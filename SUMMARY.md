@@ -17,7 +17,7 @@
   * [4.1 基础](./chapter6/spring.md)
   * [4.2 面向对象](./chapter6/spring.md)
   * [4.3 多线程](./chapter6/spring.md)
-  * [4.3 JVM](./chapter6/spring.md)
+  * [4.4 JVM](./chapter6/spring.md)
 * [第五章 数据库](./chapter5/README.md)
   * [5.1 常见面试题](./chapter5/all.md)
 * [第六章 web](./chapter6/README.md)
