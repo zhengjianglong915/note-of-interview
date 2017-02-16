@@ -16,6 +16,7 @@
 * [第四章 Java](./chapter4/README.md)
   * [4.1 基础](./chapter6/base.md)
   * [4.2 面向对象](./chapter6/object.md)
+  * [4.3 集合](./chapter6/collection.md)
   * [4.3 多线程](./chapter6/thread.md)
   * [4.4 JVM](./chapter6/jvm.md)
 * [第五章 数据库](./chapter5/README.md)
