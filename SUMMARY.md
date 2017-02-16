@@ -32,7 +32,7 @@
   * [7.2 单例模式的几种实现方式](./chapter7/danli.md)
   * [7.3 一致性哈希算法](./chapter7/hash.md)
 * [第八章 HR面](./chapter8/README.md)
-  * [8.1 项目与个人](./chapter7/hash.md)
+  * [8.1 项目与个人](./chapter8/ask.md)
 
 
 
