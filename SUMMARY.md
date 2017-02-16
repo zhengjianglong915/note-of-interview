@@ -17,7 +17,7 @@
   * [4.1 基础](./chapter6/spring.md)
   * [4.2 面向对象](./chapter6/spring.md)
   * [4.3 多线程](./chapter6/spring.md)
-  * [4.3 多线程](./chapter6/spring.md)
+  * [4.3 JVM](./chapter6/spring.md)
 
 
 
