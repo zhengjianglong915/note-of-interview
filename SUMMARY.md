@@ -16,7 +16,7 @@
 * [第六章 SSH](./chapter6/README.md)
 * [第七章 其他基础](./chapter7/README.md)
   * [7.1 编码历史](./chapter7/section1.md)
-  * [7.2 设计模式](./chapter7/section2.md)
+  * [7.2 单例模式的几种实现方式](./chapter7/danli.md)
 * [第八章 HR面](./chapter8/README.md)
 
 
