@@ -20,7 +20,6 @@
   * [6.1 spring](./chapter6/spring.md)
   * [6.2 hibernate](./chapter6/hibernate.md)
   * [6.3 struts](./chapter6/struts.md)
-
 * [第七章 其他基础](./chapter7/README.md)
   * [7.1 编码历史](./chapter7/section1.md)
   * [7.2 单例模式的几种实现方式](./chapter7/danli.md)
