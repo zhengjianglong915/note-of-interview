@@ -15,7 +15,7 @@
   * [3.4 图算法](./chapter3/tu.md)
 * [第四章 Java](./chapter4/README.md)
 * [第五章 数据库](./chapter5/README.md)
-  * [5.1 常见面试题](./chapter3/tu.md)
+  * [5.1 常见面试题](./chapter5/all.md)
 * [第六章 SSH](./chapter6/README.md)
 * [第七章 其他基础](./chapter7/README.md)
   * [7.1 编码历史](./chapter7/section1.md)
