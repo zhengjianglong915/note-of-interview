@@ -10,6 +10,7 @@
   * [2.3 常见面试题](./chapter2/all.md)
 * [第三章 算法与数据结构](./chapter3/README.md)
   * [3.1 排序算法汇总](./chapter3/section01.md)
+  * [3.2 查找](./chapter3/section01.md)
 * [第四章 Java](./chapter4/README.md)
 * [第五章 数据库](./chapter5/README.md)
 * [第六章 SSH](./chapter6/README.md)
