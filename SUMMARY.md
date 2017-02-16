@@ -17,9 +17,9 @@
 * [第五章 数据库](./chapter5/README.md)
   * [5.1 常见面试题](./chapter5/all.md)
 * [第六章 web](./chapter6/README.md)
-  * [6.1 spring](./chapter6/all.md)
-  * [6.2 hibernate](./chapter6/all.md)
-  * [6.3 struts](./chapter6/all.md)
+  * [6.1 spring](./chapter6/spring.md)
+  * [6.2 hibernate](./chapter6/hibernate.md)
+  * [6.3 struts](./chapter6/struts.md)
 
 * [第七章 其他基础](./chapter7/README.md)
   * [7.1 编码历史](./chapter7/section1.md)
