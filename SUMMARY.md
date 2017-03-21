@@ -1,6 +1,5 @@
 # Summary
 
-* [作者简介](author.md)
 * [前言](abstract.md)
 * [第一章 操作系统](./chapter1/README.md)
   * [1.1 简介](./chapter1/section1.md)
