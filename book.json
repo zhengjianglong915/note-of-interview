@@ -17,10 +17,6 @@
      "disqus": {
         "shortName": "zhengjl"
     },
-    "duoshuo": {
-            "short_name": "入境繁华",
-            "theme": "default"
-    },
       "github": {
          "url": "https://github.com/zhaoda/webpack-handbook"
        }
