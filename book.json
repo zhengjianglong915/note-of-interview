@@ -1,6 +1,6 @@
 {
   "title": "互联网面试笔记",
-  "description": "Webpack 是当下最热门的前端资源模块化管理和打包工具，本书大部分内容翻译自 Webpack 官网。",
+  "description": "本书主要是对互联网面试中常见的基础知识做总结和分析",
   "language": "zh",
   "plugins": [
     "disqus",
