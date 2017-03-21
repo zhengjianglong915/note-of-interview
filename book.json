@@ -10,7 +10,8 @@
     "-highlight",
     "baidu",
     "splitter",
-    "sitemap"
+    "sitemap",
+    "latex-codecogs"
   ],
   "pluginsConfig": {
     "duoshuo": {
