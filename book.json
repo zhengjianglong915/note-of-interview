@@ -1,9 +1,9 @@
 {
-  "title": "互联网面试笔记",
-  "description": "收集和分析互联网面试基础",
+  "title": "Webpack 中文指南",
+  "description": "Webpack 是当下最热门的前端资源模块化管理和打包工具，本书大部分内容翻译自 Webpack 官网。",
   "language": "zh",
   "plugins": [
-    "duoshuo",
+    "disqus",
     "github",
     "editlink",
     "prism",
@@ -13,12 +13,21 @@
     "sitemap"
   ],
   "pluginsConfig": {
-        "duoshuo": {
-            "short_name": "入境繁华",
-            "theme": "default"
-        },
-        "github": {
-           "url": "https://github.com/zhaoda/webpack-handbook"
-         }
+    "disqus": {
+      "shortName": "webpack-handbook"
+    },
+    "github": {
+      "url": "https://github.com/zhaoda/webpack-handbook"
+    },
+    "editlink": {
+      "base": "https://github.com/zhaoda/webpack-handbook/blob/master/content",
+      "label": "编辑本页"
+    },
+    "baidu": {
+        "token": "a9787f0ab45d5e237bab522431d0a7ec"
+    },
+    "sitemap": {
+        "hostname": "http://zhaoda.net/"
+    }
   }
 }
