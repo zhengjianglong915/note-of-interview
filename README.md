@@ -9,7 +9,7 @@
 
 个人IP： 入境繁华
 
-微博：[@入境繁华]()
+微博：[@入境繁华](http://weibo.com/2711026835/profile?rightmod=1&wvr=6&mod=personinfo)
 
 个人主页：http://zhengjianglong.leanote.com/
 
