@@ -14,6 +14,11 @@
     "sitemap"
   ],
   "pluginsConfig": {
+     "disqus": {
+        "shortName": "gitbookuse"
+    },
+  
+  zhengjl
         "duoshuo": {
             "short_name": "入境繁华",
             "theme": "default"
