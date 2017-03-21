@@ -16,7 +16,7 @@
     "duoshuo": {
             "short_name": "your duoshuo's shortname",
             "theme": "default"
-        },
+    },
     "github": {
       "url": "https://github.com/zhaoda/webpack-handbook"
     },
