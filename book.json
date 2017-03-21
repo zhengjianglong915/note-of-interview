@@ -33,10 +33,10 @@
         "hostname": "http://zhengjianglong.leanote.com"
     },
     "fontsettings":{
-"theme": 'white', 
-"family": 'sans',
-"size": 2
-}
+      "theme": 'white', 
+      "family": 'sans',
+      "size": 2,
+     }
    
   }
 }
