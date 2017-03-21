@@ -3,7 +3,7 @@
   "description": "本书主要是对互联网面试中常见的基础知识做总结和分析",
   "language": "zh",
   "plugins": [
-    "disqus",
+    "duoshuo ",
     "github",
     "editlink",
     "prism",
