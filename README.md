@@ -9,4 +9,4 @@
 个人主页：http://zhengjianglong.leanote.com/
 
 # 声明
-我认为博客是大家共享的，如果不经意侵犯别人的产权（intellectual property），请及时联系我：chenyoubing@stu.xmu.edu.cn(非诚勿扰)
+我认为博客是大家共享的，如果不经意侵犯别人的产权（intellectual property），请及时联系我：zhengjianglong915@gmail.com(非诚勿扰)
