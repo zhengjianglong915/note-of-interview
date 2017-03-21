@@ -3,4 +3,4 @@
 
 个人博客地址:http://zhengjianglong.leanote.com/
 
-简书地址： http://www.jianshu.com/u/9f1f5db3d6b8
+

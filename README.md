@@ -10,6 +10,8 @@
 微博：[@入境繁华]()
 
 个人主页：http://zhengjianglong.leanote.com/
+简书地址： http://www.jianshu.com/u/9f1f5db3d6b8
+
 
 # 声明
 我认为博客是大家共享的，如果不经意侵犯别人的产权（intellectual property），请及时联系我：zhengjianglong915@gmail.com(非诚勿扰)
