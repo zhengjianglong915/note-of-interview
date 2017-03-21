@@ -26,7 +26,6 @@
   
 基础无外乎几部分：语言（C/C++或java），操作系统，TCP/IP，数据结构与算法，再加上你所熟悉的领域。这里面其实有很多东西，各大面试宝典都有列举。
   
-  
 
 
 [](https://www.nowcoder.com/discuss/3043?type=2&order=4&pos=65&page=7)
