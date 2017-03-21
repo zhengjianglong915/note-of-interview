@@ -3,6 +3,7 @@
   "description": "Webpack 是当下最热门的前端资源模块化管理和打包工具，本书大部分内容翻译自 Webpack 官网。",
   "language": "zh",
   "plugins": [
+   "",
     "duoshuo",
     "github",
     "editlink",
