@@ -14,7 +14,7 @@
   ],
   "pluginsConfig": {
     "disqus": {
-      "shortName": "webpack-handbook"
+      "shortName": "zhengjl"
     },
     "github": {
       "url": "https://github.com/zhaoda/webpack-handbook"
