@@ -12,7 +12,8 @@
     "splitter",
     "sitemap",
     "latex-codecogs",
-    "-fontsettings"
+    "-fontsettings",
+    "donate"
   ],
   "pluginsConfig": {
     "duoshuo": {
