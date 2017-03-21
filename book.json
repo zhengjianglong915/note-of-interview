@@ -11,7 +11,8 @@
     "baidu",
     "splitter",
     "sitemap",
-    "latex-codecogs"
+    "latex-codecogs",
+    ""-fontsettings"
   ],
   "pluginsConfig": {
     "duoshuo": {
