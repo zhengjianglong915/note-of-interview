@@ -37,6 +37,14 @@
       "theme": "white", 
       "family": "sans",
       "size": 2
-     }
+     },
+     "donate": {
+        "wechat": "https://zhangjikai.com/resource/weixin.png",
+        "alipay": "https://zhangjikai.com/resource/alipay.png",
+        "title": "",
+        "button": "赏",
+        "alipayText": "支付宝打赏",
+        "wechatText": "微信打赏"
+    }
   }
 }
