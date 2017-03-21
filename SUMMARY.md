@@ -1,7 +1,7 @@
 # Summary
 
 * [作者简介](author.md)
-* [序:](abstract.md)
+* [前言](abstract.md)
 * [第一章 操作系统](./chapter1/README.md)
   * [1.1 简介](./chapter1/section1.md)
   * [1.2 生产者与消费者](chapter1/product.md)
