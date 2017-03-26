@@ -321,17 +321,17 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 
 ArrayList
 ```
-	 public Object clone() {
-		try {
-		    ArrayList<?> v = (ArrayList<?>) super.clone();
-		    v.elementData = Arrays.copyOf(elementData, size);
-		    v.modCount = 0;
-		    return v;
-		} catch (CloneNotSupportedException e) {
-		    // this shouldn't happen, since we are Cloneable
-		    throw new InternalError(e);
-		}
-	    }
+ public Object clone() {
+	try {
+	    ArrayList<?> v = (ArrayList<?>) super.clone();
+	    v.elementData = Arrays.copyOf(elementData, size);
+	    v.modCount = 0;
+	    return v;
+	} catch (CloneNotSupportedException e) {
+	    // this shouldn't happen, since we are Cloneable
+	    throw new InternalError(e);
+	}
+    }
 ```
 ## 为什么集合类没有实现 Cloneable 和 Serializable 接口
 ## Comparable 和Comparator 接口
