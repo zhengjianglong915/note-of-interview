@@ -3,6 +3,7 @@
 收集了互联网面试过程中常见的面试问题，并对这些问题、知识点做了分析和整理，希望对大家有所帮助。如果有错误地方还希望提出宝贵建议，批评指正。祝大家求职顺利。
 
 
+# 在线阅读
 该内容使用gitbook阅读更加方便、体验感更好。gitbook地址：[《互联网面试笔记》](https://www.gitbook.com/book/zhengjianglong/note-of-interview/details)
 
 # 作者简介
@@ -17,3 +18,4 @@
 
 # 声明
 如果有错之处还望指出和纠正。联系方式:zhengjianglong915@gmail.com
+如果对这些内容感兴趣，还望点
