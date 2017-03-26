@@ -1,10 +1,10 @@
 # Summary
 
 * [前言](abstract.md)
-* [第一章 操作系统](./chapter1/README.md)
-  * [1.1 简介](./chapter1/section1.md)
-  * [1.2 生产者与消费者](chapter1/product.md)
-  * [1.3 常见面试题](./chapter1/section2.md)
+* [第一章 操作系统](./os/README.md)
+  * [1.1 简介](./os/section1.md)
+  * [1.2 生产者与消费者](os/product.md)
+  * [1.3 常见面试题](./os/section2.md)
 * [第二章 计算机网络](./chapter2/README.md)
   * [2.1 物理层](./chapter2/section01.md)
   * [2.2 网络层](./chapter2/section01.md)
