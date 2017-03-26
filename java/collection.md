@@ -38,7 +38,7 @@ Collection是最基本的集合接口，**一个Collection代表一组Object，�
 		Iterator it = collection.iterator(); // 获得一个迭代器
 		while(it.hasNext()) {
 			Object obj = it.next(); // 得到下一个元素
-		}
+	}
 ```
 
 不需要维护遍历集合的“指针”，所有的内部状态都由Iterator来维护，而这个Iterator由集合类通过工厂方法生成。每一种集合类返回的Iterator具体类型可能不同，但它们都实现了Iterator接口，因此，我们不需要关心到底是哪种Iterator，它只需要获得这个Iterator接口即可，这就是接口的好处，面向对象的威力。
