@@ -34,10 +34,12 @@ Collection是最基本的集合接口，**一个Collection代表一组Object，�
 主要的一个接口方法：boolean add(Ojbect c)虽然返回的是boolean，但不是表示添加成功与否，这个返回值表示的意义是add()执行后，集合的内容是否改变了（就是元素的数量、位置等有无变化）。类似的addAll，remove，removeAll，remainAll也是一样的。
 用Iterator模式实现遍历集合,Collection**有一个重要的方法：iterator()，返回一个Iterator（迭代器），用于遍历集合的所有元素**。Iterator模式可以把访问逻辑从不同的集合类中抽象出来，从而避免向客户端暴露集合的内部结构。典型的用法如下：
 
+```
 		Iterator it = collection.iterator(); // 获得一个迭代器
 		while(it.hasNext()) {
 			Object obj = it.next(); // 得到下一个元素
 		}
+```
 
 不需要维护遍历集合的“指针”，所有的内部状态都由Iterator来维护，而这个Iterator由集合类通过工厂方法生成。每一种集合类返回的Iterator具体类型可能不同，但它们都实现了Iterator接口，因此，我们不需要关心到底是哪种Iterator，它只需要获得这个Iterator接口即可，这就是接口的好处，面向对象的威力。
 要确保遍历过程顺利完成，必须保证遍历过程中不更改集合的内容（Iterator的remove()方法除外），所以，确保遍历可靠的原则是：只在一个线程中使用这个集合，或者在多线程中对遍历代码进行同步。由Collection接口派生的两个接口是List和Set。
