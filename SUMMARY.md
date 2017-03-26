@@ -6,7 +6,7 @@
   * [1.2 常见面试题](./os/section2.md)
 * [第二章 计算机网络](./network/README.md)
   * [2.1 常见面试题](./network/all.md)
-* [第三章 算法与数据结构](./chapter3/README.md)
+* [第三章 算法与数据结构](./algorithm/README.md)
   * [3.1 排序算法汇总](./chapter3/section01.md)
   * [3.2 查找](./chapter3/section02.md)
   * [3.3 字符串](./chapter3/string.md)
