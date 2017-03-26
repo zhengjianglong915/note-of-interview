@@ -3,7 +3,7 @@
 
 本电子书主要是对互联网面试过程中常见的面试问题进行收集和分析，希望对大家有所帮助。因为才疏学浅，如果有错误地方还希望提出宝贵建议，批评指正。
 
-使用gitbook阅读更加方便、体验感更好。gitbook地址：[《》](https://www.gitbook.com/book/zhengjianglong/note-of-interview/details)
+使用gitbook阅读更加方便、体验感更好。gitbook地址：[《互联网面试笔记》](https://www.gitbook.com/book/zhengjianglong/note-of-interview/details)
 
 # 作者简介
 作者: 入境繁华
