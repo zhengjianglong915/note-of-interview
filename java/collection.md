@@ -272,52 +272,52 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 ## ArrayList 是否支持序列化
 支持，
 实现了　serlializable接口，并实现了以下两个方法：
+```
+　　 　private void writeObject(java.io.ObjectOutputStream s)
+	throws java.io.IOException{
+	// Write out element count, and any hidden stuff
+	int expectedModCount = modCount;
+	s.defaultWriteObject();
 
-	　　 　private void writeObject(java.io.ObjectOutputStream s)
-		throws java.io.IOException{
-		// Write out element count, and any hidden stuff
-		int expectedModCount = modCount;
-		s.defaultWriteObject();
+	// Write out size as capacity for behavioural compatibility with clone()
+	s.writeInt(size);
 
-		// Write out size as capacity for behavioural compatibility with clone()
-		s.writeInt(size);
+	// Write out all elements in the proper order.
+	for (int i=0; i<size; i++) {
+	    s.writeObject(elementData[i]);
+	}
 
-		// Write out all elements in the proper order.
-		for (int i=0; i<size; i++) {
-		    s.writeObject(elementData[i]);
-		}
+	if (modCount != expectedModCount) {
+	    throw new ConcurrentModificationException();
+	}
+    }
 
-		if (modCount != expectedModCount) {
-		    throw new ConcurrentModificationException();
-		}
+    /**
+     * Reconstitute the <tt>ArrayList</tt> instance from a stream (that is,
+     * deserialize it).
+     */
+    private void readObject(java.io.ObjectInputStream s)
+	throws java.io.IOException, ClassNotFoundException {
+	elementData = EMPTY_ELEMENTDATA;
+
+	// Read in size, and any hidden stuff
+	s.defaultReadObject();
+
+	// Read in capacity
+	s.readInt(); // ignored
+
+	if (size > 0) {
+	    // be like clone(), allocate array based upon size not capacity
+	    ensureCapacityInternal(size);
+
+	    Object[] a = elementData;
+	    // Read in all elements in the proper order.
+	    for (int i=0; i<size; i++) {
+	        a[i] = s.readObject();
 	    }
-
-	    /**
-	     * Reconstitute the <tt>ArrayList</tt> instance from a stream (that is,
-	     * deserialize it).
-	     */
-	    private void readObject(java.io.ObjectInputStream s)
-		throws java.io.IOException, ClassNotFoundException {
-		elementData = EMPTY_ELEMENTDATA;
-
-		// Read in size, and any hidden stuff
-		s.defaultReadObject();
-
-		// Read in capacity
-		s.readInt(); // ignored
-
-		if (size > 0) {
-		    // be like clone(), allocate array based upon size not capacity
-		    ensureCapacityInternal(size);
-
-		    Object[] a = elementData;
-		    // Read in all elements in the proper order.
-		    for (int i=0; i<size; i++) {
-		        a[i] = s.readObject();
-		    }
-		}
-	    }
-
+	}
+    }
+```
 
 ArrayList
 ```
