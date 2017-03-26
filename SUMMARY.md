@@ -18,7 +18,7 @@
   * [4.4 多线程](./java/thread.md)
   * [4.5 IO](./java/io.md)
   * [4.5 JVM](./java/jvm.md)
-* [第五章 数据库](./chapter5/README.md)
+* [第五章 数据库](./database/README.md)
   * [5.1 常见面试题](./chapter5/all.md)
 * [第六章 web](./chapter6/README.md)
   * [6.1 spring](./chapter6/spring.md)
