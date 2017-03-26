@@ -22,8 +22,6 @@
 
 
 ## 内容提纲
-# Summary
-
 * [前言](abstract.md)
 * [第一章 操作系统](./os/README.md)
   * [1.1 生产者与消费者](os/product.md)
