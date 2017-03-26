@@ -5,7 +5,7 @@
 
 # 在线阅读
 本文档使用 Gitbook 制作，[在线阅读地址](https://www.gitbook.com/book/zhengjianglong/note-of-interview/details)
-该内容使用gitbook阅读更加方便、体验感更好。gitbook地址：[《互联网面试笔记》]()
+
 
 # 作者简介
 作者: 入境繁华
