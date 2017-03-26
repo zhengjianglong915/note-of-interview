@@ -28,7 +28,7 @@
   * [7.1 编码历史](./others/section1.md)
   * [7.2 单例模式的几种实现方式](./others/danli.md)
   * [7.3 一致性哈希算法](./others/hash.md)
-* [第八章 HR面](./chapter8/README.md)
+* [第八章 HR面](./hr/README.md)
   * [8.1 项目与个人](./chapter8/ask.md)
 
 
