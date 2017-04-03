@@ -1,9 +1,10 @@
-# 《互联网面试笔记》
 # 介绍
 收集了互联网面试过程中常见的面试问题，并对这些问题、知识点做分析和整理，希望对大家有所帮助。如果**有错误地方还希望提出宝贵建议，批评指正。祝大家求职顺利**。
 
 # 在线阅读
 本文档使用 Gitbook 制作，[在线阅读地址](https://www.gitbook.com/book/zhengjianglong/note-of-interview/details)
+
+本文档github地址：https://github.com/zhengjianglong915/note-of-interview
 
 # 作者简介
 作者: 入境繁华
