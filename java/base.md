@@ -250,3 +250,8 @@ http://www.cnblogs.com/dolphin0520/p/3780005.html
 ## 修饰符顺序
 public protected private abstract static final transient volatile synchronized native strictfp
 
+个人公众号(欢迎关注)
+![](/assets/weix_gongzhonghao.jpg)
+
+
+
