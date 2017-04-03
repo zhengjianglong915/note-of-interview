@@ -5,6 +5,8 @@
 # 在线阅读
 本文档使用 Gitbook 制作，[在线阅读地址](https://www.gitbook.com/book/zhengjianglong/note-of-interview/details)
 
+本文档github地址：https://github.com/zhengjianglong915/note-of-interview
+
 # 作者简介
 作者: 入境繁华
 
