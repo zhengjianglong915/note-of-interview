@@ -201,3 +201,8 @@ http://blog.sina.com.cn/s/blog_a46817ff0101hjzp.html
 http://blog.csdn.net/shinehoo/article/details/5881939
 http://blog.chinaunix.net/uid-25132162-id-361291.html
 
+
+个人公众号（欢迎关注）：
+![](/assets/weix_gongzhonghao.jpg)
+
+
