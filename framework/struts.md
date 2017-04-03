@@ -155,3 +155,8 @@ destroy：该方法将在拦截器被销毁之前被调用, 它在拦截器的�
 **责任链模式**
 过滤器decorator模式和职责链模式
 
+
+个人公众号（欢迎关注）：
+![](/assets/weix_gongzhonghao.jpg)
+
+
