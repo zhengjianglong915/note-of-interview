@@ -97,7 +97,7 @@ ClassLoader加载Singleton类时，饿汉式单例就被创建,虽然饿汉式�
 ## 参考资料
 http://blog.chenzuhuang.com/archive/13.html
 
-个人公众号(欢迎关注)
+个人公众号(欢迎关注)：<br>
 ![](/assets/weix_gongzhonghao.jpg)
 
 

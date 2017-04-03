@@ -29,6 +29,6 @@ http://blog.sina.com.cn/s/blog_69c189bf0100mt93.html
 http://www.zhihu.com/question/23374078
 
 
-个人公众号(欢迎关注)
+个人公众号(欢迎关注)：<br>
 ![](/assets/weix_gongzhonghao.jpg)
 
