@@ -229,4 +229,7 @@ http://www.cnblogs.com/c-cloud/p/3224788.html
 https://github.com/JohnZhengHub/blogs/blob/master/algorithm/algorithm-base/Manacher.md
 
 
+个人公众号(欢迎关注)
+![](/assets/weix_gongzhonghao.jpg)
+
 
