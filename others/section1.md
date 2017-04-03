@@ -27,3 +27,8 @@ UTF-16比较好理解,就是任何字符对应的数字都用两个字节来保�
 参考
 http://blog.sina.com.cn/s/blog_69c189bf0100mt93.html
 http://www.zhihu.com/question/23374078
+
+
+个人公众号(欢迎关注)
+![](/assets/weix_gongzhonghao.jpg)
+
