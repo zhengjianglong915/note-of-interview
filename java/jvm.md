@@ -234,3 +234,8 @@ Xms = Xmx并且设置了Xmn的情况下，该参数不需要进行设置。
 相关资料：
 http://blog.csdn.net/wisgood/article/details/16818243
 
+个人公众号（欢迎关注）：
+![](/assets/weix_gongzhonghao.jpg)
+
+
+
