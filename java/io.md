@@ -30,3 +30,8 @@ Java NIO的选择器允许一个单独的线程来监视多个输入通道，你
  1. http://bbym010.iteye.com/blog/2100868
  2. http://developer.51cto.com/art/201112/307463.htm
  3. http://ifeve.com/java-nio-vs-io/
+
+
+个人公众号(欢迎关注)
+![](/assets/weix_gongzhonghao.jpg)
+
