@@ -251,8 +251,7 @@ http://www.cnblogs.com/dolphin0520/p/3780005.html
 public protected private abstract static final transient volatile synchronized native strictfp
 
 
-个人公众号(欢迎关注)：
-
+个人公众号(欢迎关注)：<br>
 ![](/assets/weix_gongzhonghao.jpg)
 
 

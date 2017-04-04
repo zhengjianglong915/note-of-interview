@@ -409,3 +409,9 @@ WebApplicationContext继承了ApplicationContext，并添加了一些web应用�
 
 
 http://www.codeceo.com/article/spring-top-25-interview.html
+
+个人公众号（欢迎关注）：
+![](/assets/weix_gongzhonghao.jpg)
+
+
+
