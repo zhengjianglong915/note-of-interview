@@ -15,8 +15,7 @@
 
 简书地址： http://www.jianshu.com/u/9f1f5db3d6b8
 
-个人公众号(欢迎关注)：
-
+个人公众号(欢迎关注)：<br>
 ![](/assets/weix_gongzhonghao.jpg)
 
 # 声明
