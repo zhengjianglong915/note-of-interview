@@ -11,7 +11,7 @@
 
 微博：[@入境繁华](http://weibo.com/2711026835/profile?rightmod=1&wvr=6&mod=personinfo)
 
-个人主页：http://zhengjianglong.leanote.com/
+个人主页：http://zhengjianglong.cn/
 
 简书地址： http://www.jianshu.com/u/9f1f5db3d6b8
 
