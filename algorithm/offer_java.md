@@ -16,23 +16,23 @@
 
 ```
 public boolean Find(int [][] array,int target) {
-        if (array == null || array[0].length == 0 ) {
-            return false;
-        }
-        int row = 0;
-        int col = array.length - 1;
-        while ( row < array.length && col >=0 ) {
-            if ( target > array[row][col]) {
-                row ++;
-            } else if (target < array[row][col]) {
-                col --;
-            } else {
-                return true;
-            }
-             
-        }
+    if (array == null || array[0].length == 0 ) {
         return false;
     }
+    int row = 0;
+    int col = array.length - 1;
+    while ( row < array.length && col >=0 ) {
+        if ( target > array[row][col]) {
+            row ++;
+        } else if (target < array[row][col]) {
+            col --;
+        } else {
+            return true;
+        }
+         
+    }
+    return false;
+}
 ```
 
 
