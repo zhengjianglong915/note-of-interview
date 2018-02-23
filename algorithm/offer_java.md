@@ -86,3 +86,31 @@ private int newLength(StringBuffer str) {
 ```
 
 # 03-从尾到头打印链表
+
+> 输入一个链表，从尾到头打印链表每个节点的值。
+
+## 思路
+利用栈，先进后出的思路。
+
+## 实现
+
+```
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    if (null == listNode) {
+        return result;
+    }
+    
+    Stack<ListNode> stack = new Stack<ListNode>();
+    ListNode next = listNode;
+    while(null != next) {
+        stack.push(next);
+        next = next.next;
+    }
+    while(!stack.isEmpty()) {
+        result.add(stack.pop().val);
+    }
+    return result;
+}
+```
+
