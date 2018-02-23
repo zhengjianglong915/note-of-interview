@@ -11,6 +11,8 @@
   * [3.2 查找](./algorithm/section02.md)
   * [3.3 字符串](./algorithm/string.md)
   * [3.4 图算法](./algorithm/tu.md)
+  * [3.5 剑指offer-java实现版本](./algorithm/offer_java.md)
+  * [3.6 剑指offer-go实现版本](./algorithm/offer_go.md)
 * [第四章 Java](./java/README.md)
   * [4.1 基础](./java/base.md)
   * [4.2 面向对象](./java/object.md)
@@ -20,7 +22,7 @@
   * [4.5 JVM](./java/jvm.md)
 * [第五章 数据库](./database/README.md)
   * [5.1 常见面试题](./database/all.md)
-* [第六章 框架](./framework/README.md)
+* [第六章 框架和组件](./framework/README.md)
   * [6.1 spring](./framework/spring.md)
   * [6.2 hibernate](./framework/hibernate.md)
   * [6.3 struts](./framework/struts.md)
@@ -30,6 +32,7 @@
   * [7.3 一致性哈希算法](./others/hash.md)
 * [第八章 HR面](./hr/README.md)
   * [8.1 项目与个人](./chapter8/ask.md)
+
 
 
 

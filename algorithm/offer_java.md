@@ -80,8 +80,9 @@ private int newLength(StringBuffer str) {
         }
     }
     
+    // 或者  str.length() + spaceNum * 2
     return (str.length() - spaceNum) + spaceNum * 3;
 }
 ```
 
-##
+# 03-从尾到头打印链表
