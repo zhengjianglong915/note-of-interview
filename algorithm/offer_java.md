@@ -45,7 +45,42 @@ public boolean Find(int [][] array,int target) {
 > 请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
 
 ## 思路
+1. 先计算空格数目
+2. 计算新的字符串长度，并构建新字符数组
+3. 逐个遍历和copy, 遇到空格用户“%20”替换
+
 
 ## 实现
 
 
+```
+public String replaceSpace(StringBuffer str) {
+    // 第一件重要的事
+    if( str == null || str.length() == 0)
+        return str.toString();
+    // 长度计算
+    int newlength = newLength(str);
+    char[] newChar = new char[newlength];
+    int idx = 0;
+    for (int i = 0; i < str.length(); i++) {
+        if (str.charAt(i) == ' ') {
+            newChar[idx++] = '%';
+            newChar[idx++] = '2';
+            newChar[idx++] = '0';
+        } else {
+            newChar[idx++] = str.charAt(i);
+        }
+    }
+    return new String(newChar);
+}
+private int newLength(StringBuffer str) {
+    int spaceNum = 0; 
+    for (int i = 0; i < str.length(); i ++) {
+        if (str.charAt(i) == ' ') {
+            spaceNum++;
+        }
+    }
+    
+    return (str.length() - spaceNum) + spaceNum * 3;
+}
+```
