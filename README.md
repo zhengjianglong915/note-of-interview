@@ -40,6 +40,8 @@
   * [3.2 查找](./algorithm/section02.md)
   * [3.3 字符串](./algorithm/string.md)
   * [3.4 图算法](./algorithm/tu.md)
+  * [3.5 剑指offer-java实现版本](./algorithm/offer_java.md)
+  * [3.6 剑指offer-go实现版本](./algorithm/offer_go.md)
 * [第四章 Java](./java/README.md)
   * [4.1 基础](./java/base.md)
   * [4.2 面向对象](./java/object.md)
