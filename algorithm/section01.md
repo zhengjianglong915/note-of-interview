@@ -144,15 +144,16 @@
         // 用于移动遍历 
         int lt = lo, gt = hi, i = lo + 1;
         int val = array[lo];
-        while (i <= gt) {
+        while (i <= gt) {  // 等于
             if (array[i] < val) {
                 exch(array, i++, lt++);
             } else if (array[i] > val) {
-                exch(array, i, gt--);
+                exch(array, i, gt--); // i不变
             } else {
                 i++;
             }
         }
+        array[i-1] = val;
         // lt 到 gt 之间的都是等于val 的. 如果存在大量重复元素的数组使用该算法可以极大提升算法效率,
         quick2waySort(array, lo, lt - 1);
         quick2waySort(array, gt + 1, hi);
@@ -161,7 +162,7 @@
 ## 选择排序
 ### 5.直接选择排序
 **思想**：首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后每次从剩余未排序元素中继续寻找最小（大）元素放到已排序序列的末尾。以此类推，直到所有元素均排序完毕
-**时间复杂度**：最坏:O(n2)  最好: O(n2)  平均: O(n2)
+**时间复杂度**：最坏:O(n^2)  最好: O(n^2)  平均: O(n^2)
 **空间复杂度**：O(1)
 **稳定性**：不稳定    例如数组  2 2 1 3  第一次选择的时候把第一个2与1交换使得两个2的相对次序发生了改变。
 **代码**：
@@ -187,7 +188,7 @@
     
     public static void heapSort(int[] array) {
         int N = array.length -1;
-        for (int k = N / 2; k >= 1; k--) {
+        for (int k = N / 2; k >= 1; k--) { // k >= 1
             sink(array, k, N);
         }
         while (N > 1) {
@@ -197,7 +198,7 @@
         }
     }
     
-    private static void sink(int[] array, int k, int N) {
+    private static void sink(int[] array, int k, int N){
         while (2 * k <= N) {
             int j = 2 * k;
             if (j < N && array[j] < array[j+1]) { // <
