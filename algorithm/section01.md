@@ -141,7 +141,7 @@
         }
         // lt以左都小于val
         // gt以右都大于val
-        
+        // 用于移动
         int lt = lo, gt = hi, i = lo + 1;
         int val = array[lo];
         while (i <= gt) {
