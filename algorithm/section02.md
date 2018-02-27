@@ -169,7 +169,7 @@ http://www.tuicool.com/articles/RnErui
         return null;
     }
     
-### 5.4.2 删除最大结点
+#### 5.4.2 删除最大结点
 **思想:** 与删除最小结点类型，根据二叉搜索树的特性，最大结点是根结点的最右孩子。所以只要找到最右孩子结点，其存在左结点的话就用左结点替换否则直接删除.
 
      public Tree deleteMax(Tree root) {
