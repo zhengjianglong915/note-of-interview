@@ -114,3 +114,70 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
+# 04-旋转数组的最小数字
+> 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+
+## 思路
+二分查找，不断缩短查找范围。
+1. mid值与左右两端比较，如果小于右边，high=mid.
+2. mid大于左边，low=mid
+3. 如果左值=mid值=右值，顺序遍历
+
+```
+public int minNumberInRotateArray(int [] array) {
+    if ( array == null || array.length == 0 ) {
+        return 0;
+    }
+    int low = 0, high = array.length - 1;
+    int mid;
+    while ( low < high && array[low] >= array[high]) {
+        // array[low] 需要大于等于 array[high] 在内部进行 遍历
+        if ( (low +1 )== high) { //这个很关键，说明只有两个元素
+            return array[high];
+        }
+        if (array[low] == array[high]) {
+            int min = array[low];
+            for ( int i = low +1; i <= high; i++) {
+                if(array[i] < min){
+                    min = array[i];
+                }
+            }
+            return min;
+        } else {
+            mid = (low + high) >> 1;
+            if (array[mid] < array[high]){
+                high = mid;
+            } else {
+                low = mid;
+            }
+        }
+    }
+     
+    // 只有一个元素 或者 array[low] < array[high]
+    return array[low];
+}
+```
+
+## 05-斐波那契数列
+
+```
+public int Fibonacci(int n) {
+    if(n <= 0) {
+        return 0;
+    }
+    if (n == 1 || n == 2) {
+        return 1;
+    }
+    int preOne = 1;
+    int preTwo = 1;
+    int temp;
+    for ( int i = 3; i <= n; i++ ){
+        temp = preOne;
+        preOne = preOne + preTwo;
+        preTwo = temp;
+    }
+    return preOne;
+}
+```
+
