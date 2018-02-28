@@ -120,9 +120,11 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 
 ## 思路
 二分查找，不断缩短查找范围。
+
 1. mid值与左右两端比较，如果小于右边，high=mid.
 2. mid大于左边，low=mid
 3. 如果左值=mid值=右值，顺序遍历
+
 
 ```
 public int minNumberInRotateArray(int [] array) {
@@ -181,3 +183,35 @@ public int Fibonacci(int n) {
 }
 ```
 
+## 06-青蛙跳
+> 一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+```
+public int JumpFloor(int target) {
+    if(target <= 0) return 0;
+    if(target == 1) return 1;
+    if(target == 2) return 2;
+    int preOne = 2, preTwo = 1;
+    for(int i = 3; i <= target; i++){
+        int temp = preOne + preTwo;
+        preTwo = preOne;
+        preOne = temp;
+    }
+    return preOne;
+}
+```
+
+## 07-变态青蛙跳
+
+```
+
+```public int JumpFloorII(int target) {
+        if(target <= 0) return 0;
+        int result = 1;
+        target --;
+        while(target !=0){
+            result = result << 1;
+            target --;
+        }
+        return result;
+    
