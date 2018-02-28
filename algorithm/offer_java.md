@@ -1,5 +1,5 @@
 # 剑指offer--java版
-
+代码格式按牛客网在线答题格式编写
 
 # 01-二维数组中的查找
 
@@ -202,16 +202,24 @@ public int JumpFloor(int target) {
 ```
 
 ## 07-变态青蛙跳
+> 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+```
+public int JumpFloorII(int target) {
+    if(target <= 0) return 0;
+    int result = 1;
+    target --;
+    while(target !=0){
+        result = result << 1;
+        target --;
+    }
+    return result;
+}
+```
+## 08-矩阵覆盖
+> 我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
 
 ```
 
-```public int JumpFloorII(int target) {
-        if(target <= 0) return 0;
-        int result = 1;
-        target --;
-        while(target !=0){
-            result = result << 1;
-            target --;
-        }
-        return result;
-    
+```
+ 
