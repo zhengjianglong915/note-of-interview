@@ -54,19 +54,14 @@ AOF持久化以日志的形式记录服务器所处理的每一个**写、删除
 
 ## 使用redis有哪些好处？
 (1) 速度快，因为数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)
-
 (2) 支持丰富数据类型，支持string，list，set，sorted set，hash
-
 (3) 支持事务，操作都是原子性，所谓的原子性就是对数据的更改要么全部执行，要么全部不执行
-
 (4) 丰富的特性：可用于缓存，消息，按key设置过期时间，过期后将会自动删除
 
 
 ## redis相比memcached有哪些优势？
 (1) memcached所有的值均是简单的字符串，redis作为其替代者，支持更为丰富的数据类型
-
 (2) redis的速度比memcached快很多
-
 (3) redis可以持久化其数据
 
 
@@ -84,6 +79,9 @@ Memcache对数据类型支持相对简单。Redis有复杂的数据类型,Redis�
 redis最大可以达到1GB，而memcache只有1MB
 
 **5) 2 、Redis支持数据的备份，即master-slave模式的数据备份。**
+
+**6)、查询速度，redis速度比memchached快** 为什么？
+
 
 ## redis常见性能问题和解决方案：
 
