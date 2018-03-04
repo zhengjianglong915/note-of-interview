@@ -78,9 +78,12 @@ Memcache对数据类型支持相对简单。Redis有复杂的数据类型,Redis�
 **4）value大小**
 redis最大可以达到1GB，而memcache只有1MB
 
-**5) 2 、Redis支持数据的备份，即master-slave模式的数据备份。**
-
+**5) Redis支持数据的备份，即master-slave模式的数据备份。**
 **6)、查询速度，redis速度比memchached快** 为什么？
+**7)redis可以持久化其数据**
+
+
+
 
 
 ## redis常见性能问题和解决方案：
