@@ -59,6 +59,20 @@ AOF持久化以日志的形式记录服务器所处理的每一个**写、删除
 ## redis底层为什么使用跳跃表而不是红黑树
 跳跃表在范围查找的时候性能比较高
 
+## 使用过Redis分布式锁么，它是什么回事？
+先拿setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。
+这时候对方会告诉你说你回答得不错，然后接着问如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？
+
+这时候你要给予惊讶的反馈：唉，是喔，这个锁就永远得不到释放了。紧接着你需要抓一抓自己得脑袋，故作思考片刻，好像接下来的结果是你主动思考出来的，然后回答：我记得set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的！对方这时会显露笑容，心里开始默念：摁，这小子还不错。
+
+
+## 假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？
+使用keys指令可以扫出指定模式的key列表。
+对方接着追问：如果这个redis正在给线上的业务提供服务，那使用keys指令会有什么问题？
+这个时候你要回答redis关键的一个特性：redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。
+
+## bgsave的原理是什么？
+你给出两个词汇就可以了，fork和cow。fork是指redis通过创建子进程来进行bgsave操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。
 
 ## 为什么redis需要把所有数据放到内存中?
 Redis为了达到最快的读写速度将数据都读到内存中，并通过异步的方式将数据写入磁盘。所以redis具有快速和数据持久化的特征。如果不将数据放在内存中，磁盘I/O速度为严重影响redis的性能。在内存越来越便宜的今天，redis将会越来越受欢迎。
@@ -76,19 +90,16 @@ Redis为单进程单线程模式，采用队列模式将并发访问变为串行
 2.服务器角度，利用setnx实现锁。
 注：对于第一种，需要应用程序自己处理资源的同步，可以使用的方法比较通俗，可以使用synchronized也可以使用lock；第二种需要用到Redis的setnx命令，但是需要注意一些问题。
 
-
 ## 使用redis有哪些好处？
 (1) 速度快，因为数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)
 (2) 支持丰富数据类型，支持string，list，set，sorted set，hash
 (3) 支持事务，操作都是原子性，所谓的原子性就是对数据的更改要么全部执行，要么全部不执行
 (4) 丰富的特性：可用于缓存，消息，按key设置过期时间，过期后将会自动删除
 
-
 ## redis相比memcached有哪些优势？
 (1) memcached所有的值均是简单的字符串，redis作为其替代者，支持更为丰富的数据类型
 (2) redis的速度比memcached快很多
 (3) redis可以持久化其数据
-
 
 ## Memcache与Redis的区别都有哪些？
 **1)、存储方式**
@@ -159,6 +170,10 @@ Redis的LRU算法不是一个严格的LRU实现。这意味着Redis不能选择�
 
 
 # Redis支持的数据类型
+字符串String、字典Hash、列表List、集合Set、有序集合SortedSet。
+
+如果你是Redis中高级用户，还需要加上下面几种数据结构HyperLogLog、Geo、Pub/Sub。
+如果你说还玩过Redis Module，像BloomFilter，RedisSearch，Redis-ML，面试官得眼睛就开始发亮了。
 
 # redis 最适合的场景
 Redis最适合所有数据in-momory的场景，虽然Redis也提供持久化功能，但实际更多的是一个disk-backed的功能，跟传统意义上的持久化有比较大的差别，那么可能大家就会有疑问，似乎Redis更像一个加强版的Memcached，那么何时使用Memcached,何时使用Redis呢?
@@ -195,3 +210,4 @@ Redis提供的所有特性中，我感觉这个是喜欢的人最少的一个，
 - [redis详解（三）-- 面试题](http://blog.csdn.net/guchuanyun111/article/details/52064870)
 - [Redis的那些最常见面试问题](https://www.cnblogs.com/Survivalist/p/8119891.html)
 - [2017年6月Java面试——redis](http://blog.csdn.net/sunqingzhong44/article/details/73866263)
+- [坑人无数的Redis面试题](https://baijiahao.baidu.com/s?id=1588454565071211950&wfr=spider&for=pc)
