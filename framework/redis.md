@@ -63,7 +63,6 @@ AOF持久化以日志的形式记录服务器所处理的每一个**写、删除
 
 
 ## redis相比memcached有哪些优势？
-
 (1) memcached所有的值均是简单的字符串，redis作为其替代者，支持更为丰富的数据类型
 
 (2) redis的速度比memcached快很多
