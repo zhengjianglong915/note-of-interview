@@ -41,6 +41,18 @@ AOF持久化以日志的形式记录服务器所处理的每一个**写、删除
 
 ## skiplist插入和查询原理（来自360）
 ## redis持久化方式（百度金融）
+1、RDB快照（snapshots）
+缺省情况情况下，Redis把数据快照存放在磁盘上的二进制文件中，文件名为dump.rdb。你可以配置Redis的持久化策略，例如数据集中每N秒钟有超过M次更新，就将数据写入磁盘；或者你可以手工调用命令SAVE或BGSAVE。
+工作原理:
+- Redis forks.
+- 子进程开始将数据写到临时RDB文件中。
+- 当子进程完成写RDB文件，用新文件替换老文件。
+- 这种方式可以使Redis使用copy-on-write技术。
+
+2. AOF
+快照模式并不十分健壮，当系统停止，或者无意中Redis被kill掉，最后写入Redis的数据就会丢失。这对某些应用也许不是大问题，但对于要求高可靠性的应用来说Redis就不是一个合适的选择。Append-only文件模式是另一种选择。你可以在配置文件中打开AOF模式
+
+
 ## redis过期时间如何实现（来自58赶集）
 ## 压缩列表的原理（来自360）
 ## redis如何清除过期keys
@@ -55,6 +67,15 @@ Redis为了达到最快的读写速度将数据都读到内存中，并通过异
 
 ## Redis是单进程单线程的
 redis利用队列技术将并发访问变为串行访问，消除了传统数据库串行控制的开销
+
+## redis的并发竞争问题如何解决?
+Redis为单进程单线程模式，采用队列模式将并发访问变为串行访问。Redis本身没有锁的概念，Redis对于多个客户端连接并不存在竞争，但是在Jedis客户端对Redis进行并发访问时会发生连接超时、数据转换错误、阻塞、客户端关闭连接等问题，这些问题均是由于客户端连接混乱造成。对此有2种解决方法：
+
+1.客户端角度，为保证每个客户端间正常有序与Redis进行通信，对连接进行池化，同时对客户端读写Redis操作采用内部锁synchronized。
+
+2.服务器角度，利用setnx实现锁。
+注：对于第一种，需要应用程序自己处理资源的同步，可以使用的方法比较通俗，可以使用synchronized也可以使用lock；第二种需要用到Redis的setnx命令，但是需要注意一些问题。
+
 
 ## 使用redis有哪些好处？
 (1) 速度快，因为数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)
@@ -85,7 +106,23 @@ redis最大可以达到1GB，而memcache只有1MB
 **5) Redis支持数据的备份，即master-slave模式的数据备份。**
 **6)、查询速度，redis速度比memchached快** 为什么？
 
+## 谈谈redis的LRU算法
+答：LRU即最近最久未使用，当内存达到限制时，Redis 具体的回收策略是通过 maxmemory-policy 配置项配置的。由以下多个选项：
+**noenviction**：不清除数据，只是返回错误，这样会导致浪费掉更多的内存，对大多数写命令（DEL 命令和其他的少数命令例外）
+allkeys-lru：从所有的数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰，以供新数据使用
+volatile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰，以供新数据使用
+allkeys-random：从所有数据集（server.db[i].dict）中任意选择数据淘汰，以供新数据使用
+volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰，以供新数据使用
+volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰，以供新数据使用
+当 cache 中没有符合清除条件的 key 时，回收策略 volatile-lru, volatile-random 和volatile-ttl 将会和 策略 noeviction 一样返回错误。选择正确的回收策略是很重要的，取决于你的应用程序的访问模式。
 
+回收的过程是这么运作的非常的重要：
+①一个客户端运行一个新命令，添加了新数据。
+②Redis 检查内存使用情况，如果大于 maxmemory 限制，根据策略来回收键。
+③一个新的命令被执行，如此等等
+Redis的LRU算法不是一个严格的LRU实现。这意味着Redis不能选择最佳候选键来回收，也就是最久未被访问的那些键。
+
+相反，Redis 会尝试执行一个近似的LRU算法，通过采样一小部分键，然后在采样键中回收最适合(拥有最久访问时间)的那个。
 ## mySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据
 
 相关知识：redis 内存数据集大小上升到一定大小的时候，就会施行数据淘汰策略。redis 提供 6种数据淘汰策略：
@@ -96,6 +133,12 @@ redis最大可以达到1GB，而memcache只有1MB
 **allkeys-random**：从数据集（server.db[i].dict）中任意选择数据淘汰
 **no-enviction（驱逐）**：禁止驱逐数据
 
+注意这里的6种机制，volatile和allkeys规定了是对已设置过期时间的数据集淘汰数据还是从全部数据集淘汰数据，后面的lru、ttl以及random是三种不同的淘汰策略，再加上一种no-enviction永不回收的策略。
+　使用策略规则：
+　1、如果数据呈现幂律分布，也就是一部分数据访问频率高，一部分数据访问频率低，则使用allkeys-lru
+　2、如果数据呈现平等分布，也就是所有的数据访问频率都相同，则使用allkeys-random
+　三种数据淘汰策略：
+　ttl和random比较容易理解，实现也会比较简单。主要是Lru最近最少使用淘汰策略，设计上会对key 按失效时间排序，然后取最先失效的key进行淘汰
 
 ## Redis 常见的性能问题都有哪些？如何解决？
 1).**Master最好不要做任何持久化工作，如RDB内存快照和AOF日志文件**. Master写内存快照，save命令调度rdbSave函数，会阻塞主线程的工作，当快照比较大时对性能影响是非常大的，会间断性暂停服务，所以Master最好不要写内存快照.Master AOF持久化，如果不重写AOF文件，这个持久化方式对性能的影响是最小的，但是AOF文件会不断增大，AOF文件过大会影响Master重启的恢复速度。Master最好不要做任何持久化工作，包括内存快照和AOF日志文件，特别是不要启用内存快照做持久化,如果数据比较关键，某个Slave开启AOF备份数据，策略为每秒同步一次。
@@ -144,3 +187,5 @@ Redis提供的所有特性中，我感觉这个是喜欢的人最少的一个，
 
 # 参考
 - [redis详解（三）-- 面试题](http://blog.csdn.net/guchuanyun111/article/details/52064870)
+- [Redis的那些最常见面试问题](https://www.cnblogs.com/Survivalist/p/8119891.html)
+- [2017年6月Java面试——redis](http://blog.csdn.net/sunqingzhong44/article/details/73866263)
