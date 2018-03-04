@@ -80,7 +80,6 @@ redis最大可以达到1GB，而memcache只有1MB
 
 **5) Redis支持数据的备份，即master-slave模式的数据备份。**
 **6)、查询速度，redis速度比memchached快** 为什么？
-**7)redis可以持久化其数据**
 
 
 ## mySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据
@@ -92,6 +91,9 @@ redis最大可以达到1GB，而memcache只有1MB
 **allkeys-lru**：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰
 **allkeys-random**：从数据集（server.db[i].dict）中任意选择数据淘汰
 **no-enviction（驱逐）**：禁止驱逐数据
+
+
+## Redis 常见的性能问题都有哪些？如何解决？
 
 
 ## redis常见性能问题和解决方案：
