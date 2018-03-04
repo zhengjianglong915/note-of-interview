@@ -106,23 +106,25 @@ redis最大可以达到1GB，而memcache只有1MB
 **5) Redis支持数据的备份，即master-slave模式的数据备份。**
 **6)、查询速度，redis速度比memchached快** 为什么？
 
+## 如何提高redis命中率
+## redis主从是如何实现同步的
+
 ## 谈谈redis的LRU算法
 答：LRU即最近最久未使用，当内存达到限制时，Redis 具体的回收策略是通过 maxmemory-policy 配置项配置的。由以下多个选项：
-**noenviction**：不清除数据，只是返回错误，这样会导致浪费掉更多的内存，对大多数写命令（DEL 命令和其他的少数命令例外）
-allkeys-lru：从所有的数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰，以供新数据使用
-volatile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰，以供新数据使用
-allkeys-random：从所有数据集（server.db[i].dict）中任意选择数据淘汰，以供新数据使用
-volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰，以供新数据使用
-volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰，以供新数据使用
-当 cache 中没有符合清除条件的 key 时，回收策略 volatile-lru, volatile-random 和volatile-ttl 将会和 策略 noeviction 一样返回错误。选择正确的回收策略是很重要的，取决于你的应用程序的访问模式。
+**no-eviction**：不清除数据，只是返回错误，这样会导致浪费掉更多的内存，对大多数写命令（DEL 命令和其他的少数命令例外）
+**allkeys-lru**：从所有的数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰，以供新数据使用
+**volatile-lru**：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰，以供新数据使用
+**allkeys-random**：从所有数据集（server.db[i].dict）中任意选择数据淘汰，以供新数据使用
+**volatile-random**：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰，以供新数据使用
+**volatile-ttl**：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰，以供新数据使用
+当 cache 中没有符合清除条件的key时，回收策略 volatile-lru, volatile-random 和volatile-ttl 将会和策略 noeviction 一样返回错误。选择正确的回收策略是很重要的，取决于你的应用程序的访问模式。
 
 回收的过程是这么运作的非常的重要：
 ①一个客户端运行一个新命令，添加了新数据。
-②Redis 检查内存使用情况，如果大于 maxmemory 限制，根据策略来回收键。
+②Redis 检查内存使用情况，如果大于**maxmemory**限制，根据策略来回收键。
 ③一个新的命令被执行，如此等等
-Redis的LRU算法不是一个严格的LRU实现。这意味着Redis不能选择最佳候选键来回收，也就是最久未被访问的那些键。
+Redis的LRU算法不是一个严格的LRU实现。这意味着Redis不能选择最佳候选键来回收，也就是最久未被访问的那些键。相反，Redis 会尝试执行一个近似的LRU算法，通过采样一小部分键，然后在采样键中回收最适合(拥有最久访问时间)的那个。
 
-相反，Redis 会尝试执行一个近似的LRU算法，通过采样一小部分键，然后在采样键中回收最适合(拥有最久访问时间)的那个。
 ## mySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据
 
 相关知识：redis 内存数据集大小上升到一定大小的时候，就会施行数据淘汰策略。redis 提供 6种数据淘汰策略：
@@ -131,7 +133,7 @@ Redis的LRU算法不是一个严格的LRU实现。这意味着Redis不能选择�
 **volatile-random**：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰
 **allkeys-lru**：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰
 **allkeys-random**：从数据集（server.db[i].dict）中任意选择数据淘汰
-**no-enviction（驱逐）**：禁止驱逐数据
+**no-eviction（驱逐）**：禁止驱逐数据
 
 注意这里的6种机制，volatile和allkeys规定了是对已设置过期时间的数据集淘汰数据还是从全部数据集淘汰数据，后面的lru、ttl以及random是三种不同的淘汰策略，再加上一种no-enviction永不回收的策略。
 　使用策略规则：
