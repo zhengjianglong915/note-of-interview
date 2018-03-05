@@ -329,5 +329,137 @@ private boolean verifySequenceOfBST(int[] sequence,int begin,int end){
 ## 复杂链表的复制
 > 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
 
+### 思路
+三步走:
+1. 在原来链中插入克隆节点，是的克隆节点和源节点相间出现。
+2. 复制random指针
+3. 从原链从剥离clone链。
+
+
+###
+```
+public RandomListNode Clone(RandomListNode pHead)
+{
+    cloneNodes(pHead);
+    connectRandomNodes(pHead); 
+    return reconnectNodes(pHead);
+}
+private void cloneNodes(RandomListNode pHead){
+    RandomListNode node = pHead;
+    while(node != null){
+        RandomListNode clone = new RandomListNode(node.label);
+        RandomListNode temp = node.next;
+        clone.next = temp;
+        node.next = clone;
+        node = temp;           
+    }
+}
+private void connectRandomNodes(RandomListNode pHead){
+    RandomListNode node = pHead;
+    while(node != null){
+         RandomListNode clone = node.next;
+         if(node.random != null)//这里一定要判断
+            clone.random = node.random.next;
+         node = clone.next;
+    }
+}
+ 
+private  RandomListNode reconnectNodes(RandomListNode pHead){
+    RandomListNode node = pHead;
+    RandomListNode cloneHead = null;
+    RandomListNode cloneNode = null;
+    if(node != null){
+        cloneHead = cloneNode = node.next;
+        node.next = cloneNode.next;
+        node = node.next;
+    }
+    while(node != null){
+        cloneNode.next = node.next;
+        cloneNode = cloneNode.next;
+        node.next = cloneNode.next;
+        node = cloneNode.next;
+    }
+    return cloneHead;
+}
+```
+
+## 二叉搜索树与双向链表
+> 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+
+```
+public class Solution {
+    public TreeNode Convert(TreeNode root){
+        TreeNode lastNode = null;
+        lastNode = doConvert(root, lastNode);
+        while(lastNode != null && lastNode.left != null) {
+            lastNode = lastNode.left;
+        }
+       return lastNode;
+         
+    }
+    /* 转换并返回链表最后一个结点
+     */
+    private TreeNode doConvert(TreeNode root, TreeNode lastNode){
+         if (root == null) {
+             return lastNode;
+         }
+         if (root.left != null) {
+             lastNode = doConvert(root.left, lastNode);
+         }
+         if(lastNode != null) {
+             lastNode.right = root;
+         }
+         root.left = lastNode;
+         lastNode = root;
+         if (root.right != null) {
+             lastNode = doConvert(root.right, lastNode);
+         }
+        return lastNode;
+    }
+}
+```
+
+## 字符串的排列
+> 输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+
+```
+import java.util.ArrayList;
+import java.util.Collections;
+public class Solution {
+    public ArrayList<String> Permutation(String str) {
+       ArrayList<String> result = new ArrayList<String>();
+        if(str == null || str.length() == 0)
+            return result;
+        doPermutation(str.toCharArray(),0,result);
+        // 实际中不需要排序
+        Collections.sort(result);
+        return result;
+         
+    }
+    private void doPermutation(char[] array,int idx,ArrayList<String> result){
+        if(idx >= array.length){
+            String str = new String(array);
+            result.add(str);
+            return;
+        }
+        for(int i=idx; i < array.length; i++){ //i得从 idx开始
+            if(i != idx && array[i] == array[idx] )
+                continue;
+             
+            swap(array,idx,i);
+            doPermutation(array,idx+1,result);
+            swap(array,idx,i);
+        }
+    }
+    private void swap(char[] array,int i,int j){
+        char temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+     
+}
+```
+
+
 
 
