@@ -287,3 +287,41 @@ public double Power(double base, int exponent) {
 ```
 
 ```
+
+
+## 二叉搜索树的后序遍历序列
+> 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+### 实现
+
+```
+public boolean VerifySquenceOfBST(int [] sequence) {
+   if (sequence == null || sequence.length ==0) {
+       return false;
+   }
+    return verifySequenceOfBST(sequence, 0, sequence.length-1);
+     
+}
+private boolean verifySequenceOfBST(int[] sequence,int begin,int end){
+   if (begin == end) {
+       return true;
+   }
+    int rightBegin = begin;
+    int root = sequence[end];
+    for (;rightBegin < end; rightBegin++ ) {
+        if (sequence[rightBegin] > root ) {
+            break;
+        }
+    }
+    int i = rightBegin;
+    for (; i < end; i ++ ) {
+        if (sequence[i] < root) {
+            return false;
+        }
+    }
+    boolean left = (rightBegin == begin )? true : verifySequenceOfBST(sequence, begin, rightBegin -1);
+    boolean right = (rightBegin == end) ? true : verifySequenceOfBST(sequence, rightBegin+1, end);
+    return left & right;
+     
+}
+```
