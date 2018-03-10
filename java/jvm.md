@@ -1,4 +1,4 @@
-## 介绍JVM中7个区域，然后把每个区域可能造成内存的溢出的情况说明
+  ## 介绍JVM中7个区域，然后把每个区域可能造成内存的溢出的情况说明
 **程序计数器**：看做当前线程所执行的**字节码行号指示器**。是线程**私有**的内存，且唯一一块不报OutOfMemoryError异常。
 **Java虚拟机栈**：用于描述java方法的**内存模型**：每个方法被执行时都会同时创建一个**栈帧**用于存储**局部变量表，操作数栈，动态链接，方法出口**等信息。每一个方法被调用直至执行完成的过程就对应着一个栈帧在虚拟机中从入栈到出栈的过程。如果线程请求的**栈深度**大于虚拟机所允许的深度就报StackOverflowError, 如果虚拟机栈可以动态**扩展**，当拓展时无法申请到足够的内存会抛出OutOfMemoryError. 是线程**私有**的。
 
@@ -12,7 +12,7 @@
 
 **直接内存**：不是虚拟机运行时数据的一部分，也不是java虚拟机规范中定义的区域，是计算机直接的内存空间。这部分也被频繁使用，如JAVA NIO的引入基于通道和缓存区的I/O使用native函数直接分配堆外内存。如果内存不足会报OutOfMemoryError。
 
-2. GC的两种判定方法：引用计数与根搜索算法。
+GC的两种判定方法：引用计数与根搜索算法。
 **引用计数**：
 给对象添加一个引用计数器，每当有一个地方引用该对象时，计数器值加1，当引用失效时，计数器值减1,。任何时候计数器都为0的对象就是不可能再被使用的。它很难解决对象之间相互**循环引用**问题。
 **根搜索算法（GC Roots Traceing）:**
@@ -101,20 +101,21 @@ java.lang.StackOverflowError ------> 不会抛OOM error，但也是比较常见�
 
 ## Minor GC与Full GC分别在什么时候发生？
 FullGC 一般是发生在老年代的GC，出现一个FullGC经常会伴随至少一次的Minor GC。速度比MinorGC慢10倍以上。FULL GC发生的情况:
-1) 老年代空间不足
+**1) 老年代空间不足**
 老年代空间只有在新生代对象转入及创建为大对象、大数组时才会出现不足的现象，当执行Full GC后空间仍然不足，则抛出如下错误：java.lang.OutOfMemoryError: Java heap space  .
 措施:为避免以上两种状况引起的FullGC，调优时应尽量做到让对象在Minor GC阶段被回收、让对象在新生代多存活一段时间及不要创建过大的对象及数组
-2) Permanet Generation(方法区或永久代)空间满
+**2) Permanet Generation(方法区或永久代)空间满**
 PermanetGeneration中存放的为一些class的信息等，当系统中要加载的类、反射的类和调用的方法较多时，Permanet Generation可能会被占满，在未配置为采用CMS GC的情况下会执行Full GC。如果经过Full GC仍然回收不了，那么JVM会抛出如下错误信息：
 java.lang.OutOfMemoryError: PermGen space 
 措施:为避免Perm Gen占满造成Full GC现象，可采用的方法为增大Perm Gen空间或转为使用CMS GC。
-3) CMS GC时出现promotion failed和concurrent mode failure
+**3) CMS GC时出现promotion failed和concurrent mode failure**
 对于采用CMS进行老年代GC的程序而言，尤其要注意GC日志中是否有promotion failed和concurrent mode failure两种状况，当这两种状况出现时可能会触发Full GC。
 promotion failed是在进行Minor GC时，survivor space放不下、对象只能放入老年代，而此时老年代也放不下造成的；
 concurrent mode failure: CMS在执行垃圾回收时需要一部分的内存空间并且此刻用户程序也在运行需要预留一部分内存给用户程序，如果预留的内存无法满足程序需求就出现一次"Concurrent mod failure",并触发一次Full GC。
 应对措施为：增大survivor space、老年代空间或调低触发并发GC的比率，
-4) 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间
-Hotspot为了避免由于新生代对象晋升到旧生代导致旧生代空间不足的现象，在进行Minor GC时，做了一个判断，如果之前统计所得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间，那么就直接触发Full GC。如果小于并且不允许担保失败也会发生一次Full GC
+**4) 空间分配担保**
+统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间Hotspot为了避免由于新生代对象晋升到旧生代导致旧生代空间不足的现象，在进行Minor GC时，做了一个判断，如果之前统计所得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间，那么就直接触发Full GC。如果小于并且不允许担保失败也会发生一次Full GC
+
 
 MinorGC
 MinorGC 指发生在新生代的垃圾收集动作，非常频繁，回收速度也快。一般发生在新生代空间不足时,另外一个FullGC经常会伴随至少一次的Minor GC. 当虚拟检测晋升到到老年代的平均大小是否小于老年代剩余空间大小,如果小于并且允许担保失败,则执行Minor GC.
