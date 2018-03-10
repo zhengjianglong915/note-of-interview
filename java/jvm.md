@@ -93,10 +93,13 @@ java.lang.StackOverflowError ------> 不会抛OOM error，但也是比较常见�
 初始标记和重新标记需要stop the world. 并发标记和并发清除过程用户线程和收集器线程可以并行执行。
 **G1(Garbage First):**基于标记-整理算法的收集器,不会产生空间碎片.它可以精确控制停顿,能够让使用者明确指定一个长度为M毫秒的时间片段内,消耗集上的时间不超过N秒.是不牺牲吞吐量的前提下完成低停顿的.G1将整个java堆(新生和老生)划分为大小相同的区,并跟踪这些区上发生的变化.在后台维护一个优先列表,每次根据允许的收集时间优先回收垃圾最多的区域.
 
-[](https://www.baidu.com/link?url=z7dIW_8BCR2csBQYDfxaCURrxPLfDKdIqu62Be1XJx7iuteQwCay2IYZyFsFMGPZvaKQmcU1eirtSzul6eJ4eEe6Xsg1KiNLlxJ3PyIKxAAiSoWHnvBJK0roAuEKfSR8YphuEIRhOkZ0kSZXWpdI0_&wd=&eqid=fd8e53310001ad05000000025aa34f38)
+
 
 [JVM中的G1垃圾回收器](http://www.importnew.com/15311.html)
 [G1垃圾收集器入门-原创译文](https://www.cnblogs.com/oldtrafford/p/6883796.html)
+[深入理解G1垃圾收集器](https://www.baidu.com/link?url=z7dIW_8BCR2csBQYDfxaCURrxPLfDKdIqu62Be1XJx7iuteQwCay2IYZyFsFMGPZvaKQmcU1eirtSzul6eJ4eEe6Xsg1KiNLlxJ3PyIKxAAiSoWHnvBJK0roAuEKfSR8YphuEIRhOkZ0kSZXWpdI0_&wd=&eqid=fd8e53310001ad05000000025aa34f38)
+
+
 
 ## Minor GC与Full GC分别在什么时候发生？
 FullGC 一般是发生在老年代的GC，出现一个FullGC经常会伴随至少一次的Minor GC。速度比MinorGC慢10倍以上。FULL GC发生的情况:
