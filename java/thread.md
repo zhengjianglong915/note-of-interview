@@ -9,15 +9,16 @@
 
 ## volatile的理解
 **Volatile自身特性**：
-Volatile 是轻量级的synchronized，它在多处理器开发过程中保证了共享变量的“可见性”，可见性是指当一个线程的某个共享变量发生改变时，另一个线程能够读取到这个修改的值。Voaltile变量修饰的变量在进行写操作时在多核处理器下首先将当前处理器缓存行的数据写回到系统内存中。为了保证一致性，其他处理器嗅探到总线上传播的数据，发现数据被修改了自己缓存地址的数据无效。
-Volatile 可以禁止重排序，
-Volatile 能保持单个简单volatile变量的读/写操作的具有原子性。但不能保证自增自减的原子性。
+1. Volatile 是轻量级的synchronized，它在多处理器开发过程中保证了共享变量的“可见性”，可见性是指当一个线程的某个共享变量发生改变时，另一个线程能够读取到这个修改的值。Voaltile变量修饰的变量在进行写操作时在多核处理器下首先将当前处理器缓存行的数据写回到系统内存中。为了保证一致性，其他处理器嗅探到总线上传播的数据，发现数据被修改了自己缓存地址的数据无效。
+2. Volatile 可以禁止重排序，
+3. Volatile 能保持单个简单volatile变量的读/写操作的具有原子性。但不能保证自增自减的原子性。
 
 从**内存语义**来讲:
 volatile变量的写-读与锁的释放-获取具有相同语义，volatile的写与锁的释放有相同的内存语义，volatile读与锁的获取具有相同语义。
 线程A写一个volatile变量，实质上是线程A向接下来要读这个volatile变量的某个线程发出消息
 线程B读一个volatile变量，实质上是线程B接收了之前某个线程发出的消息。
 线程A写volatile变量，随后线程B读这个变量，这个过程实质上线程A通过内存向B发送消息。
+
 内存语义的实现，也是禁止重排序特性：
 为了实现volatile内存语义，JMM限制了对volatile重排序做了限制：
 1.当第二个操作是volatile写时，不管第一个操作时什么，都不能重排序。
@@ -42,14 +43,14 @@ Java内存模型控制线程之间的通信，决定了一个线程对共享变�
 
 **可见性保证**
  为了提供内存可见性保证，JMM向程序员保证了以下hapens-before规则:
-1.程序顺序规则：一个线程的每个操作happen-before与该线程的任意后续操作。
-2.监视器锁规则：一个锁的解锁，happens-before于随后这个锁的加锁。
-3.Volatile变量规则：对一个volatile域的写，happens-before于任意后续这个域的读。
-4.传递性, 如果A happens-before B, 且B happens-before C 那么A happens-before C
-5.线程启动规则：如果线程A执行操作ThreadB.start().那么线程A中的任意操作happens-before与线程B中的任意操作。
-6.线程结束规则: 线程中的任何操作都必须在其线程检测到该线程已经结束之前执行，或者从Thread.join中成功返回，或者在调用Thread.isAlive时返回false.
-7.中断规则:当一个线程在另一个线程上调用interrupt时，必须在被中断线程检测到interrupt调用之前执行(通过抛出InterruptedException,或者调用isInterrupted和interrupted)
-8.终结器规则: 对象的构造函数必须在启动该对象的终结器之前执行完成。
+1.**程序顺序规则**：一个线程的每个操作happen-before与该线程的任意后续操作。
+2.**监视器锁规则**：一个锁的解锁，happens-before于随后这个锁的加锁。
+3.**Volatile变量规则**：对一个volatile域的写，happens-before于任意后续这个域的读。
+4.**传递性**, 如果A happens-before B, 且B happens-before C 那么A happens-before C
+5.**线程启动规则**：如果线程A执行操作ThreadB.start().那么线程A中的任意操作happens-before与线程B中的任意操作。
+6.**线程结束规则**: 线程中的任何操作都必须在其线程检测到该线程已经结束之前执行，或者从Thread.join中成功返回，或者在调用Thread.isAlive时返回false.
+7.**中断规则**:当一个线程在另一个线程上调用interrupt时，必须在被中断线程检测到interrupt调用之前执行(通过抛出InterruptedException,或者调用isInterrupted和interrupted)
+8.**终结器规则**: 对象的构造函数必须在启动该对象的终结器之前执行完成。
  
 **禁止重排序**
 为了保证内存可见性，java编辑器在生成指令序列的适当位置插入内存屏障指令来禁止特定类型的处理器重排序。
