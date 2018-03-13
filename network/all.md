@@ -362,9 +362,9 @@ http://blog.csdn.net/binyao02123202/article/details/8049446
 http://www.codeceo.com/article/why-http-better-than-https.html 
 
 ## http和https的区别
-1. https协议需要到ca申请证书，一般免费证书很少，需要交费。
-2. http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议 http和https使用的是完全不同的连接方式用的端口也不一样：前者是80，后者是443。
-3. http的连接很简单，是无状态的 HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议 要比http协议安全 HTTPS解决的问题.
+1. https协议需要到ca申请证书，一般免费证书很少，需要交费.<br>
+2. http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议 http和https使用的是完全不同的连接方式用的端口也不一样：前者是80，后者是443。<br>
+3. http的连接很简单，是无状态的 HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议 要比http协议安全 HTTPS解决的问题.<br>
 http://www.admin5.com/article/20150708/608526.shtml
 
 ## SSL协议及完整交互过程
