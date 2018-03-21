@@ -84,32 +84,41 @@ Expression2 可以是得出一个值的任意表达式；这个值用于生成�
 
 ## final, finally, finalize 的区别?
 **final**：修饰符（关键字）有三种用法：如果一个类被声明为final，意味着它不能再派生出新的子类，即不能被继承，因此它和 abstract 是反义词。将变量声明为 final，可以保证它们在使用中不被改变，被声明为 final 的变量必须在声明时给定初值，而在以后的引用中只能读取不可修改。被声明为 final 的方法也同样只能使用，不能在子类中被重写。
+
 **finally**：通常放在 try…catch 的后面构造总是执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要 JVM 不关闭都能执行，可以将释放外部资源的代码写在 finally 块中。
+
 **finalize**：Object 类中定义的方法，Java 中允许使用 finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize() 方法可以整理系统资源或者执行其他清理工作。
 
 ## & 和 &&
 & 和 && 都可以用作逻辑与的运算符，表示逻辑与（and），当运算符两边的表达式的结果都为 true 时，整个运算结果才为 true，否则，只要有一方为 false，则结果为 false。 
+
 **&& 还具有短路的功能**，即如果第一个表达式为 false，则不再计算第二个表达式.& 还可以用作位运算符，当 & 操作符两边的表达式不是 boolean 类型时，& 表示按位与操作.
 
 ## 用最有效率的方法算出 2 乘以 8 等於几
 2 << 3，因为将一个数左移 n 位，就相当于乘以了 2 的 n 次方，那么，一个数乘以 8 只要将其左移 3 位即可，而位运算 cpu 直接支持的，效率最高，所以，2 乘以 8 等於几的最效率的方法是 2 << 3 。
 
 ## char 型变量
-char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Unicode（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个 char 类型占 2 个字节（16bit），所以放一个中文是没问题的。
+char 类型可以存储一个中文汉字，因为 Java 中使用的编码是** Unicode**（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个 char 类型占 2 个字节（16bit），所以放一个中文是没问题的。
+
 补充：使用 Unicode 意味着字符在 JVM 内部和外部有不同的表现形式，在 JVM 内部都是 Unicode，当这个字符被从 JVM 内部转移到外部时（例如存入文件系统中），需要进行编码转换。所以 Java 中有字节流和字符流，以及在字符流和字节流之间进行转换的转换流，如 InputStreamReader 和 OutputStreamReader.
 
 ## String 和StringBuilder、StringBuffer 的区别
-答：Java 平台提供了两种类型的字符串：String 和StringBuffer / StringBuilder，它们可以储存和操作字符串。其中 String 是**只读**字符串，也就意味着 String 引用的字符串内容是不能被改变的。而 StringBuffer 和 StringBuilder 类表示的字符串对象可以直接进行修改。StringBuilder 是 JDK 1.5 中引入的，它和 StringBuffer 的方法完全相同，区别在于它是在单线程环境下使用的，因为它的所有方面都没有被 synchronized 修饰，因此它的效率也比 StringBuffer 略高。
+答：Java 平台提供了两种类型的字符串：String 和StringBuffer / StringBuilder，它们可以储存和操作字符串。其中 String 是**只读**字符串，也就意味着 String 引用的字符串内容是不能被改变的。
+
+而 StringBuffer 和 StringBuilder 类表示的字符串对象可以直接进行修改。StringBuilder 是 JDK 1.5 中引入的，它和 StringBuffer 的方法完全相同，区别在于它是在单线程环境下使用的，因为它的所有方面都没有被 synchronized 修饰，因此它的效率也比 StringBuffer 略高。
+
 有一个面试题问：有没有哪种情况用 + 做字符串连接比调用 StringBuffer / StringBuilder 对象的 append 方法性能更好？如果连接后得到的字符串在静态存储区中是早已存在的，那么用+做字符串连接是优于 StringBuffer / StringBuilder 的 append 方法的。
 
 ## String不可变性
-至于为什么要把 String 类设计成不可变类，是它的用途决定的。其实不只 String，很多 Java 标准类库中的类都是不可变的。在开发一个系统的时候，我们有时候也需要设计不可变类，来传递一组相关的值，这也是面向对象思想的体现。不可变类有一些优点，比如因为它的对象是只读的，所以多线程并发访问也不会有任何问题。当然也有一些缺点，比如每个不同的状态都要一个对象来代表，可能会造成性能上的问题。所以 Java 标准类库还提供了一个可变版本，即 StringBuffer。
+至于为什么要把 String 类设计成不可变类，是它的用途决定的。其实不只 String，很多 Java 标准类库中的类都是不可变的。在开发一个系统的时候，我们有时候也需要设计不可变类，来传递一组相关的值，这也是面向对象思想的体现。不可变类有一些优点，比如因为它的对象是只读的，**所以多线程并发访问也不会有任何问题**。当然也有一些缺点，比如每个不同的状态都要一个对象来代表，可能会造成性能上的问题。所以 Java 标准类库还提供了一个可变版本，即 StringBuffer。
+
  Javac 编译可以对字符串常量直接相加的表达式进行优化，不必要等到运行期去进行加法运算处理，而是在**编译时去掉其中的加号**，直接将其编译成一个这些常量相连的结果。所以 
 		String s=“a”+”b”+”c”+”d”;只生成一个对象.
 
 ## 不可变对象
 如果一个对象，在它创建完成之后，不能再改变它的状态，那么这个对象就是不可变的。不能改变状态的意思是，不能改变对象内的成员变量，包括基本数据类型的值不能改变，引用类型的变量不能指向其他的对象，引用类型指向的对象的状态也不能改变。
 **如何创建不可变类**
+
 1. 将类声明为final，所以它不能被继承
 2. 将所有的成员声明为私有的，这样就不允许直接访问这些成员
 3. 对变量不要提供setter方法
@@ -119,13 +128,17 @@ char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Un
 
 http://www.cnblogs.com/yg_zhang/p/4355354.html
 http://www.importnew.com/7535.html
+
 ## 为什么String要设计成不可变的**
 在Java中将String设计成不可变的是综合考虑到各种因素的结果,如内存,同步,数据结构以及安全等方面的考虑.
 1. 字符串常量池的需要.
  字符串池的实现可以在运行时节约很多heap空间，因为不同的字符串变量都指向池中的同一个字符串。但如果字符串是可变的，那么String interning将不能实现(译者注：String interning是指对不同的字符串仅仅只保存一个，即不会保存多个相同的字符串。)，因为这样的话，如果变量改变了它的值，那么其它指向这个值的变量的值也会一起改变。
+ 
 2. 线程安全考虑。
 同一个字符串实例可以被多个线程共享。这样便不用因为线程安全问题而使用同步。字符串自己便是线程安全的。
+
 3. 类加载器要用到字符串，不可变性提供了安全性，以便正确的类被加载。譬如你想加载java.sql.Connection类，而这个值被改成了myhacked.Connection，那么会对你的数据库造成不可知的破坏。
+
 4. 支持hash映射和缓存。
 因为字符串是不可变的，所以在它创建的时候hashcode就被缓存了，不需要重新计算。这就使得字符串很适合作为Map中的键，字符串的处理速度要快过其它的键对象。这就是HashMap中的键往往都使用字符串。
 
@@ -140,29 +153,43 @@ http://www.importnew.com/16817.html
 序列化的实现：将需要被序列化的类实现 Serializable 接口，该接口没有需要实现的方法， implements Serializable 只是为了标注该对象是可被序列化的，然后使用一个输出流(如：FileOutputStream)来构造一个ObjectOutputStream(对象流)对象，接着，使用ObjectOutputStream对象的writeObject(Object obj)方法就可以将参数为obj的对象写出(即保存其状态)，要恢复的话则用输入流。
 
 
-
-
 ## 错误和异常的区别(Error vs Exception)
 1) java.lang.Error: Throwable 的子类，**用于标记严重错误,表示系统级的错误和程序不必处理的异常**。合理的应用程序不应该去 try/catch 这种错误。是恢复不是不可能但很困难的情况下的一种严重问题；**比如内存溢出**，不可能指望程序能处理这样的情况；
+
 java.lang.Exception: Throwable 的子类，**表示需要捕捉或者需要程序进行处理的异常，是一种设计或实现问题**；也就是说，它表示如果程序运行正常，从不会发生的情况。并且鼓励用户程序去 catch 它。
 
 2) Error 和 RuntimeException 及其子类都是**未检查的异常（unchecked exceptions）**，而所有其他的 Exception 类都是检查了的异常（checked exceptions）
-    **checked exceptions**: **上下文环境有关，即使程序设计无误，仍然可能因使用的问题而引发．通常是从一个可以恢复的程序中抛出来的，并且最好能够从这种异常中使用程序恢复**。比如 **FileNotFoundException**, ParseException 等。检查了的异常发生在编译阶段，必须要使用 try…catch（或者 throws ）否则编译不通过。
-    **unchecked exceptions**:通常是如果一切正常的话本不该发生的异常，但是的确发生了。 **发生在运行期，具有不确定性，主要是由于程序的逻辑问题所引起的**。比如 ArrayIndexOutOfBoundException, ClassCastException 等。从语言本身的角度讲，程序不该去 catch 这类异常，虽然能够从诸如 RuntimeException 这样的异常中 catch 并恢复，但是并不鼓励终端程序员这么做，因为完全没要必要。因为这类错误本身就是 bug，应该被修复，出现此类错误时程序就应该立即停止执行。 因此，面对 Errors 和 unchecked exceptions 应该让程序自动终止执行，程序员不该做诸如 try/catch 这样的事情，而是应该查明原因，修改代码逻辑。
-    RuntimeException：RuntimeException体系包括错误的类型转换、数组越界访问和试图访问空指针等等。处理 RuntimeException 的原则是：如果出现 RuntimeException，那么一定是程序员的错误。例如，可以通过检查数组下标和数组边界来避免数组越界访问异常。其他（IOException等等）checked 异常一般是外部错误，例如试图从文件尾后读取数据等，这并不是程序本身的错误，而是在应用环境中出现的外部错误。
+
+**checked exceptions**: **上下文环境有关，即使程序设计无误，仍然可能因使用的问题而引发．通常是从一个可以恢复的程序中抛出来的，并且最好能够从这种异常中使用程序恢复**。比如 **FileNotFoundException**, ParseException 等。检查了的异常发生在编译阶段，必须要使用 try…catch（或者 throws ）否则编译不通过。
+
+**unchecked exceptions**:通常是如果一切正常的话本不该发生的异常，但是的确发生了。 **发生在运行期，具有不确定性，主要是由于程序的逻辑问题所引起的**。比如 ArrayIndexOutOfBoundException, ClassCastException 等。从语言本身的角度讲，程序不该去 catch 这类异常，虽然能够从诸如 RuntimeException 这样的异常中 catch 并恢复，但是并不鼓励终端程序员这么做，因为完全没要必要。因为这类错误本身就是 bug，应该被修复，出现此类错误时程序就应该立即停止执行。 因此，面对 Errors 和 unchecked exceptions 应该让程序自动终止执行，程序员不该做诸如 try/catch 这样的事情，而是应该查明原因，修改代码逻辑。
+
+RuntimeException：RuntimeException体系包括错误的类型转换、数组越界访问和试图访问空指针等等。处理 RuntimeException 的原则是：如果出现 RuntimeException，那么一定是程序员的错误。例如，可以通过检查数组下标和数组边界来避免数组越界访问异常。其他（IOException等等）checked 异常一般是外部错误，例如试图从文件尾后读取数据等，这并不是程序本身的错误，而是在应用环境中出现的外部错误。
+
+常见 非检查异常：
+ - NullPointerException
+ - ArrayIndexOutOfBoundException
+ - IllegalArgumentException
+ - OutOfMemoryError
+ 
+常见的检查异常:
+ - ClassNotFoundException
+ - IOException 
+ - FileNotFoundException
 
 ## try{} 里的 return 语句
 Java 允许在 finally 中改变返回值的做法是不好的，因为如果存在 finally 代码块，try 中的 return 语句不会立马返回调用者，而是记录下返回值待 finally 代码块执行完毕之后再向调用者返回其值，然后如果在 finally 中修改了返回值，这会对程序造成很大的困扰
 
 ## 运行时异常与受检异常有何异同？
 答：异常表示程序运行过程中可能出现的非正常状态，运行时异常表示虚拟机的通常操作中可能遇到的异常，是一种常见运行错误，只要程序设计得没有问题通常就不会发生。受检异常跟程序运行的**上下文环境有关，即使程序设计无误，仍然可能因使用的问题而引发**。Java编译器要求方法必须声明抛出可能发生的受检异常，但是并不要求必须声明抛出未被捕获的运行时异常。异常和继承一样，是面向对象程序设计中经常被滥用的东西，神作《Effective Java》中对异常的使用给出了以下指导原则：
-    **不要将异常处理用于正常的控制流（设计良好的API不应该强迫它的调用者为了正常的控制流而使用异常）**
-    **对可以恢复的情况使用受检异常，对编程错误使用运行时异常**
-    **避免不必要的使用受检异常（可以通过一些状态检测手段来避免异常的发生）**
-    **优先使用标准的异常**
-    **每个方法抛出的异常都要有文档**
-    **保持异常的原子性**
-    **不要在 catch 中忽略掉捕获到的异常**
+
+- **不要将异常处理用于正常的控制流（设计良好的API不应该强迫它的调用者为了正常的控制流而使用异常）**
+- **对可以恢复的情况使用受检异常，对编程错误使用运行时异常**
+- **避免不必要的使用受检异常（可以通过一些状态检测手段来避免异常的发生）**
+- **优先使用标准的异常**
+- **每个方法抛出的异常都要有文档**
+- **保持异常的原子性**
+- **不要在 catch 中忽略掉捕获到的异常**
 
 ## throws、throw、try、catch、finally 
 一般情况下是用 try 来执行一段程序，如果出现异常，系统会抛出（throw）一个异常，这时候你可以通过它的类型来捕捉（catch）它，或最后（finally）由缺省处理器来处理；try 用来指定一块预防所有“异常”的程序；catch 子句紧跟在 try 块后面，用来指定你想要捕捉的“异常”的类型；throw 语句用来明确地抛出一个“异常”；throws用来标明一个成员函数可能抛出的各种“异常”；finally 为确保一段代码不管发生什么“异常”都被执行一段代码；
@@ -187,59 +214,78 @@ Java 1.7之前不可以，java 1.7后String可以作为参数。
 整型（byte，short int，int，long int），枚举类型，boolean，字符型(char),字符串都可以，唯独浮点型不可以
 
 ## equals与==的区别
-1、 == 是一个运算符。 
-2、Equals则是string对象的方法，可以.（点）出来。 
+1. == 是一个运算符。 
+2. Equals则是string对象的方法，可以.（点）出来。 
 我们比较无非就是这两种 1、基本数据类型比较 2、引用对象比较 
+
 1、基本数据类型比较 
 　==比较两个值是否相等。相等为true 否则为false；
  equals不能直接用于基本类型的比较。需要将基本类型转换为包装器进行比较。 
+ 
 2、引用对象比较 
 ==和equals都是比较栈内存中的地址是否相等 。相等为true 否则为false； 　 
 需注意几点： 
-1、string是一个特殊的引用类型。对于两个字符串的比较，不管是 == 和 equals 这两者比较的都是字符串是否相同； 
-2、当你创建两个string对象时，内存中的地址是不相同的，你可以赋相同的值。 
+
+  1、string是一个特殊的引用类型。对于两个字符串的比较，不管是 == 和 equals 这两者比较的都是字符串是否相同； 
+
+ 2、当你创建两个string对象时，内存中的地址是不相同的，你可以赋相同的值。 
 　　所以字符串的内容相同。引用地址不一定相同，（相同内容的对象地址不一定相同），但反过来却是肯定的； 
-3、基本数据类型比较(string 除外) == 和 Equals 两者都是比较值；
+
+ 3、基本数据类型比较(string 除外) == 和 Equals 两者都是比较值；
 
 ## Object有哪些公用方法
-protected Object clone()创建并返回此对象的一个副本。 
-public boolean equals(Object obj)指示其他某个对象是否与此对象“相等”。 
-protected void finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。 
-public final native Class< ? > getClass() 返回此 Object 的运行时类。
-public int hashCode()返回该对象的哈希码值。 
-public String toString()返回该对象的字符串表示。 
-public void notify()唤醒在此对象监视器上等待的单个线程。 
-public void notifyAll()唤醒在此对象监视器上等待的所有线程。 
-public void wait()在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。 
-public void wait(long timeout)在其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量前，导致当前线程等待。 
-public void wait(long timeout, int nanos)在其他线程调用此对象的 notify() 方法或
+ - protected Object clone()创建并返回此对象的一个副本。  
+ - public boolean equals(Object obj)指示其他某个对象是否与此对象“相等”。 
+ - protected void finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。 
+ - public final native Class< ? > getClass() 返回此 Object 的运行时类。
+ - public int hashCode()返回该对象的哈希码值。 
+ - public String toString()返回该对象的字符串表示。 
+ - public void notify()唤醒在此对象监视器上等待的单个线程。 
+ - public void notifyAll()唤醒在此对象监视器上等待的所有线程。 
+ - public void wait()在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。 
+ - public void wait(long timeout)在其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量前，导致当前线程等待。 
+ - public void wait(long timeout, int nanos)在其他线程调用此对象的 notify() 方法或
 
 注意：
-1.如果一个类实现了Cloneable,Object的clone方法就返回该对象的逐域拷贝，否则就会抛出CloneNotSupportException异常。java.lang.Cloneable 是一个标示性接口，不包含任何方法（详见《effective java》 p46）。
+1. 如果一个类实现了Cloneable,Object的clone方法就返回该对象的逐域拷贝，否则就会抛出CloneNotSupportException异常。java.lang.Cloneable 是一个标示性接口，不包含任何方法（详见《effective java》 p46）。
+
 2. 覆盖equals（）时总要覆盖hashCode（）（详见《effective java》p39）
 在每个覆盖equals方法的类中也必须覆盖hashCode方法，如果不这样做就会导致Object.hashCode的通用约定---**相等的对象必须具有相等的散列码的约定**，从而导致该类无法集合所有基于散列集合一起工作，这样的集合有HashMap,HashSet和HashTable。HashMap等使用Key对象的hashCode()和equals()方法去决定key-value对的索引。如果将equals相等的对象认为是同一个对象的话，那么put方法将对象放在一个散列桶，而get方法可能从另一个散列桶获取该对象，因为这两个方法传入的对象虽然equals相同，但hashCode可能不同，而hashMap根据hashCode去定位散列桶位置导致出现在不同的散列桶中。
+
  Hashcode的作用。
 1. hashCode的存在主要是用于查找的快捷性，如Hashtable，HashMap等，hashCode是用来在散列存储结构中确定对象的存储地址的；
 2. 比较对象是否相同。
+
+
 一下是关于hashCode的约定：
 1、如果两个对象相同，就是适用于equals(java.lang.Object) 方法，那么这两个对象的hashCode一定要相同；
+
 2、如果对象的equals方法被重写，那么对象的hashCode也尽量重写，并且产生hashCode使用的对象，一定要和equals方法中使用的一致，否则就会违反上面提到的第2点；
+
 3、两个对象的hashCode相同，并不一定表示两个对象就相同，也就是不一定适用于equals(java.lang.Object) 方法，只能够说明这两个对象在散列存储结构中，如Hashtable，他们“存放在同一个篮子里”。
 
 ## String、StringBuffer与StringBuilder的区别
 1. String是字符串常量，是不可变类。如果要操作少量的数据用
 2. StringBuffer是字符串变量，是线程安全的。多线程操作字符串缓冲区 下操作大量数据
 3. StringBuilder是字符串变量，非线程安全。单线程操作字符串缓冲区 下操作大量数据
+
 速度：StringBuilder >  StringBuffer  >  String
+
 String 对象的字符串拼接其实是被 JVM 解释成了 StringBuffer 对象的拼接，所以这些时候 String 对象的速度并不会比 StringBuffer 对象慢，而特别是以下的字符串对象生成中， String 效率是远要比 StringBuffer 快的：
+```
 String S1 = “This is only a” + “ simple” + “ test”;
 StringBuffer Sb = new StringBuilder(“This is only a”).append(“simple”).append(“ test”);
+```
+
 参见：http://www.findspace.name/easycoding/1090
 
 ## try catch finally，try里有return，finally还执行么？
 1)不管有木有出现异常，finally块中代码都会执行 
+
 2)当try和catch中有return时，finally仍然会执行 
+
 3)finally是在return后面的表达式运算后执行的（此时并没有返回运算后的值，而是先把要返回的值保存起来，**不管finally中的代码怎么样，返回的值都不会改变**，任然是之前保存的值），所以函数返回值是在finally执行前确定的 
+
 4)finally中最好不要包含return，否则程序会提前退出，返回值不是try或catch中保存的返回值
 
 ## UnsupportedOperationException是什么
@@ -250,9 +296,10 @@ UnsupportedOperationException是用于表明操作不支持的异常。在JDK类
 
 
 ## java值传递问题
-1.对象就是传引用
-2.原始类型就是传值
-3.String，Integer, Double等immutable类型因为没有提供自身修改的函数，每次操作都是新生成一个对象，所以要特殊对待。可以认为是传值。
+1. 对象就是传引用
+2. 原始类型就是传值
+3. String，Integer, Double等immutable类型因为没有提供自身修改的函数，每次操作都是新生成一个对象，所以要特殊对待。可以认为是传值。
+
 Integer 和 String 一样。保存value的类变量是Final属性，无法被修改，只能被重新赋值／生成新的对象。 当Integer 做为方法参数传递进方法内时，对其的赋值都会导致 原Integer 的引用被 指向了方法内的栈地址，失去了对原类变量地址的指向。对赋值后的Integer对象做得任何操作，都不会影响原来对象。
 
 
