@@ -1,137 +1,176 @@
+[TOC]
+
 ## 集合框架
-Collection：List列表，Set集
-Map：Hashtable，HashMap，TreeMap
+![](/assets/java_collection.png)
 
-Collection  是单列集合
-List   元素是有序的(元素存取是有序)、可重复
-有序的 collection，可以对列表中每个元素的插入位置进行精确地控制。可以根据元素的整数索引（在列表中的位置）访问元素，并搜索列表中的元素。可存放重复元素，元素存取是有序的。
+Collection：List列表，Set集 <br>
+Map：Hashtable，HashMap，TreeMap <br>
+
+Collection: 是单列集合  <br>
+List: 元素是有序的(元素存取是有序)、可重复. 有序的 collection，可以对列表中每个元素的插入位置进行精确地控制。可以根据元素的整数索引（在列表中的位置）访问元素，并搜索列表中的元素。可存放重复元素，元素存取是有序的。
+
 List接口中常用类：
-Vector：线程安全，但速度慢，已被ArrayList替代。底层数据结构是**数组结构**
-ArrayList：线程不安全，查询速度快。底层数据结构是数组结构
-LinkedList：线程不安全。增删速度快。底层数据结构是链表结构
 
-Set(集) 元素不可重复。
-取出元素的方法只有迭代器。**不可以存放重复元素，元素存取是无序的**。
-Set接口中常用的类
-HashSet：线程不安全，内部是基于散列函数实现,存取速度快。它是如何保证元素唯一性的呢？依赖的是元素的hashCode方法和euqals方法。.
-  LinkedHashSet:具有HashSet的查询速度，且内部采用双向链表**维护元素的顺序**（默认保持插入顺序排序， 如果初始化时将accessOrder设置为true将使用最近最少顺序，即最近使用的元素插在链表尾部）。元素必须实现hashCode(）方法。内部是由链表实现。
-TreeSet：线程不安全，可以对Set集合中的元素进行排序,底层采用了红黑树。它的排序是如何进行的呢？通过compareTo或者compare方法中的来保证元素的唯一性。元素是以二叉树的形式存放的。意味着TreeSet中的元素要实现Comparable接口。或者有一个自定义的比较器。
+ - Vector：线程安全，但速度慢，已被ArrayList替代。底层数据结构是**数组结构**
+ - ArrayList：线程不安全，查询速度快。底层数据结构是数组结构
+ - LinkedList：线程不安全。增删速度快。底层数据结构是**链表结构**
 
-Map　是一个双列集合
-|--Hashtable:线程安全，速度快。底层是**哈希表数据**结构。是同步的。不允许null作为键，null作为值。
-   |--Properties:用于配置文件的定义和操作，使用频率非常高，同时键和值都是字符串。是集合中可以和IO技术相结合的对象。(到了IO在学习它的特有和io相关的功能。)
-|--HashMap:线程不安全，速度慢。底层也是哈希表数据结构。是不同步的。
+Set(集) 元素不可重复: 取出元素的方法只有迭代器。**不可以存放重复元素，元素存取是无序的**。Set接口中常用的类:
+
+ - HashSet：线程不安全，内部是基于**散列函数**实现,存取速度快。它是如何保证元素唯一性的呢？依赖的是元素的hashCode方法和euqals方法。
+ - LinkedHashSet:具有HashSet的查询速度，且内部采用**双向链表维护元素的顺序**（默认保持插入顺序排序，如果初始化时将accessOrder设置为true将使用最近最少顺序，即最近使用的元素插在链表尾部）。元素必须实现hashCode(）方法。内部是由链表实现。
+ - TreeSet：线程不安全，可以对Set集合中的元素**进行排序**,底层采用了**红黑树**。它的排序是如何进行的呢？通过compareTo或者compare方法中的来保证元素的唯一性。元素是以二叉树的形式存放的。意味着TreeSet中的元素要实现Comparable接口。或者有一个自定义的比较器。
+
+Map　是一个双列集合:
+ - Hashtable:线程安全，速度快。底层是**哈希表数据**结构。是同步的。不允许null作为键，null作为值。
+ - Properties:用于配置文件的定义和操作，使用频率非常高，同时键和值都是字符串。是集合中可以和IO技术相结合的对象。(到了IO在学习它的特有和io相关的功能。)   
+ - HashMap:线程不安全，速度慢。底层也是哈希表数据结构。是不同步的。
 允许null作为键，null作为值。替代了Hashtable.
-   |--LinkedHashMap: 可以保证HashMap集合有序。存入的顺序和取出的顺序一致。
-|--TreeMap：可以用来对Map集合中的键进行排序.底层是采用红黑树．
+ - LinkedHashMap: 可以保证HashMap集合有序。存入的顺序和取出的顺序一致。
+ - TreeMap：可以用来对Map集合中的键进行排序.底层是采用红黑树．
+ 
+ 
 Collection 和 Collections的区别
-Collection是集合类的上级接口，子接口主要有Set 和List、Map。 
-Collections是针对集合类的一个帮助类，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。 
+ - Collection是集合类的上级接口，子接口主要有Set 和List、Map。 
+ - Collections是针对集合类的一个帮助类，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。 
+
+以下这张图能体现出上面总结的集合关系： 
+![](/assets/collection_compare.png)
 
 ## 接口：Collection
 Collection是最基本的集合接口，**一个Collection代表一组Object，即Collection的元素（Elements）**。一些Collection允许相同的元素而另一些不行。一些能排序而另一些不行。Java SDK不提供直接继承自Collection的类，Java SDK提供的类都是继承自Collection的“子接口”如List和Set。
+
 所有实现Collection接口的类都必须提供**两个标准的构造函数**：无参数的构造函数用于创建一个空的Collection，有一个Collection参数的构造函数用于创建一个新的Collection，这个新的Collection与传入的Collection有相同的元素。后一个构造函数允许用户复制一个Collection。
+
 主要的一个接口方法：boolean add(Ojbect c)虽然返回的是boolean，但不是表示添加成功与否，这个返回值表示的意义是add()执行后，集合的内容是否改变了（就是元素的数量、位置等有无变化）。类似的addAll，remove，removeAll，remainAll也是一样的。
+
 用Iterator模式实现遍历集合,Collection**有一个重要的方法：iterator()，返回一个Iterator（迭代器），用于遍历集合的所有元素**。Iterator模式可以把访问逻辑从不同的集合类中抽象出来，从而避免向客户端暴露集合的内部结构。典型的用法如下：
 
 ```
-		Iterator it = collection.iterator(); // 获得一个迭代器
-		while(it.hasNext()) {
-			Object obj = it.next(); // 得到下一个元素
-	}
+Iterator it = collection.iterator(); // 获得一个迭代器
+while(it.hasNext()) {
+	Object obj = it.next(); // 得到下一个元素
+}
 ```
 
 不需要维护遍历集合的“指针”，所有的内部状态都由Iterator来维护，而这个Iterator由集合类通过工厂方法生成。每一种集合类返回的Iterator具体类型可能不同，但它们都实现了Iterator接口，因此，我们不需要关心到底是哪种Iterator，它只需要获得这个Iterator接口即可，这就是接口的好处，面向对象的威力。
+
 要确保遍历过程顺利完成，必须保证遍历过程中不更改集合的内容（Iterator的remove()方法除外），所以，确保遍历可靠的原则是：只在一个线程中使用这个集合，或者在多线程中对遍历代码进行同步。由Collection接口派生的两个接口是List和Set。
 
 ## Collection包结构，与Collections的区别
-Collection是集类，包含List有序列表，Set无序集合以及Map双列集合 Collection是集合类的上级接口，子接口主要有Set 和List、Map。  
-Collections是针对集合类的一个**帮助类**，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作
+ - Collection是集合类，包含List有序列表，Set无序集合以及Map双列集合 Collection是集合类的上级接口，子接口主要有Set 和List、Map。  
+ - Collections是针对集合类的一个**帮助类**，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作
 
 ## List、Map、Set 三个接口存储元素时各有什么特点
 1）**List**是有序的Collection，使用此接口**能够精确的控制每个元素插入的位置**。用户能够使用索引（元素在List中的位置，类似于数组下标）来访问List中的元素，这类似于Java的数组。和下面要提到的Set不同，List**允许有相同**的元素。
-除了具有Collection接口必备的iterator()方法外，List还提供一个listIterator()方法，返回一个ListIterator接口，和标准的Iterator接口相比，ListIterator多了一些add()之类的方法，允许添加，删除，设定元素，还能向前或向后遍历。实现List接口的常用类有LinkedList，ArrayList，Vector和Stack。
+
+除了具有Collection接口必备的iterator()方法外，List还提供一个listIterator()方法，返回一个ListIterator接口，和标准的Iterator接口相比，**ListIterator**多了一些add()之类的方法，允许添加，删除，设定元素，还能向前或向后遍历。实现List接口的常用类有LinkedList，ArrayList，Vector和Stack。
+
 2）**Set** 是一种不包含重复的元素的 Collection，即任意的两个元素 e1 和 e2 都有e1.equals(e2)=false，**Set 最多有一个 null 元素**。
-3）**Map** 接口 ：请注意，Map 没有继承 Collection 接口，Map 提供 key 到 value 的映射．使用底层散列函数
+
+3）**Map** 接口 ：请注意，Map 没有继承 Collection 接口，Map 提供 key 到 value 的映射．底层使用散列函数。
 
 ## Map、Set、List、Queue、Stack的特点与用法
-Set集合类似于一个罐子，"丢进"Set集合里的多个对象之间没有明显的顺序。 
-List集合代表元素有序、可重复的集合，集合中每个元素都有其对应的顺序索引。 
-Stack是Vector提供的一个子类，用于模拟"栈"这种数据结构(LIFO后进先出)
-Queue用于模拟"队列"这种数据结构(先进先出 FIFO)。 
-Map用于保存具有**"映射关系"**的数据，因此Map集合里保存着两组值
+ - Set集合类似于一个罐子，"丢进"Set集合里的多个对象之间没有明显的顺序。 
+ - List集合代表元素有序、可重复的集合，集合中每个元素都有其对应的顺序索引。 
+ - Stack是Vector提供的一个子类，用于模拟"栈"这种数据结构(LIFO后进先出)
+ - Queue用于模拟"队列"这种数据结构(先进先出 FIFO)。 
+ - Map用于保存具有**"映射关系"**的数据，因此Map集合里保存着两组值
 
 ## Array和ArrayList有何区别？什么时候更适合用Array
-Array可以容纳**基本类型和对象**，而**ArrayList只能容纳对象**。
+ - Array可以容纳**基本类型和对象**，而**ArrayList只能容纳对象**。
 Array是**指定大小的**，而ArrayList大小是固定的。
-**Array没有提供ArrayList那么多功能**，比如addAll、removeAll和iterator等。尽管ArrayList明显是更好的选择，但也有些时候Array比较好用。
-（1）如果列表的大小已经指定，大部分情况下是存储和遍历它们。
-（2）对于遍历**基本数据类型**，尽管Collections使用自动装箱来减轻编码任务，在指定大小的基本类型的列表上工作也会变得很慢。
-（3）如果你要使用**多维数组**，使用[][]比List更容易。
+ - **Array没有提供ArrayList那么多功能**，比如addAll、removeAll和iterator等。尽管ArrayList明显是更好的选择，但也有些时候Array比较好用。
+ 
+  - 如果列表的大小已经指定，大部分情况下是存储和遍历它们。
+  - 对于遍历**基本数据类型**，尽管Collections使用自动装箱来减轻编码任务，在指定大小的基本类型的列表上工作也会变得很慢。
+  - 如果你要使用**多维数组**，使用[][]比List更容易。
 
 ## ArrayList 和 LinkedList 
 ArrayList 和 LinkedList 都实现了 List 接口，他们有以下的不同点：
-ArrayList 是基于索引的数据接口，它的底层是数组。它可以以O(1)时间复杂度对元素进行**随机访问**。与此对应，LinkedList 是以元素列表的形式存储它的数据，每一个元素都和它的前一个和后一个元素链接在一起，在这种情况下，查找某个元素的时间复杂度是O(n)。
-相对于 ArrayList，LinkedList的**插入，添加，删除操作速度更快**，因为当元素被添加到集合任意位置的时候，不需要像数组那样重新计算大小或者是更新索引。
-LinkedList 比 ArrayList **更占内存**，因为 LinkedList 为每一个节点存储了两个引用，一个指向前一个元素，一个指向下一个元素。
+
+ - ArrayList 是基于索引的数据接口，它的底层是数组。它可以以O(1)时间复杂度对元素进行**随机访问**。与此对应，LinkedList 是以元素列表的形式存储它的数据，每一个元素都和它的前一个和后一个元素链接在一起，在这种情况下，查找某个元素的时间复杂度是O(n)。
+ - 相对于 ArrayList，LinkedList的**插入，添加，删除操作速度更快**，因为当元素被添加到集合任意位置的时候，不需要像数组那样重新计算大小或者是更新索引。
+ - LinkedList 比 ArrayList **更占内存**，因为 LinkedList 为每一个节点存储了两个引用，一个指向前一个元素，一个指向下一个元素。
 
 ## ArrayList和Vector异同点
- ArrayList和Vector在很多时候都很类似。
-（1）两者都是基于索引的，内部由一个**数组支持**。
-（2）两者维护插入的顺序，我们可以**根据插入顺序来获取元素**。
-（3）ArrayList和Vector的迭代器实现都是**fail-fast**的。
-（4）ArrayList和Vector两者**允许null值**，也可以使用索引值对元素进行随机访问。
+ ArrayList和Vector在很多时候都很类似：
+ 
+ - （1）两者都是基于索引的，内部由一个**数组支持**。
+ - （2）两者维护插入的顺序，我们可以**根据插入顺序来获取元素**。
+ - （3）ArrayList和Vector的迭代器实现都是**fail-fast**的。
+ - （4）ArrayList和Vector两者**允许null值**，也可以使用索引值对元素进行随机访问。
 
-以下是ArrayList和Vector的不同点。
-（1）Vector是同步的，而ArrayList不是。然而，如果你寻求在迭代的时候对列表进行改变，你应该使用CopyOnWriteArrayList。
-（2）ArrayList比Vector快，它因为有同步，不会过载。
-（3）ArrayList更加通用，因为我们可以使用Collections工具类轻易地获取同步列表和只读列表。
+以下是ArrayList和Vector的不同点：
+
+ - （1）Vector是**同步**的，而ArrayList不是。然而，如果你寻求在迭代的时 候对列表进行改变，你应该使用CopyOnWriteArrayList。
+ - （2）ArrayList比Vector**快**，它因为有同步，不会过载。
+ - （3）ArrayList更加通用，因为我们可以使用Collections工具类轻易地获取同步列表和只读列表。
 
 ## 遍历一个List有哪些不同的方式
 
-		List<String> strList = new ArrayList<>();
-		//使用for-each循环
-		for(String obj : strList){
-		  System.out.println(obj);
-		}
-		//using iterator
-		Iterator<String> it = strList.iterator();
-		while(it.hasNext()){
-			String obj = it.next();
-			System.out.println(obj);
-		}
+```
+List<String> strList = new ArrayList<>();
+//使用for-each循环
+for(String obj : strList){
+  System.out.println(obj);
+}
+//using iterator
+Iterator<String> it = strList.iterator();
+while(it.hasNext()){
+	String obj = it.next();
+	System.out.println(obj);
+}
+```
 
 使用**迭代器更加线程安全，因为它可以确保，在当前遍历的集合元素被更改的时候，它会抛出ConcurrentModificationException**。
 
 ## LinkedList 和PriorityQueue 的区别
-**Queue中只有两个实现类LinkedList 和PriorityQueue**。他们都是属于队列，即拥有先进先出（FIFO）的特点。而这两个类的区别在于他们的排序行为并非性能。
-LinkedList 支持双向列表操作，
-PriorityQueue 按优先权控制队列元素的出队次序。（列表中的排序顺序是通过实现Comparable来控制的）
+ - **Queue中只有两个实现类LinkedList 和PriorityQueue**。他们都是属于队列，即拥有先进先出（FIFO）的特点。而这两个类的区别在于他们的排序行为并非性能。
+ - LinkedList 支持双向列表操作，
+ - PriorityQueue 按优先权控制队列元素的出队次序。（列表中的排序顺序是通过实现Comparable来控制的）
 
 ## HashMap的工作原理
-HashMap在Map.Entry静态内部类实现中存储key-value对。HashMap使用哈希算法，在put和get方法中，它使用hashCode()和equals()方法。当我们通过传递key-value对调用put方法的时候，HashMap使用Key hashCode()和哈希算法来找出存储key-value对的索引。Entry存储在LinkedList中，所以如果存在entry，它使用equals()方法来检查传递的key是否已经存在，如果存在，它会覆盖value，如果不存在，它会创建一个新的entry然后保存。当我们通过传递key调用get方法时，它再次使用hashCode()来找到数组中的索引，然后使用equals()方法找出正确的Entry，然后返回它的值。
+HashMap在Map.Entry**静态内部类**实现中存储key-value对。HashMap使用哈希算法，在put和get方法中，它使用hashCode()和equals()方法。当我们通过传递key-value对调用put方法的时候，HashMap使用Key hashCode()和哈希算法来找出存储key-value对的索引。Entry存储在LinkedList中，所以如果映射到同一个桶后，它使用equals()方法来检查传递的key是否entry已经存在，如果存在，它会覆盖value，如果不存在，它会创建一个新的entry然后保存。当我们通过传递key调用get方法时，它再次使用hashCode()来找到数组中的索引，然后使用equals()方法找出正确的Entry，然后返回它的值。
 
 其它关于HashMap比较重要的问题**是容量、加载因子和阀值调整**。HashMap默认的初始容量是16，**负荷系数是0.75**。阀值是为负荷系数乘以容量，无论何时我们尝试添加一个entry，如果map的大小比阀值大的时候，HashMap会对map的内容进行重新哈希，且使用更大的容量。**容量总是2的幂**，所以如果你知道你需要存储大量的key-value对，比如缓存从数据库里面拉取的数据，使用正确的容量和负荷系数对HashMap进行初始化是个不错的做法。
 
 ## HashMap实现原理
-**数据结构**： HashMap基于哈希算法，采用链地址法来避免hash冲突，所以其内部采用链表数组数据结构。我们通过put()和get()方法储存和获取对象。HashMap里面实现一个静态内部类Entry, Entry其重要的属性有key , value, next.用该Entry定义了一个链表的数组用来存放数据，这种方法叫做连地址法，是为了避免hash冲突。
+**数据结构**： HashMap基于哈希算法，采用链地址法来避免hash冲突，所以其内部采用**链表数组数据结构**。我们通过put()和get()方法储存和获取对象。HashMap里面实现一个静态内部类Entry, Entry其重要的属性有key , value, next.用该Entry定义了一个链表的数组用来存放数据，这种方法叫做连地址法，是为了避免hash冲突。
+
 HashMap的存取实现:
-1) put
+
+ - 1) put
+
 首先会根据对象的hashCode计算得到**散列桶坐标**（数组下表），因为数组中存放的是**Entry链表结构**，所以还需要对该链表进行遍历，通过调用key.equals方法判断是否存在该key，如果存在则修改内容。如果不存在则**采用头插入**的方式在链表头部插入一个新的节点存储这个新的映射关系。
+
 **null key总是存放在Entry[]数组的第一个元素，而且仅保留一个null key**。
-2) get
-首先也会根据hashCode的值定位到散列桶，并遍历存放在改桶中的链表。如果存在的该key则返回对应的value，**如果不存在则返回null**。（比较时调用key.equals)  具体比较：
+
+ - 2) get
+首先也会根据hashCode的值定位到散列桶，并遍历存放在该桶中的链表。如果存在的该key则返回对应的value，**如果不存在则返回null**。（比较时调用key.equals)  具体比较：
+
+```
 (e.hash == hash && ((k = e.key) == key || key.equals(k)))）
-再散列rehash过程：
+```
+
+ 3） 再散列rehash过程：
 Entry[]的长度一定后，随着map里面数据的越来越长，超过了加载因子，必须调整table的大小。每次将数组拓展到原来数据长度的两倍。这时，需要创建一张新表，将原表的映射到新表中。
 注：**在存储当前值后再判断是否进行扩展容器**，这样的扩容方式有可能导致拓展后容器没有被使用造成浪费。
-解决hash冲突的办法
-1.开放定址法（线性探测再散列，二次探测再散列，伪随机探测再散列）
-2.再哈希法
-3.链地址法
-4.建立一个公共溢出区
+
+ 4) 红黑树的引入
+为了避免链表过长，查询速度变为了线性，java1.8 引入了红黑树。当链表长度大于8时就采用红黑树结构。
+
+解决hash冲突的常用方法办法：
+1. 开放定址法（线性探测再散列，二次探测再散列，伪随机探测再散列）
+2. 再哈希法
+3. 链地址法
+4. 建立一个公共溢出区
 Java中hashmap的解决办法就是采用的链地址法。
-HashMap实现原理：http://blog.csdn.net/vking_wang/article/details/14166593
+
+HashMap实现原理：
+ - http://blog.csdn.net/vking_wang/article/details/14166593
+ - [美团点评][Java 8系列之重新认识HashMap](https://tech.meituan.com/java-hashmap.html) | 写的比较好
+
 
 ## 我们能否使用任何类作为Map的key
  我们可以使用任何类作为Map的key，然而在使用它们之前，需要考虑以下几点：
