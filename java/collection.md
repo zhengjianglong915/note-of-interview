@@ -165,6 +165,7 @@ Entry[]的长度一定后，随着map里面数据的越来越长，超过了加�
 2. 再哈希法
 3. 链地址法
 4. 建立一个公共溢出区
+
 Java中hashmap的解决办法就是采用的链地址法。
 
 HashMap实现原理：
@@ -174,19 +175,22 @@ HashMap实现原理：
 
 ## 我们能否使用任何类作为Map的key
  我们可以使用任何类作为Map的key，然而在使用它们之前，需要考虑以下几点：
-（1）**如果类重写了equals()方法，它也应该重写hashCode()方法**。
-（2）**类的所有实例需要遵循与equals()和hashCode()相关的规则**。请参考之前提到的这些规则。
-（3）如果一个类没有使用equals()，你不应该在hashCode()中使用它。
-（4）**用户自定义key类的最佳实践是使之为不可变的**，这样，hashCode()值可以被缓存起来，拥有更好的性能。不可变的类也可以确保hashCode()和equals()在未来不会改变，这样就会解决与可变相关的问题了。
-    比如，我有一个类MyKey，在HashMap中使用它
+ - （1）**如果类重写了equals()方法，它也应该重写hashCode()方法**。
+ -（2）**类的所有实例需要遵循与equals()和hashCode()相关的规则**。请参考之前提到的这些规则。
+ -（3）如果一个类没有使用equals()，你不应该在hashCode()中使用它。
+ -（4）**用户自定义key类的最佳实践是使之为不可变的**，这样，hashCode()值可以被缓存起来，拥有更好的性能。不可变的类也可以确保hashCode()和equals()在未来不会改变，这样就会解决与可变相关的问题了。
+ 
+比如，我有一个类MyKey，在HashMap中使用它
 
-		//传递给MyKey的name参数被用于equals()和hashCode()中
-		MyKey key = new MyKey('Pankaj'); //assume hashCode=1234
-		myHashMap.put(key, 'Value');
-		// 以下的代码会改变key的hashCode()和equals()值
-		key.setName('Amit'); //assume new hashCode=7890
-		//下面会返回null，因为HashMap会尝试查找存储同样索引的key，而key已被改变了，匹配失败，返回null
-		myHashMap.get(new MyKey('Pankaj'));
+```
+// 传递给MyKey的name参数被用于equals()和hashCode()中
+MyKey key = new MyKey('Pankaj'); //assume hashCode=1234
+myHashMap.put(key, 'Value');
+// 以下的代码会改变key的hashCode()和equals()值
+key.setName('Amit'); //assume new hashCode=7890
+// 下面会返回null，因为HashMap会尝试查找存储同样索引的key，而key已被改变了，匹配失败，返回null
+myHashMap.get(new MyKey('Pankaj'));
+```
 
 那就是为何String和Integer被作为HashMap的key大量使用
 
@@ -195,21 +199,17 @@ HashMap实现原理：
 
 ## HashMap和HashTable的区别
 HashMap和Hashtable都实现了Map接口，因此很多特性非常相似。但是，他们有以下不同点：
-1)HashMap允许键和值是null，而Hashtable不允许键或者值是null。
-2)Hashtable是同步的，而HashMap不是。因此，HashMap更适合于单线程环境，而Hashtable适合于多线程环境。
-3）HashMap的**迭代器(Iterator)是fail-fast迭代器**，而Hashtable的**enumerator(列举)迭代器不是fail-fast的**。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。一般认为Hashtable是一个遗留的类。如果你寻求在迭代的时候修改Map，你应该使用CocurrentHashMap
+
+ - 1) HashMap允许键和值是null，而Hashtable不允许键或者值是null。
+ - 2) Hashtable是同步的，而HashMap不是。因此，HashMap更适合于单线程环境，而Hashtable适合于多线程环境。
+ - 3）HashMap的**迭代器(Iterator)是fail-fast迭代器**，而Hashtable的**enumerator(列举)迭代器不是fail-fast的**。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。一般认为Hashtable是一个遗留的类。如果你寻求在迭代的时候修改Map，你应该使用CocurrentHashMap 
+ 
 http://www.importnew.com/7010.html
 
-## HashMap 和 Hashtable 有什么区别
-HashMap 和 Hashtable 都实现了 Map 接口，因此很多特性非常相似。但是，他们有以下不同点： 
-HashMap 允许键和值是 null，而 Hashtable 不允许键或者值是 null。
-Hashtable 是同步的，而 HashMap 不是。因此， HashMap 更适合于单线程环境，而 Hashtable 适合于多线程环境。
-HashMap 提供了可供应用迭代的键的集合，因此，HashMap 是快速失败的。另一方面，Hashtable 提供了对键的列举(Enumeration)。
-
 ## Enumeration 接口和 Iterator 接口的区别
-Enumeration 速度是 Iterator 的2倍，**同时占用更少的内存**。
-但是，Iterator远远比 Enumeration 安全，因为其他线程不能够修改正在被 iterator 遍历的集合里面的对象。
-同时，Iterator 允许调用者删除底层集合里面的元素，这对 Enumeration 来说是不可能的。
+ - Enumeration 速度是 Iterator 的2倍，**同时占用更少的内存**。
+ - Iterator远远比 Enumeration 安全，因为其他线程不能够修改正在被 iterator 遍历的集合里面的对象。
+ - Iterator 允许调用者删除底层集合里面的元素，这对 Enumeration 来说是不可能的。
 
 ## 通过迭代器fail-fast属性
 每次我们尝试获取下一个元素的时候，Iterator fail-fast属性检查当前集合结构里的任何改动。如果发现任何改动，它抛出ConcurrentModificationException。Collection中所有Iterator的实现都是按fail-fast来设计。在遍历一个集合的时候，我们可以使用并发集合类来避免ConcurrentModificationException，比如使用CopyOnWriteArrayList，而不是ArrayList
@@ -218,44 +218,54 @@ Enumeration 速度是 Iterator 的2倍，**同时占用更少的内存**。
 Iterator的fail-fast属性与当前的集合共同起作用，因此它不会受到集合中任何改动的影响。java.util包下面的所有的集合类都是快速失败的，而java.util.concurrent包下面的所有的类都是安全失败的。快速失败的迭代器会抛出ConcurrentModificationException异常，而安全失败的迭代器永远不会抛出这样的异常。
 
 ## HashSet,TreeSet,LinkedHashSet 之间的区别
-首先这三个类都是实现了Set接口，并且LinkedHashSet继承HashSet ，TreeSet实现了SortedSet。所以它们都拥有Set的基本特性，如：集合中的元素不能重复（这个需要和容器转载的类中的**equals()方法**有关）. 这三个容器所接受的类必须实现equals() 方法。
-**HashSet**： 为查询速度所设计的，存入HashSet的元素必须定义hashCode()方法。内部是基于散列函数实现。
-**TreeSet**： 实现了SortedSet（SortedSet的元素可以保证处于排序状态）,所以内部的元素是保持一定次序的（次序与元素实现的compareTo()方法有关），且底层是树状结构。使用它可以从Set中提取有序的序列。要求存入的元素必须实现Comparable接口,或则需要传入一个比较器Comparator。否则报ClassCastException。内部采用了**红黑树**实现。
-**LinkedHashSet**： 具有HashSet的查询速度，且内部链表维护元素的顺序（按插入顺序排序）。元素必须实现hashCode(）方法。内部是由链表实现。
+首先这三个类都是实现了Set接口，并且LinkedHashSet继承HashSet ，TreeSet实现了SortedSet。所以它们都拥有Set的基本特性，如：集合中的元素不能重复（这个需要和容器转载的类中的**equals()方法**有关）. 这三个容器所接受的类必须实现equals() 方法:
+ - **HashSet**： 为查询速度所设计的，存入HashSet的元素必须定义hashCode()方法。内部是基于散列函数实现。
+ - **TreeSet**： 实现了SortedSet（SortedSet的元素可以保证处于排序状态）,所以内部的元素是保持一定次序的（次序与元素实现的compareTo()方法有关），且底层是树状结构。使用它可以从Set中提取有序的序列。要求存入的元素必须实现**Comparable接口**,或则需要传入一个比较器**Comparator**。否则报ClassCastException。内部采用了**红黑树**实现。
+ - **LinkedHashSet**： 具有HashSet的查询速度，且内部链表维护元素的顺序（按插入顺序排序）。元素必须实现hashCode(）方法。内部是由链表实现。
 
 ## HashMap ,LinkedHashMap ,TreeMap,WeakHashMap,ConcurrentHashMap,IdentityHashMap的区别
-**Map** 中任何键的比较都是通过equals进行比较的，所以如果键用于映射的话需要由恰当的hashCode() 方法。如果键值用于TreeMap，它必须实现Comparable。
-**HashMap** 基于散列表来的实现，即使用hashCode()进行快速查询元素的位置，显著提高性能。插入和查询“键值对”的开销是固定的。可以通过设置容量和负载因子，以调整容器的性能。
-**LinkedHashMap**,  类似于HashMap,但是迭代遍历它时，取得“键值对”的顺序是其插入的次序，只比HashMap慢一点。而在迭代访问时反而更快，**因为它使用链表维护内部次序**。此外可以在构造器中设定LinkedHashMap，使之采用基于访问的最近最少使用(LRU)算法。于是没有被访问过的元素就会出现在队列前面。对于需要定期清理元素以节省空间的程序员来说，此功能使得程序员很容易得以实现。被访问过的键值会放在链表尾部。
-**TreeMap**, 是基于**红黑树**的实现。实现了SortedMap，SortedMap 可以确保键处于排序状态。所以查看“键”和“键值对”时，所有得到的结果都是经过排序的，次序由Comparable或Comparator决定。SortedMap拥有其他额外的功能，如：Comparator comparator()返回当前Map使用的Comparator或者null. T firstKey() 返回Map的第一个键，T lastKey() 返回最后一个键。SortedMap headMap(toKey),生成一个键小于toKey的Map子集。SortedMap tailMap(fromKey) 也是生成一个子集。TreeMap是唯一的带有subMap()方法的Map,它可以返回一个子树。
-**WeakHashMap**  表示**弱键映射**，允许释放映射所指向的对象。这是为了解决某类特殊问题而设计的，如果映射之外没有引用指向某个“键”，则“键”可以被垃圾收集器回收。
-**ConcurrentHashMap** 一种线程安全的Map,它不涉及同步加锁。
-**IdentityHashMap** 使用==代替equals() 对“键”进行比较的散列映射。专为解决特殊问题而设计。
-**HashTable** (已经摒弃了)
+ - **Map** 中任何键的比较都是通过equals进行比较的，所以如果键用于映射的话需要由恰当的hashCode() 方法。如果键值用于TreeMap，它必须实现Comparable。
+
+ - **HashMap** 基于散列表来的实现，即使用hashCode()进行快速查询元素的位置，显著提高性能。插入和查询“键值对”的开销是固定的。可以通过设置容量和负载因子，以调整容器的性能。
+ - **LinkedHashMap**,  类似于HashMap,但是迭代遍历它时，取得“键值对”的顺序是其**插入的次序**，只比HashMap慢一点。而在迭代访问时反而更快，**因为它使用链表维护内部次序**。
+ - **TreeMap**, 是基于**红黑树**的实现。实现了SortedMap，SortedMap 可以确保键处于排序状态。所以查看“键”和“键值对”时，所有得到的结果都是经过排序的，次序由Comparable或Comparator决定。SortedMap拥有其他额外的功能，如：Comparator comparator()返回当前Map使用的Comparator或者null. T firstKey() 返回Map的第一个键，T lastKey() 返回最后一个键。SortedMap headMap(toKey),生成一个键小于toKey的Map子集。SortedMap tailMap(fromKey) 也是生成一个子集。TreeMap是唯一的带有subMap()方法的Map,它可以返回一个子树。
+ - **WeakHashMap**  表示**弱键映射**，允许释放映射所指向的对象。这是为了解决某类特殊问题而设计的，如果映射之外没有引用指向某个“键”，则“键”可以被垃圾收集器回收。
+ - **ConcurrentHashMap** 一种线程安全的Map,它不涉及同步加锁。
+ - **IdentityHashMap** 使用==代替equals() 对“键”进行比较的散列映射。专为解决特殊问题而设计。
+ - **HashTable** (已经摒弃了)
+
+- [Map 综述（二）：彻头彻尾理解 LinkedHashMap](http://blog.csdn.net/justloveyou_/article/details/71713781)
 
 ## Map接口提供了哪些不同的集合视图
 Map接口提供三个集合视图：
-（1）**Set keyset()**：**返回map中包含的所有key的一个Set视图**。**集合是受map支持的，map的变化会在集合中反映出来，反之亦然**。当一个迭代器正在遍历一个集合时，若map被修改了（除迭代器自身的移除操作以外），迭代器的结果会变为未定义。集合支持通过**Iterator**的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
-（2）**Collection values()**：**返回一个map中包含的所有value的一个Collection视图**。这个collection受map支持的，map的变化会在collection中反映出来，反之亦然。当一个迭代器正在遍历一个collection时，若map被修改了（除迭代器自身的移除操作以外），迭代器的结果会变为**未定义**。集合支持通过Iterator的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
-（3）Set< Map.Entry < K,V > > entrySet()：**返回一个map钟包含的所有映射的一个集合视图**。这个集合受map支持的，map的变化会在collection中反映出来，反之亦然。当一个迭代器正在遍历一个集合时，若map被修改了（除迭代器自身的移除操作，以及对迭代器返回的entry进行setValue外），**迭代器的结果会变为未定义**。集合支持通过Iterator的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
+ - （1）**Set keyset()**：**返回map中包含的所有key的一个Set视图**。**集合是受map支持的，map的变化会在集合中反映出来，反之亦然**。当一个迭代器正在遍历一个集合时，若map被修改了（除迭代器自身的移除操作以外），迭代器的结果会变为未定义。集合支持通过**Iterator**的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
+ 
+ - （2）**Collection values()**：**返回一个map中包含的所有value的一个Collection视图**。这个collection受map支持的，map的变化会在collection中反映出来，反之亦然。当一个迭代器正在遍历一个collection时，若map被修改了（除迭代器自身的移除操作以外），迭代器的结果会变为**未定义**。集合支持通过Iterator的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
+ 
+ - （3）Set< Map.Entry < K,V > > entrySet()：**返回一个map钟包含的所有映射的一个集合视图**。这个集合受map支持的，map的变化会在collection中反映出来，反之亦然。当一个迭代器正在遍历一个集合时，若map被修改了（除迭代器自身的移除操作，以及对迭代器返回的entry进行setValue外），**迭代器的结果会变为未定义**。集合支持通过Iterator的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
 
 
 ## hashCode()和equals()方法有何重要性
-HashMap使用Key对象的hashCode()和equals()方法去决定key-value对的索引。当我们试着从HashMap中获取值的时候，这些方法也会被用到。如果这些方法没有被正确地实现，在这种情况下，两个不同Key也许会产生相同的hashCode()和equals()输出，HashMap将会认为它们是相同的，然后覆盖它们，而非把它们存储到不同的地方。同样的，所有不允许存储重复数据的集合类都使用hashCode()和equals()去查找重复，所以正确实现它们非常重要。equals()和hashCode()的实现应该遵循以下规则：
+**HashMap使用Key对象的hashCode()和equals()方法去决定key-value对的索引**。当我们试着从HashMap中获取值的时候，这些方法也会被用到。如果这些方法没有被正确地实现，在这种情况下，两个不同Key也许会产生相同的hashCode()和equals()输出，HashMap将会认为它们是相同的，然后覆盖它们，而非把它们存储到不同的地方。同样的，所有不允许存储重复数据的集合类都使用hashCode()和equals()去查找重复，所以正确实现它们非常重要。equals()和hashCode()的实现应该遵循以下规则：
+
+```
 （1）如果o1.equals(o2)，那么o1.hashCode() == o2.hashCode()总是为true的。
 （2）如果o1.hashCode() == o2.hashCode()，并不意味着o1.equals(o2)会为true。
+```
 
 ## Iterator是什么
 Iterator接口提供遍历任何Collection的接口。我们可以从一个Collection中使用迭代器方法来获取迭代器实例。迭代器取代了Java集合框架中的Enumeration。迭代器允许调用者在迭代过程中移除元素。
 
 ## Iterator和ListIterator的区别是什么
 下面列出了他们的区别：
-Iterator 可用来遍历 Set 和 List 集合，但是 ListIterator 只能用来遍历 List 。
-Iterator 对集合只能是前向遍历，ListIterator 既可以前向也可以后向。
-ListIterator 实现了 Iterator 接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引，等等。 
+
+ - Iterator 可用来遍历 Set 和 List 集合，但是 ListIterator 只能用来遍历 List 。
+ - Iterator 对集合只能是前向遍历，ListIterator 既可以前向也可以后向。
+ - ListIterator 实现了 Iterator 接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引，等等。 
 
 ## 为何Iterator接口没有具体的实现
 Iterator接口定义了遍历集合的方法，但它的实现则是集合实现类的责任。每个能够返回用于遍历的Iterator的集合类都有它自己的Iterator实现内部类。
+
 这就允许集合类去选择迭代器是fail-fast还是fail-safe的。比如，ArrayList迭代器是fail-fast的，而CopyOnWriteArrayList迭代器是fail-safe的
 
 ## EnumSet是什么
@@ -272,18 +282,30 @@ Java.util.concurrent.BlockingQueue是一个队列，在进行检索或移除一�
 
 ## Comparable和Comparator接口
 Comparable & Comparator 都是用来实现集合中元素的比较、排序的，只是 Comparable 是在集合内部定义的方法实现的排序，Comparator 是在集合外部实现的排序，所以，如想实现排序，就需要在集合外定义 Comparator 接口的方法或在集合内实现 Comparable 接口的方法。
-1) Comparator位于包java.util下，而Comparable位于包java.lang下
-2)  **Comparable 是在集合内部定义的方法实现的排序,Comparator 是在集合外部实现的排序**.Comparable 是一个对象本身就已经支持自比较所需要实现的接口,自定义的类要在加入list容器中后能够排序，可以实现Comparable接口.在用Collections类的sort方法排序时，如果不指定Comparator，那么就以自然顺序排序.而 Comparator 是一个专用的比较器，当这个对象不支持自比较或者自比较函数不能满足你的要求时，你可以写一个比较器来完成两个对象之间大小的比较。**用 Comparator 是策略模式（strategy design pattern），就是不改变对象自身，而用一个策略对象（strategy object）来改变它的行为**。
-3) Comparator定义了俩个方法，分别是int compare(T o1,T o2)和boolean equals(Object obj).Comparable接口只提供了int compareTo(T o)方法.
-也就是说假如我定义了一个Person类，这个类实现了Comparable接口，那么当我实例化Person类的person1后，我想比较person1和一个现有的Person对象person2的大小时，我就可以这样来调用：person1.comparTo(person2),通过返回值就可以判断了；而此时如果你定义了一个PersonComparator（实现了Comparator接口）的话，那你就可以这样：PersonComparator   comparator=   new   PersonComparator();
+
+ - 1) Comparator位于包java.util下，而Comparable位于包java.lang下
+ - 2)  **Comparable 是在集合内部定义的方法实现的排序,Comparator 是在集合外部实现的排序**.Comparable 是一个对象本身就已经支持自比较所需要实现的接口,自定义的类要在加入list容器中后能够排序，可以实现Comparable接口.在用Collections类的sort方法排序时，如果不指定Comparator，那么就以自然顺序排序.而 Comparator 是一个专用的比较器，当这个对象不支持自比较或者自比较函数不能满足你的要求时，你可以写一个比较器来完成两个对象之间大小的比较。**用 Comparator 是策略模式（strategy design pattern），就是不改变对象自身，而用一个策略对象（strategy object）来改变它的行为**。
+ - 3) Comparator定义了俩个方法，分别是int compare(T o1,T o2)和boolean equals(Object obj).Comparable接口只提供了int compareTo(T o)方法.
+ 
+也就是说我定义了一个Person类，这个类实现了Comparable接口，那么当我实例化Person类的person1后，我想比较person1和一个现有的Person对象person2的大小时，我就可以这样来调用：
+
+```
+person1.comparTo(person2)
+```
+
+通过返回值就可以判断了；而此时如果你定义了一个PersonComparator（实现了Comparator接口）的话，那你就可以这样：
+
+```
+PersonComparator   comparator=   new   PersonComparator();
 comparator.compare(person1,person2);。
+```
 
 ## Java集合框架是什么？说出一些集合框架的优点？
 每种编程语言中都有集合，最初的Java版本包含几种集合类：Vector、Stack、HashTable和Array。随着集合的广泛使用，Java1.2提出了囊括所有集合接口、实现和算法的集合框架。在保证线程安全的情况下使用泛型和并发集合类，Java已经经历了很久。它还包括在Java并发包中，阻塞接口以及它们的实现。集合框架的部分优点如下：
-（1）使用核心集合类降低开发成本，而非实现我们自己的集合类。
-（2）随着使用经过严格测试的集合框架类，代码质量会得到提高。
-（3）通过使用JDK附带的集合类，可以降低代码维护成本。
-（4）复用性和可操作性。
+ - （1）使用核心集合类降低开发成本，而非实现我们自己的集合类。
+ - （2）随着使用经过严格测试的集合框架类，代码质量会得到提高。
+ - （3）通过使用JDK附带的集合类，可以降低代码维护成本。
+ - （4）复用性和可操作性。
 
 ## 集合框架中的泛型有什么优点
 Java1.5引入了泛型，所有的集合接口和实现都大量地使用它。泛型允许我们为集合提供一个可以容纳的对象类型，因此，如果你添加其它类型的任何元素，它会在编译时报错。这避免了在运行时出现ClassCastException，因为你将会在编译时得到报错信息。泛型也使得代码整洁，我们不需要使用显式转换和instanceOf操作符。它也给运行时带来好处，因为不会产生类型检查的字节码指令。
@@ -294,19 +316,21 @@ Java1.5引入了泛型，所有的集合接口和实现都大量地使用它。�
 
 ## 为什么集合类没有实现Cloneable和Serializable接口
 Collection接口指定一组对象，对象即为它的元素。**如何维护这些元素由Collection的具体实现决定**。例如，一些如List的Collection实现允许重复的元素，而其它的如Set就不允许。**很多Collection实现有一个公有的clone方法。然而，把它放到集合的所有实现中也是没有意义的。这是因为Collection是一个抽象表现。重要的是实现**。
+
 **当与具体实现打交道的时候，克隆或序列化的语义和含义才发挥作用**。所以，具体实现应该决定如何对它进行克隆或序列化，或它是否可以被克隆或序列化。
+
 **在所有的实现中授权克隆和序列化，最终导致更少的灵活性和更多的限制**。特定的实现应该决定它是否可以被克隆和序列化。
 
 ## 与Java集合框架相关的有哪些最好的实践
-(1)根据需要选择正确的集合类型。比如，如果指定了大小，我们会选用Array而非ArrayList。如果我们想根据插入顺序遍历一个Map，我们需要使用TreeMap。如果我们不想重复，我们应该使用Set。如果涉及到堆栈，队列等操作，应该考虑用List，对于需要快速插入，删除元素，应该使用LinkedList，如果需要快速随机访问元素，应该使用ArrayList。
-(2)如果程序在单线程环境中，或者访问仅仅在一个线程中进行，考虑非同步的类，其效率较高，如果多个线程可能同时操作一个类，应该使用同步的类。
-(3)要特别注意对哈希表的操作，作为key的对象要正确复写equals和hashCode方法。使用JDK提供的不可变类作为Map的key，可以避免自己实现hashCode()和equals()。
+ - (1) 根据需要选择正确的集合类型。比如，如果指定了大小，我们会选用Array而非ArrayList。如果我们想根据插入顺序遍历一个Map，我们需要使用TreeMap。如果我们不想重复，我们应该使用Set。如果涉及到堆栈，队列等操作，应该考虑用List，对于需要快速插入，删除元素，应该使用LinkedList，如果需要快速随机访问元素，应该使用ArrayList。
+ - (2) 如果程序在单线程环境中，或者访问仅仅在一个线程中进行，考虑非同步的类，其效率较高，如果多个线程可能同时操作一个类，应该使用同步的类。
+ - (3) 要特别注意对哈希表的操作，作为key的对象要正确复写equals和hashCode方法。使用JDK提供的不可变类作为Map的key，可以避免自己实现hashCode()和equals()。
 性。
-(4)尽量返回接口而非实际的类型，如返回List而非ArrayList，这样如果以后需要将ArrayList换成LinkedList时，客户端代码不用改变。这就是针对抽象编程。
-(5)尽可能使用Collections工具类，或者获取只读、同步或空的集合，而非编写自己的实现。它将会提供代码重用性，它有着更好的稳定性和可维护
-(6)一些集合类允许指定**初始容量**，所以如果我们能够估计到存储元素的数量，我们可以使用它，就避免了重新哈希或大小调整。
-(7)基于接口编程，而非基于实现编程，它允许我们后来轻易地改变实现。
-(8)总是使用类型安全的泛型，避免在运行时出现ClassCastException。
+ - (4) 尽量返回接口而非实际的类型，如返回List而非ArrayList，这样如果以后需要将ArrayList换成LinkedList时，客户端代码不用改变。这就是针对抽象编程。
+ - (5) 尽可能使用Collections工具类，或者获取只读、同步或空的集合，而非编写自己的实现。它将会提供代码重用性，它有着更好的稳定性和可维护
+ - (6) 一些集合类允许指定**初始容量**，所以如果我们能够估计到存储元素的数量，我们可以使用它，就避免了重新哈希或大小调整。
+ - (7) 基于接口编程，而非基于实现编程，它允许我们后来轻易地改变实现。
+ - (8) 总是使用类型安全的泛型，避免在运行时出现ClassCastException。
 
 ## ArrayList 是否支持序列化
 支持，
@@ -329,13 +353,13 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 	if (modCount != expectedModCount) {
 	    throw new ConcurrentModificationException();
 	}
-    }
+   }
 
-    /**
-     * Reconstitute the <tt>ArrayList</tt> instance from a stream (that is,
-     * deserialize it).
-     */
-    private void readObject(java.io.ObjectInputStream s)
+   /**
+    * Reconstitute the <tt>ArrayList</tt> instance from a stream (that is,
+    * deserialize it).
+    */
+   private void readObject(java.io.ObjectInputStream s)
 	throws java.io.IOException, ClassNotFoundException {
 	elementData = EMPTY_ELEMENTDATA;
 
@@ -355,7 +379,7 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 	        a[i] = s.readObject();
 	    }
 	}
-    }
+   }
 ```
 
 ArrayList
