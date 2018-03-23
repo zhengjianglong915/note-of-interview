@@ -210,6 +210,7 @@ http://www.cnblogs.com/ITtangtang/p/3948786.html
 相同：显示锁与内置锁在加锁和内存上提供的语义相同(互斥访问临界区)
 
 不同：
+
 1. 使用方式，内置无需指定释放锁，简化锁操作。显示锁拥有锁获取和释放的可操作性。
 2. 功能上：显示锁提供了其他很多功能如定时锁等待、可中断锁等待、公平性、尝试非阻塞获取锁、以及实现非结构化的加锁。（一个线程获取不到锁而被阻塞在synchronized之外时，对该线程进行中断操作，此时该线程的中断表示为会被修改，但线程依旧会被阻塞在synchronized上，等待获取锁。）
 3. 对死锁的处理：内置只能重启，显示可以通过设置超时获取锁来避免
@@ -218,10 +219,13 @@ http://www.cnblogs.com/ITtangtang/p/3948786.html
 
 SOF你遇到过哪些情况。
 
-21. 实现多线程的3种方法：Thread与Runable。
-**1)继承Tread类，重写run函数**
-**2)实现Runnable接口**
-**3)实现Callable接口**
+### 实现多线程的3种方法：Thread与Runable。
+ - **1)继承Tread类，重写run函数**
+ - **2)实现Runnable接口**
+ - **3)实现Callable接口**
+
+### 如何选择多线程池
+
 
 
 22. 线程同步的方法：sychronized、lock、reentrantLock等。
