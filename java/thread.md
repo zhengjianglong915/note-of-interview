@@ -113,8 +113,10 @@ CountDownLatch: 允许一个或多个线程等待其他线程完成操作. Cycli
 2. 闭锁CountDownLatch做减计数，而栅栏CyclicBarrier则是加计数。
 3. CountDownLatch是一次性的，CyclicBarrier可以重用。
 4. CountDownLatch一个线程(或者多个)，等待另外N个线程完成某个事情之后才能执行。CyclicBarrier是N个线程相互等待，任何一个线程完成之前，所有的线程都必须等待。 
-CountDownLatch 是计数器, 线程完成一个就记一个,就像报数一样, 只不过是递减的.
-而CyclicBarrier更像一个水闸, 线程执行就像水流, 在水闸处都会堵住, 等到水满(线程到齐)了, 才开始泄流.
+
+CountDownLatch 是**计数器**, 线程完成一个就记一个,就像报数一样, 只不过是递减的.
+
+而CyclicBarrier更像一个**水闸**, 线程执行就像水流, 在水闸处都会堵住, 等到水满(线程到齐)了, 才开始泄流.
 
 ## execute 和submit的区别
 Execute()用于提交不需要返回值得任务，submit()用于提交需要返回值的任务，发挥Future类型的对象。
