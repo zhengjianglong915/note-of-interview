@@ -200,78 +200,85 @@ public static void selectSort(int[] array) {
 **空间复杂度**：O(1) <br>
 **稳定性**：不稳定   例如 5 10 15 10。 如果堆顶5先输出，则第三层的10(最后一个10)的跑到堆顶，然后堆稳定，继续输出堆顶，则刚才那个10跑到前面了，所以两个10排序前后的次序发生改变。 <br>
 **代码**：
-    
-    // 第一个元素没有利用
-    public static void heapSort(int[] array) {
-        int N = array.length -1;
-        for (int k = N / 2; k >= 1; k--) { // k >= 1
-            sink(array, k, N);
-        }
-        while (N > 1) {
-            // 最大堆, 选择最大值放在最后
-            exch(array, 1, N --);
-            sink(array, 1, N);
-        }
+
+```
+        
+// 第一个元素没有利用
+public static void heapSort(int[] array) {
+    int N = array.length -1;
+    for (int k = N / 2; k >= 1; k--) { // k >= 1
+        sink(array, k, N);
     }
-    
-    private static void sink(int[] array, int k, int N){
-        while (2 * k <= N) {
-            int j = 2 * k;
-            if (j < N && array[j] < array[j+1]) { // <
-                j++;
-            }
-            if (array[j] < array[k]) break;  // <
-            exch(array, k, j);
-            k = j;
-        }
+    while (N > 1) {
+        // 最大堆, 选择最大值放在最后
+        exch(array, 1, N --);
+        sink(array, 1, N);
     }
+}
+
+private static void sink(int[] array, int k, int N){
+    while (2 * k <= N) {
+        int j = 2 * k;
+        if (j < N && array[j] < array[j+1]) { // <
+            j++;
+        }
+        if (array[j] < array[k]) break;  // <
+        exch(array, k, j);
+        k = j;
+    }
+}
+```
 
 ## 7.归并排序
-**思想**：归并排序采用了分治算法，首先递归将原始数组划分为若干子数组，对每个子数组进行排序。然后将排好序的子数组递归合并成一个有序的数组。
-**时间复杂度**：最坏:O(nlog2n)  最好: O(nlog2n)  平均: O(nlog2n)
-**空间复杂度**：O(n)
-**稳定性**：稳定
+**思想**：归并排序采用了分治算法，首先递归将原始数组划分为若干子数组，对每个子数组进行排序。然后将排好序的子数组递归合并成一个有序的数组。<br>
+**时间复杂度**：最坏:O(nlog2n)  最好: O(nlog2n)  平均: O(nlog2n)<br>
+**空间复杂度**：O(n) <br>
+**稳定性**：稳定 <br>
 **代码**：
 
-    public static void mergeSort(int[] array) {
-        sort(array, 0, array.length - 1);
+```
+public static void mergeSort(int[] array) {
+    sort(array, 0, array.length - 1);
+}
+
+private static void sort(int[] array, int left, int right) {
+    if (left < right) {
+        int middle = (left + right) >> 1;
+        //递归处理相关的合并事项
+        sort(array, left, middle);
+        sort(array, middle + 1, right);
+        merge(array, left, middle, right);
     }
-    
-    private static void sort(int[] array, int left, int right) {
-        if (left < right) {
-            int middle = (left + right) >> 1;
-            //递归处理相关的合并事项
-            sort(array, left, middle);
-            sort(array, middle + 1, right);
-            merge(array, left, middle, right);
-        }
+}
+
+private static void merge(int[] array, int lo, int mid, int hi) {
+    //创建一个临时数组用来存储合并后的数据
+    int[] temp = new int[array.length];
+    int left = lo;
+    int right = mid + 1;
+    int k = lo;
+    while (left <= mid && right <= hi) {
+        if (array[left] < array[right])
+            temp[k++] = array[left++];
+        else
+            temp[k++] = array[right++];
     }
-    
-    private static void merge(int[] array, int lo, int mid, int hi) {
-        //创建一个临时数组用来存储合并后的数据
-        int[] temp = new int[array.length];
-        int left = lo;
-        int right = mid + 1;
-        int k = lo;
-        while (left <= mid && right <= hi) {
-            if (array[left] < array[right])
-                temp[k++] = array[left++];
-            else
-                temp[k++] = array[right++];
-        }
-        //处理剩余未合并的部分
-        while (left <= mid)  temp[k++] = array[left++];
-        while (right <= hi)  temp[k++] = array[right++];
-        //将临时数组中的内容存储到原数组中
-        while (lo <= hi) array[lo] = temp[lo++];
-    
-    }
+    //处理剩余未合并的部分
+    while (left <= mid)  temp[k++] = array[left++];
+    while (right <= hi)  temp[k++] = array[right++];
+    //将临时数组中的内容存储到原数组中
+    while (lo <= hi) array[lo] = temp[lo++];
+
+}
+
+```
 
 ## 8.基数排序算法
-**思想**：基数排序是通过“分配”和“收集”过程来实现排序，首先根据数字的个位的数将数字放入0-9号桶中，然后将所有桶中所盛数据按照桶号由小到大，桶中由顶至底依次重新收集串起来，得到新的元素序列。然后递归对十位、百位这些高位采用同样的方式分配收集，直到没各位都完成分配收集得到一个有序的元素序列。
-**时间复杂度**：最坏:O(d(r+n))  最好:O(d(r+n)) 平均: O(d(r+n))
-**空间复杂度**：O(dr+n)      n个记录，d个关键码，关键码的取值范围为r
-**稳定性**：稳定    基数排序基于分别排序，分别收集，所以其是稳定的排序算法。
+**思想**：基数排序是通过“分配”和“收集”过程来实现排序，首先根据数字的个位的数将数字放入0-9号桶中，然后将所有桶中所盛数据按照桶号由小到大，桶中由顶至底依次重新收集串起来，得到新的元素序列。然后递归对十位、百位这些高位采用同样的方式分配收集，直到没各位都完成分配收集得到一个有序的元素序列。<br>
+**时间复杂度**：最坏:O(d(r+n))  最好:O(d(r+n)) 平均: O(d(r+n)) <br>
+**空间复杂度**：O(dr+n)      n个记录，d个关键码，关键码的取值范围为r <br>
+**稳定性**：稳定    基数排序基于分别排序，分别收集，所以其是稳定的排序算法。 <br>
+
 **代码**：
 
 
