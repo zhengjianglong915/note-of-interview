@@ -1,27 +1,28 @@
 ## 插入排序
 ### 1.直接插入排序
-**思想**：每次将一个待排序的数据按照其关键字的大小插入到前面已经排序好的数据中的适当位置，直到全部数据排序完成。
-**时间复杂度**：O(n^2)  O(n)  O(n^2) （最坏 最好 平均）
-**空间复杂度**：O(1)
-**稳定性**： 稳定    每次都是在前面已排好序的序列中找到适当的位置，只有小的数字会往前插入，所以原来相同的两个数字在排序后相对位置不变。
-     代码：
+**思想**：每次将一个待排序的数据按照其关键字的大小插入到前面已经排序好的数据中的适当位置，直到全部数据排序完成。<br>
+**时间复杂度**：O(n^2)  O(n)  O(n^2) （最坏 最好 平均）<br>
+**空间复杂度**：O(1) <br>
+**稳定性**： 稳定    每次都是在前面已排好序的序列中找到适当的位置，只有小的数字会往前插入，所以原来相同的两个数字在排序后相对位置不变。<br>
 
-
-    /**
-     * 插入排序
-     * @param array
-     */
-    public static void insertSort(int[] array) {
-        for (int i = 2; i < array.length; i++ ) {
-            int val = array[i];
-            int j = i -1;
-            while (j >= 0 && array[j] > val) {  // array[j] > val
-                array[j+1] = array[j];
-                j--;
-            }
-            array[j+1] = val; //  array[j+1] 不是array[j]
+代码：
+```
+/**
+ * 插入排序
+ * @param array
+ */
+public static void insertSort(int[] array) {
+    for (int i = 2; i < array.length; i++ ) {
+        int val = array[i];
+        int j = i -1;
+        while (j >= 0 && array[j] > val) {  // array[j] > val
+            array[j+1] = array[j];
+            j--;
         }
+        array[j+1] = val; //  array[j+1] 不是array[j]
     }
+}
+```    
 
 ### 2.希尔排序
 **思想**：希尔排序根据增量值对数据按下标进行分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整体采用直接插入排序得到有序数组，算法终止。
