@@ -107,9 +107,8 @@
 |三向字符串快速排序|否|是|N到Nw之间|W+logN|通用排序算法，特别适合用于含有较长公共前缀的字符串|
 
 
-查找树
-
-- 单词查找树（trie）
+# 查找树
+## 单词查找树（trie）
 
 基本性质： 是由连接结点组成的数据结构，除了根结点，每个结点有且只有一条从父结点指向它的链接。每条链接都对应着一个字符，也可以用链接所对应的字符标记被指向的结点。值为空的结点在符号表中没有对应的键，它们的存在是为了简化单词查找树的查找操作。
 
@@ -179,54 +178,55 @@
 
 
 实现：
-
-    /**
-     * 计算部分匹配表
-     *
-     * @param pattern
-     * @param next
-     */
-    public void makeNext(char[] pattern, int next[]) {
-        int pIdx, maxSuffixLen; // pIdx:模版字符串下标；maxSuffixLen:最大前后缀长度
-        int m = pattern.length;  // 模版字符串长度
-        next[0] = 0; //模版字符串的第一个字符的最大前后缀长度为0
-        for (pIdx = 1, maxSuffixLen = 0; pIdx < m; ++pIdx) //for循环，从第二个字符开始，依次计算每一个字符对应的next值
+```
+/**
+ * 计算部分匹配表
+ *
+ * @param pattern
+ * @param next
+ */
+public void makeNext(char[] pattern, int next[]) {
+    int pIdx, maxSuffixLen; // pIdx:模版字符串下标；maxSuffixLen:最大前后缀长度
+    int m = pattern.length;  // 模版字符串长度
+    next[0] = 0; //模版字符串的第一个字符的最大前后缀长度为0
+    for (pIdx = 1, maxSuffixLen = 0; pIdx < m; ++pIdx) //for循环，从第二个字符开始，依次计算每一个字符对应的next值
+    {
+        /**
+         * maxSuffixLen 大于0 表示前一个字符已经存在匹配
+         */
+        while (maxSuffixLen > 0 && pattern[pIdx] != pattern[maxSuffixLen]) { //递归的求出P[0]···P[q]的最大的相同的前后缀长度k
+            maxSuffixLen = next[maxSuffixLen - 1];          //不理解没关系看下面的分析，这个while循环是整段代码的精髓所在，确实不好理解
+        }
+        if (pattern[pIdx] == pattern[maxSuffixLen]) //如果相等，那么最大相同前后缀长度加1
         {
+            maxSuffixLen++;
+        }
+        next[pIdx] = maxSuffixLen;
+    }
+}
+
+public int kmp(String str, String pattern) {
+    int[] next = new int[str.length()];
+    int strIdx, pIdx;
+    makeNext(pattern.toCharArray(), next);
+
+    for (strIdx = 0, pIdx = 0; strIdx < str.length(); ++strIdx) {
+        while (pIdx > 0 && pattern.charAt(pIdx) != str.charAt(strIdx)) {
             /**
-             * maxSuffixLen 大于0 表示前一个字符已经存在匹配
+             * 移动匹配字符串位置
              */
-            while (maxSuffixLen > 0 && pattern[pIdx] != pattern[maxSuffixLen]) { //递归的求出P[0]···P[q]的最大的相同的前后缀长度k
-                maxSuffixLen = next[maxSuffixLen - 1];          //不理解没关系看下面的分析，这个while循环是整段代码的精髓所在，确实不好理解
-            }
-            if (pattern[pIdx] == pattern[maxSuffixLen]) //如果相等，那么最大相同前后缀长度加1
-            {
-                maxSuffixLen++;
-            }
-            next[pIdx] = maxSuffixLen;
+            pIdx = next[pIdx - 1];
+        }
+        if (pattern.charAt(pIdx) == str.charAt(strIdx)) {
+            pIdx++;
+        }
+        if (pIdx == pattern.length()) {
+            return strIdx - pattern.length() + 1;
         }
     }
-    
-    public int kmp(String str, String pattern) {
-        int[] next = new int[str.length()];
-        int strIdx, pIdx;
-        makeNext(pattern.toCharArray(), next);
-    
-        for (strIdx = 0, pIdx = 0; strIdx < str.length(); ++strIdx) {
-            while (pIdx > 0 && pattern.charAt(pIdx) != str.charAt(strIdx)) {
-                /**
-                 * 移动匹配字符串位置
-                 */
-                pIdx = next[pIdx - 1];
-            }
-            if (pattern.charAt(pIdx) == str.charAt(strIdx)) {
-                pIdx++;
-            }
-            if (pIdx == pattern.length()) {
-                return strIdx - pattern.length() + 1;
-            }
-        }
-        return -1;
-    }
+    return -1;
+}
+```
 
 复杂度：时间复杂度最坏（3N）  空间复杂度 O(M）
 
