@@ -223,7 +223,7 @@ http://blog.csdn.net/dazhong159/article/details/7896070
 
 
 
-## 4. Window内存管理方式：页存储、段存储、段页存储。
+## 4.内存管理方式：页存储、段存储、段页存储。
 参考: 
 https://www.cnblogs.com/onepeace/p/5066736.html
 http://blog.sina.com.cn/s/blog_a46817ff0101hjzp.html
