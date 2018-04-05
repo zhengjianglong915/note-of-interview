@@ -205,11 +205,11 @@ http://www.cnblogs.com/ITtangtang/p/3978349.html
 http://blessht.iteye.com/blog/1162131
 
 ## AOP相关概念
-**方面（Aspect）**：一个关注点的模块化，这个关注点实现可能另外横切多个对象。事务管理是J2EE应用中一个很好的横切关注点例子。方面用Spring的 Advisor或拦截器实现。
+**方面（Aspect）**：一个关注点的模块化，这个关注点实现可能横切多个对象。事务管理是J2EE应用中一个很好的横切关注点例子。方面用Spring的 Advisor或拦截器实现。
 
 **连接点（Joinpoint）**: 程序执行过程中明确的点，如方法的调用或特定的异常被抛出。
 
-**通知（Advice）:** 在特定的连接点，AOP框架执行的动作。各种类型的通知包括“around”、“before”和“throws”通知。通知类型将在下面讨论。许多AOP框架包括Spring都是以拦截器做通知模型，维护一个“围绕”连接点的拦截器链。Spring中定义了4个advice.Interception Around(MethodInterceptor)、Before(MethodBeforeAdvice)、After Returning(AfterReturningAdvice)、After(AfterAdvice)。
+**通知（Advice）:** 在特定的连接点，AOP框架执行的动作。各种类型的通知包括“around”、“before”和“throws”等通知。通知类型将在下面讨论。许多AOP框架包括Spring都是以拦截器做通知模型，维护一个“围绕”连接点的拦截器链。Spring中定义了4个advice.Interception Around(MethodInterceptor)、Before(MethodBeforeAdvice)、After Returning(AfterReturningAdvice)、After(AfterAdvice)。
 
 **切入点（Pointcut）**: 一系列连接点的集合。AOP框架必须允许开发者指定切入点：例如，使用正则表达式。 Spring定义了Pointcut接口，用来组合MethodMatcher和ClassFilter，可以通过名字很清楚的理解， MethodMatcher是用来检查目标类的方法是否可以被应用此通知，而ClassFilter是用来检查Pointcut是否应该应用到目标类上
 
@@ -280,12 +280,16 @@ IOC或依赖注入减少了应用程序的代码量。它使得应用程序的**
 
 ## 应用上下文是如何实现的？
 ClassPathXmlApplicationContext 容器加载XML文件中beans的定义。XML Bean配置文件的完整路径必须传递给构造器。
+
 FileSystemXmlApplicationContext 容器也加载XML文件中beans的定义。注意，你需要正确的设置CLASSPATH，因为该容器会在CLASSPATH中查看bean的XML配置文件。
+
 WebXmlApplicationContext：该容器加载xml文件，这些文件定义了web应用中所有的beans。
 
 ## 有哪些不同类型的IOC(依赖注入)
 **接口注入**:接口注入的意思是通过接口来实现信息的注入，而其它的类要实现该接口时，就可以实现了注入
+
 构造器依赖注入：构造器依赖注入在容器触发构造器的时候完成，该构造器有一系列的参数，每个参数代表注入的对象。
+
 Setter方法依赖注入：首先容器会触发一个无参构造函数或无参静态工厂方法实例化对象，之后容器调用bean中的setter方法完成Setter方法依赖注入。
 
 ## 你推荐哪种依赖注入？构造器依赖注入还是Setter方法依赖注入？
@@ -293,6 +297,7 @@ Setter方法依赖注入：首先容器会触发一个无参构造函数或无�
 
 ## 什么是Spring Beans
 Spring Beans是构成Spring应用核心的Java对象。这些对象由Spring IOC容器实例化、组装、管理。这些对象通过容器中配置的元数据创建，例如，使用XML文件中定义的创建。
+
 在Spring中创建的beans都是单例的beans。在bean标签中有一个属性为”singleton”,如果设为true，该bean是单例的，如果设为false，该bean是原型bean。Singleton属性默认设置为true。因此，spring框架中所有的bean都默认为单例bean。
 
 ## Spring Bean中定义了什么内容？
@@ -303,9 +308,6 @@ Spring Bean中定义了所有的配置元数据，这些配置信息告知容器
  - XML配置文件
  - 基于注解配置
  - 基于Java的配置
-
-## 你如何定义bean的作用域
-在Spring中创建一个bean的时候，我们可以声明它的作用域。只需要在bean定义的时候通过’scope’属性定义即可。例如，当Spring需要产生每次一个新的bean实例时，应该声明bean的scope属性为prototype。如果每次你希望Spring返回一个实例，应该声明bean的scope属性为singleton。
 
 ## Spring框架中单例beans是线程安全的吗？
 不是，Spring框架中的单例beans不是线程安全的。
@@ -380,8 +382,9 @@ Spring对数据访问对象(DAO)的支持旨在使它可以与数据访问技术
 
 ## 使用Spring可以通过什么方式访问Hibernate？
 使用Spring有两种方式访问Hibernate：
-使用Hibernate Template的反转控制以及回调方法
-继承HibernateDAOSupport，并申请一个AOP拦截器节点
+
+ - 使用Hibernate Template的反转控制以及回调方法
+ - 继承HibernateDAOSupport，并申请一个AOP拦截器节点
 
 ## Spring支持的ORM
 Spring支持一下ORM：
@@ -394,6 +397,7 @@ Spring支持一下ORM：
 
 ## 如何通过HibernateDaoSupport将Spring和Hibernate结合起来？
 使用Spring的SessionFactory 调用LocalSessionFactory。结合过程分为以下三步：
+
  - 配置Hibernate SessionFactory
  - 继承HibernateDaoSupport实现一个DAO
  - 使用AOP装载事务支持
@@ -401,7 +405,7 @@ Spring支持一下ORM：
 ## Spring支持的事务管理类型
 Spring支持如下两种方式的事务管理：
 
-编码式事务管理：sping对编码式事务的支持与EJB有很大区别，不像EJB与java事务API耦合在一起．spring通过回调机制将实际的事务实现从事务性代码中抽象出来．你能够精确控制事务的边界，它们的开始和结束完全取决于你．
+编码式事务管理：sping对编码式事务的支持与EJB有很大区别，不像EJB与java事务API耦合在一起．spring通过回调机制将实际的事务实现从事务性代码中抽象出来．**你能够精确控制事务的边界，它们的开始和结束完全取决于你**．
 
 声明式事务管理：这种方式意味着你可以将事务管理和业务代码分离。你只需要通过注解或者XML配置管理事务。通过传播行为，隔离级别，回滚规则，事务超时，只读提示来定义．
 
