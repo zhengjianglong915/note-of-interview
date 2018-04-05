@@ -66,7 +66,7 @@ Bean在Spring中的生命周期如下：
 3. 受用**依赖注入**，Spring按照Bean定义信息配置Bean的所有属性。
 4. 如果Bean实现了**BeanNameAware**接口，工厂调用Bean的**setBeanName()**方法传递Bean的ID。
 5. 如果Bean实现了**BeanFactoryAware**接口，工厂调用**setBeanFactory()**方法传入工厂自身。
-6. 如果**BeanPostProcessor**和Bean关联，那么它们的**postProcessBeforeInitialzation()**方法将被调用。
+6. 如果**BeanPostProcessor**和Bean关联，那么它们的**postProcessBeforeInitialization()**方法将被调用。
 7. 如果Bean指定了init-method方法，它将被调用。
 8. 如果有**BeanPostProcessor**和Bean关联，那么它们的postProcessAfterInitialization()方法将被调用
 9. 最后如果配置了destroy-method方法则注册**DisposableBean**.
@@ -76,11 +76,11 @@ Bean在Spring中的生命周期如下：
 2. 如果指定了订制的销毁方法，就调用这个方法。
 
 ## Spring Bean的作用域之间有什么区别
- - singleton：这种bean范围是默认的，这种范围确保不管接受到多少个请求，每个容器中只有一个bean的实例，单例的模式由bean factory自身来维护。
- - prototype：原形范围与单例范围相反，为每一个bean请求提供一个实例。
- - request：在请求bean范围内会每一个来自客户端的网络请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。
- - Session：与请求范围类似，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。
- - global-session：global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。
+ - **singleton**：这种bean范围是默认的，这种范围确保不管接受到多少个请求，每个容器中只有一个bean的实例，单例的模式由bean factory自身来维护。
+ - **prototype**：原形范围与单例范围相反，为每一个bean请求提供一个实例。
+ - **request**：在请求bean范围内会每一个来自**客户端的网络请求**创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。
+ - **Session**：与请求范围类似，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。
+ - **global-session**：global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。
 
 ## 请解释自动装配模式的区别
 - **no**：这是Spring框架的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。
@@ -96,45 +96,47 @@ Bean在Spring中的生命周期如下：
 ## Spring 框架中都用到了哪些设计模式
 - **代理模式**—在AOP和remoting中被用的比较多。 
 - **单例模式**—在spring配置文件中定义的bean默认为单例模式。
-- **模板方法**—用来解决代码重复的问题
-比如. RestTemplate, JmsTemplate, JpaTemplate。
-前端控制器—Srping提供了DispatcherServlet来对请求进行分发。
-视图帮助(View Helper )—Spring提供了一系列的JSP标签，高效宏来辅助将分散的代码整合在视图里。
-依赖注入—贯穿于BeanFactory / ApplicationContext接口的核心理念。
+- **模板方法**—用来解决代码重复的问题. 比如. RestTemplate, JmsTemplate, JpaTemplate。
 
- - **工厂模式**—BeanFactory用来创建对象的实例。
- - **Builder模式** - 自定义配置文件的解析bean是时采用builder模式，一步一步地构建一个beanDefinition
- - **策略模式** ：Spring 中策略模式使用有多个地方，如 Bean 定义对象的创建以及代理对象的创建等。这里主要看一下代理对象创建的策略模式的实现。
+- **工厂模式**—BeanFactory用来创建对象的实例。
+- **Builder模式** - 自定义配置文件的解析bean是时采用builder模式，一步一步地构建一个beanDefinition
+- **策略模式** ：Spring 中策略模式使用有多个地方，如 Bean 定义对象的创建以及代理对象的创建等。这里主要看一下代理对象创建的策略模式的实现。
 前面已经了解 Spring 的代理方式有两个 Jdk 动态代理和 CGLIB 代理。这两个代理方式的使用正是使用了策略模式。
 
 ## AOP是怎么实现的
-实现AOP的技术，主要分为两大类：
-一是采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；
 
-二是采用静态织入的方式，引入特定的语法创建“方面”，从而使得编译器可以在编译期间织入有关“方面”的代码。Spring AOP 的实现原理其实很简单：AOP 框架负责动态地生成 AOP 代理类，这个代理类的方法则由 Advice 和回调目标对象的方法所组成,并将该对象可作为目标对象使用。AOP 代理包含了目标对象的全部方法，但 AOP 代理中的方法与目标对象的方法存在差异，AOP 方法在特定切入点添加了增强处理，并回调了目标对象的方法。
+实现AOP的技术，主要分为两大类：
+ - 一是采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；
+ - 二是采用静态织入的方式，引入特定的语法创建“方面”，从而使得编译器可以在编译期间织入有关“方面”的代码。
+
+Spring AOP 的实现原理其实很简单：AOP 框架负责动态地生成 AOP 代理类，这个代理类的方法则由 Advice 和回调目标对象的方法所组成,并将该对象可作为目标对象使用。AOP 代理包含了目标对象的全部方法，但 AOP 代理中的方法与目标对象的方法存在差异，AOP 方法在特定切入点添加了**增强处理，并回调了目标对象的方法**。
 
 Spring AOP使用动态代理技术在运行期织入增强代码。使用两种代理机制：基于JDK的动态代理（JDK本身只提供接口的代理）；基于CGlib的动态代理。
 
-1)JDK的动态代理主要涉及java.lang.reflect包中的两个类：Proxy和InvocationHandler。其中InvocationHandler只是一个接口，可以通过实现该接口定义横切逻辑，并通过反射机制调用目标类的代码，动态的将横切逻辑与业务逻辑织在一起。而Proxy利用InvocationHandler动态创建一个符合某一接口的实例，生成目标类的代理对象。
+**(1) JDK的动态代理**
+JDK的动态代理主要涉及java.lang.reflect包中的两个类：**Proxy和InvocationHandler**。其中InvocationHandler只是一个接口，可以通过实现该接口定义横切逻辑，并通过反射机制调用目标类的代码，动态的将横切逻辑与业务逻辑织在一起。而Proxy利用InvocationHandler动态创建一个符合某一接口的实例，生成目标类的代理对象。
 
 其代理对象**必须是某个接口的实现**,它是通过在运行期间创建一个接口的实现类来完成对目标对象的代理.只能实现接口的类生成代理,而**不能针对类**
 
-2)CGLib采用底层的字节码技术，为一个类创建子类，并在子类中采用方法拦截的技术拦截所有父类的调用方法，并顺势织入横切逻辑.它运行期间生成的代理对象是目标类的扩展子类.所以无法通知final的方法,因为它们不能被覆写.是针对类实现代理,主要是为指定的类生成一个子类,覆盖其中方法.
+**(2)CGLib**
+CGLib采用**底层的字节码技术**，**为一个类创建子类**，并在子类中采用方法拦截的技术拦截所有父类的调用方法，并顺势织入横切逻辑.它运行期间生成的代理对象是目标类的扩展子类.**所以无法通知final、private的方法**,因为它们不能被覆写.是针对类实现代理,主要是为指定的类生成一个子类,覆盖其中方法.
 
 在spring中默认情况下使用JDK动态代理实现AOP,如果proxy-target-class设置为true或者使用了优化策略那么会使用CGLIB来创建动态代理.Spring　AOP在这两种方式的实现上基本一样．以JDK代理为例，会使用JdkDynamicAopProxy来创建代理，在invoke()方法首先需要织入到当前类的增强器封装到拦截器链中，然后递归的调用这些拦截器完成功能的织入．最终返回代理对象．
 
 http://zhengjianglong.cn/2015/12/12/Spring/spring-source-aop/
 
 ## 介绍spring的IOC实现
-Spring　IOC主要负责创建和管理bean及bean之间的依赖关系．Spring　IOC的可分为:IOC容器的初始化和bean的加载．
+Spring　**IOC主要负责创建和管理bean及bean之间的依赖关系**．Spring　IOC的可分为:IOC容器的初始化和bean的加载．
 
-在IOC容器阶段主要是完成资源的加载(如定义bean的xml文件)，bean的解析及对解析后得到的beanDefinition的进行注册．以xmlBeanFactory为例，XmlBeanFactory继承了DefaultListableBeanFactory，XmlBeanFactory将读取xml配置文件，解析bean和注册解析后的beanDefinition工作交给XmlBeanDefinitionReader(是BeanDefinitionReader接口的一个个性化实现)来执行.spring中定义了一套资源类，将文件，class等都看做资源．
+在IOC容器阶段主要是完成资源的加载(如定义bean的xml文件)，bean的解析及对解析后得到的beanDefinition的进行注册．以xmlBeanFactory为例，XmlBeanFactory继承了DefaultListableBeanFactory，XmlBeanFactory将读取xml配置文件，解析bean和注册解析后的beanDefinition工作交给XmlBeanDefinitionReader(是BeanDefinitionReader接口的一个个性化实现)来执行.
 
-1)所以首先是将xml文件转化为资源然后用EncodeResouce来封装，该功能主要时考虑Resource可能存在编码要求的情况，如UTF-8等．
+1) spring中定义了一套资源类，将文件，class等都看做资源．所以首先是将xml文件转化为资源然后用EncodeResouce来封装，该功能主要时考虑Resource可能存在编码要求的情况，如UTF-8等．
 
-2)然后根据xml文件判断xml的约束模式，是DTD还是Schema,以及寻找模式文档(验证文件)的方法(EntityResolver，这部分采用了代理模式和策略模式)．
+2) 然后根据xml文件判断xml的约束模式，是DTD还是Schema,以及寻找模式文档(验证文件)的方法(EntityResolver，这部分采用了代理模式和策略模式)．
 
-完成了前面所有的准备工作以后就可以正式的加载配置文件，获取Docoment和解析注册BeanDefinition．Docoment的获取以及BeanDefinition的解析注册并不是由XmlBeanDefinitionReader完成，XmlBeanDefinitionReader只是将前面的工作完成以后文档加载交给DefaultDocumentLoader类来完成．而解析交给了DefaultBeanDefinitionDocumentReader来处理.bean标签可以分为两种，一种是spring自带的默认标签，另一种就是用户自定义的标签．所以spring针对这两种情况，提供了不同的解析方式. 每种bean的解析完成后都会先注册到容器中然后最后发出响应事件，通知相关的监听器这个bean已经注册完成了．
+完成了前面所有的准备工作以后就可以正式的加载配置文件，获取Docoment和解析注册BeanDefinition．Docoment的获取以及BeanDefinition的解析注册并不是由**XmlBeanDefinitionReader**完成，XmlBeanDefinitionReader只是将前面的工作完成以后文档加载交给**DefaultDocumentLoader**类来完成．
+
+而解析交给了**DefaultBeanDefinitionDocumentReader**来处理.bean标签可以分为两种，一种是spring自带的默认标签，另一种就是用户自定义的标签．所以spring针对这两种情况，提供了不同的解析方式. 每种bean的解析完成后都会先注册到容器中然后最后发出响应事件，通知相关的监听器这个bean已经注册完成了．
 
 **bean的加载**
 http://zhengjianglong.cn/2015/12/06/Spring/spring-source-ioc-bean-parse/
@@ -153,25 +155,29 @@ http://www.cnblogs.com/ITtangtang/p/3978349.html
 
 
 ## springMVC流程具体叙述下
-当应用启动时,容器会加载servlet类并调用init方法. 在这个阶段，DispatcherServlet在init()完成初始化参数init-param的解析和封装,相关配置,spring的WebApplicationContext的初始化即完成xml文件的加载,bean的解析和注册等工作,另外为servlet功能所用的变量进行初始化,如:handlerMapping,viewResolvers等.
+
+当应用启动时,容器会加载servlet类并调用**init**方法. 在这个阶段，DispatcherServlet在init()完成初始化参数**init-param**的解析和封装、相关配置：
+
+ - 完成了spring的**WebApplicationContext**的初始化，即完成xml文件的加载、bean的解析和注册等工作。
+ - 另外为servlet功能所用的变量进行初始化,如:handlerMapping,viewResolvers等.
 
 当用户发送一个请求时，首先根据请求的类型调用DispatcherServlet不同的方法，这些方法都会转发到doService()中执行．在该方法内部完成以下工作：
 
-1)spring首先考虑multipart的处理,如果是MultipartContent类型的request,则将该请求转换成MultipartHttpServletRequest类型的request.
+ 1. spring首先考虑**multipart**的处理,如果是MultipartContent类型的request,则将该请求转换成MultipartHttpServletRequest类型的request.
 
-2)根据request信息获取对应的Handler. 首先根据request获取访问路径,然后根据该路径可以选择直接匹配或通用匹配的方式寻找Handler,即用户定义的controller. Handler在init()方法时已经完成加载且保存到Map中了,只要根据路径就可以得到对应的Handler. 如果不存在则尝试使用默认的Handler. 如果还是没有找到那么就通过response向用户返回错误信息.找到handler后会将其包装在一个执行链中,然后将所有的拦截器也加入到该链中.
+ 2. 根据request信息获取对应的**Handler**. 首先根据request获取访问路径,然后根据该路径可以选择直接匹配或通用匹配的方式寻找Handler,即用户定义的controller. Handler在init()方法时已经完成加载且保存到Map中了,只要根据路径就可以得到对应的Handler. 如果不存在则尝试使用默认的Handler. 如果还是没有找到那么就通过response向用户返回错误信息. 找到handler后会将其包装在一个**执行链**中,然后将所有的拦截器也加入到该链中.
 
-4)如果存在handler则根据当前的handler寻找对应的HandlerAdapter. 通过遍历所有适配器来选择合适的适配器.
+ 3. 如果存在handler则根据当前的handler寻找对应的HandlerAdapter. 通过遍历所有适配器来选择合适的适配器.
 
-5)SpringMVC允许你通过处理拦截器Web请求,进行前置处理和后置处理.所以在正式调用 Handler的逻辑方法时,先执行所有拦截器的preHandle()方法.
+ 4. SpringMVC允许你通过处理拦截器Web请求,进行前置处理和后置处理.所以在正式调用 Handler的逻辑方法时,先执行所有拦截器的preHandle()方法.
 
-6)正式执行handle的业务逻辑方法handle(),返回ModelAndView.逻辑处理是通过适配器调用handle并返回视图.这过程其实是调用用户controller的业务逻辑.
+ 5. 正式执行handle的业务逻辑方法handle(),返回ModelAndView.逻辑处理是通过适配器调用handle并返回视图.这过程其实是调用用户controller的业务逻辑.
 
-8)调用拦截器的postHandle()方法,完成后置处理.
+ 6. 调用拦截器的postHandle()方法,完成后置处理.
 
-9)根据视图进行页面跳转.该过程首先会根据视图名字解析得到视图,该过程支持缓存,如果缓存中存在则直接获取,否则创建新的视图并在支持缓存的情况下保存到缓冲中.该10)过程完成了像添加前缀后缀,设置必须的属性等工作.最后就是进行页面跳转处理.
+ 7. 根据视图进行页面跳转.该过程首先会根据视图名字解析得到视图,该过程支持缓存,如果缓存中存在则直接获取,否则创建新的视图并在支持缓存的情况下保存到缓冲中.该过程完成了像添加前缀后缀,设置必须的属性等工作.最后就是进行页面跳转处理.
 
-11)调用拦截器的afterComplection()
+ 8. 调用拦截器的afterCompletion()
 
 ## spring各个版本的区别
 
