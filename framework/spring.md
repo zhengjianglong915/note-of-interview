@@ -3,27 +3,35 @@ Spring是一个开源的Java EE开发框架。Spring框架的核心功能可以�
 
 ## Spring有哪些优点
 **轻量级**：Spring在大小和透明性方面绝对属于轻量级的，基础版本的Spring框架大约只有2MB。
+
 **控制反转(IOC)**：Spring使用控制反转技术实现了松耦合。依赖被注入到对象，而不是创建或寻找依赖对象。
+
 **面向切面编程(AOP)**： Spring支持面向切面编程，同时把应用的**业务逻辑与系统的服务分离开来**。
+
 **容器**：Spring包含并管理应用程序对象的配置及生命周期。
+
 **MVC框架**：Spring的web框架是一个设计优良的web MVC框架，很好的取代了一些web框架。
+
 **事务管理**：Spring对下至本地业务上至全局业务(JAT)提供了统一的事务管理接口。
+
 **异常处理**：Spring提供一个方便的API将特定技术的异常(由JDBC, Hibernate, 或JDO抛出)转化为一致的、Unchecked异常。
 
 ## Spring框架有哪些模块
 Spring框架至今已集成了20多个模块。这些模块主要被分如下图所示的核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块。
-**核心容器模块**：是spring中最核心的模块。负责Bean的创建，配置和管理。主要包括：beans,core,context,expression等模块。
-**Spring的AOP模块**：主要负责对面向切面编程的支持，帮助应用对象解耦。
-**数据访问和集成模块**：包括JDBC，ORM，OXM，JMS和事务处理模块，其细节如下：
-JDBC模块提供了不再需要冗长的JDBC编码相关了JDBC的抽象层。
-ORM模块提供的集成层。流行的对象关系映射API，包括JPA，JDO，Hibernate和iBatis。
-OXM模块提供了一个支持对象/ XML映射实现对JAXB，Castor，使用XMLBeans，JiBX和XStream 的抽象层。
-Java消息服务JMS模块包含的功能为生产和消费的信息。
-事务模块支持编程和声明式事务管理实现特殊接口类，并为所有的POJO。
-**Web和远程调用**：包括web,servlet,struts,portlet模块。
-**测试模块**：test
-**工具模块**
-**消息模块**
+- **核心容器模块**：是spring中最核心的模块。负责Bean的创建，配置和管理。主要包括：beans,core,context,expression等模块。
+
+- **Spring的AOP模块**：主要负责对面向切面编程的支持，帮助应用对象解耦。
+
+- **数据访问和集成模块**：包括JDBC，ORM，OXM，JMS和事务处理模块，其细节如下：
+ - JDBC模块提供了不再需要冗长的JDBC编码相关了JDBC的抽象层。
+ - ORM模块提供的集成层。流行的对象关系映射API，包括JPA，JDO，Hibernate和iBatis。
+ - OXM模块提供了一个支持对象/ XML映射实现对JAXB，Castor，使用XMLBeans，JiBX和XStream 的抽象层。
+ - Java消息服务JMS模块包含的功能为生产和消费的信息。
+ - 事务模块支持编程和声明式事务管理实现特殊接口类，并为所有的POJO。
+
+- **Web和远程调用**：包括web,servlet,struts,portlet模块。
+- **测试模块**：test
+
 
 ## 什么是控制反转(IOC)？什么是依赖注入？
 传统模式中对象的调用者需要创建被调用对象，两个对象过于耦合，不利于变化和拓展．在spring中，直接操控的对象的调用权交给容器，通过容器来实现对象组件的装配和管理，从而实现对象之间的松耦合。所谓的“控制反转”概念就是对组件对象控制权的转移，从程序代码本身转移到了外部容器。
