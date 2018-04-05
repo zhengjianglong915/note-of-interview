@@ -1,12 +1,14 @@
 ## 描述 Struts 体系结构？对应各个部分的开发工作主要包括哪些？
 Struts开源架构很好的实现了MVC模式，MVC即Model-View-Controller的缩写，是一种常用的设计模式。MVC 减弱了业务逻辑接口和数据接口之间的耦合，以及让视图层更富于变化。在Struts2的模型 - 视图 - 控制器模式，实现以下五个核心部件：
-    Actions
-    Interceptors
-    Value Stack / OGNL
-    Results / Result types
-    View technologies
+
+ - Actions
+ - Interceptors
+ - Value Stack / OGNL
+ - Results / Result types
+ - View technologies
 
 Struts 2 从传统的MVC框架操作需要的模型，而不是在控制器角色略有不同，虽然有一些重叠
+
 **模型**
 模型以一个或多个java bean的形式存在。这些bean分为三类：Action Form、Action、JavaBean or EJB。Action Form通常称之为FormBean，封装了来自于Client的用户请求信息，如表单信息。Action通常称之为ActionBean，获取从ActionSevlet传来的FormBean，取出FormBean中的相关信息，并做出相关的处理，一般是调用Java Bean或EJB等。
 
