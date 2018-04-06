@@ -51,29 +51,27 @@ Bean工厂(BeanFactory)是Spring框架最核心的接口，提供了高级Ioc的
  - **基于Java的配置**： Spring对Java配置的支持是由@Configuration注解和@Bean注解来实现的。由@Bean注解的方法将会实例化、配置和初始化一个新对象，这个对象将由Spring的IoC容器来管理。@Bean声明所起到的作用与<bean/> 元素类似。被@Configuration所注解的类则表示这个类的主要目的是作为bean定义的资源。被@Configuration声明的类可以通过在同一个类的内部调用@bean方法来设置嵌入bean的依赖关系。
 
 ## Spring Bean的生命周期
+![](/assets/beans.png)
 
 Bean在Spring中的生命周期如下：
- - **实例化**。Spring通过new关键字将一个Bean进行实例化，JavaBean都有默认的构造函数，因此不需要提供构造参数。
- - **填入属性**。Spring根据xml文件中的配置通过调用Bean中的setXXX方法填入对应的属性。
-事件通知。Spring依次检查Bean是否实现了BeanNameAware、BeanFactoryAware、ApplicationContextAware、BeanPostProcessor、InitializingBean接口，如果有的话，依次调用这些接口。
- - **使用**。应用程序可以正常使用这个Bean了。
- - **销毁**。如果Bean实现了DisposableBean接口，就调用其destroy方法。
+- **实例化**：Spring通过new关键字将一个Bean进行实例化。
+- **填入属性**：spring将值和bean引用注入到bean 的属性中。
+- 如果Bean实现了**BeanNameAware**接口，工厂调用Bean的**setBeanName()**方法传递Bean的ID。
+- 如果Bean实现了**BeanFactoryAware**接口，工厂调用**setBeanFactory()**方法传入工厂自身。
+- 如果实现了**ApplicationContextAware**, spring将调用setApplicationContext()方法，将bean所在的上下文的引用 进来。
+- 如果**BeanPostProcessor**和Bean关联，那么它们的**postProcessBeforeInitialization()**方法将被调用。
+- 如果Bean指定了init-method方法，它将被调用。
+- 如果有**BeanPostProcessor**和Bean关联，那么它们的postProcessAfterInitialization()方法将被调用
+- 最后如果配置了destroy-method方法则注册**DisposableBean**.
 
 
----加载过程---
-1. 容器寻找Bean的定义信息并且将其实例化。
-2. 如果允许提前暴露工厂，则提前暴露这个bean的工厂，这个工厂主要是返回该未完全处理的bean．主要是用于避免单例属性循环依赖问题．
-3. 受用**依赖注入**，Spring按照Bean定义信息配置Bean的所有属性。
-4. 如果Bean实现了**BeanNameAware**接口，工厂调用Bean的**setBeanName()**方法传递Bean的ID。
-5. 如果Bean实现了**BeanFactoryAware**接口，工厂调用**setBeanFactory()**方法传入工厂自身。
-6. 如果**BeanPostProcessor**和Bean关联，那么它们的**postProcessBeforeInitialization()**方法将被调用。
-7. 如果Bean指定了init-method方法，它将被调用。
-8. 如果有**BeanPostProcessor**和Bean关联，那么它们的postProcessAfterInitialization()方法将被调用
-9. 最后如果配置了destroy-method方法则注册**DisposableBean**.
-
-到这个时候，Bean已经可以被应用系统使用了，并且将被保留在Bean Factory中知道它不再需要。有两种方法可以把它从Bean Factory中删除掉：
+ **使用：**到这个时候，Bean已经可以被应用系统使用了，并且将被保留在Bean Factory中知道它不再需要。
+ 
+ **销毁**。如果Bean实现了DisposableBean接口，就调用其destroy方法。有两种方法可以把它从Bean Factory中删除掉：
 1. 如果Bean实现了DisposableBean接口，destory()方法被调用。
-2. 如果指定了订制的销毁方法，就调用这个方法。
+2. 如果指定了订制的销毁方法，就调用这个方法。destory-method（）配置时指定。
+
+
 
 ## Spring Bean的作用域之间有什么区别
  - **singleton**：这种bean范围是默认的，这种范围确保不管接受到多少个请求，每个容器中只有一个bean的实例，单例的模式由bean factory自身来维护。
@@ -147,12 +145,13 @@ http://zhengjianglong.cn/2015/12/06/Spring/spring-source-ioc-bean-parse/
 3. 受用**依赖注入**，Spring按照Bean定义信息配置Bean的所有属性。
 4. 如果Bean实现了**BeanNameAware**接口，工厂调用Bean的**setBeanName()**方法传递Bean的ID。
 5. 如果Bean实现了**BeanFactoryAware**接口，工厂调用**setBeanFactory()**方法传入工厂自身。
+6. 如果实现了**ApplicationContextAware**, spring将调用setApplicationContext()方法，将bean所在的上下文的引用 进来。
 6. 如果**BeanPostProcessor**和Bean关联，那么它们的**postProcessBeforeInitialzation()**方法将被调用。
 7. 如果Bean指定了init-method方法，它将被调用。
 8. 如果有**BeanPsotProcessor**和Bean关联，那么它们的postProcessAfterInitialization()方法将被调用
 9. 最后如果配置了destroy-method方法则注册**DisposableBean**.
-http://www.cnblogs.com/ITtangtang/p/3978349.html
 
+http://www.cnblogs.com/ITtangtang/p/3978349.html
 
 ## springMVC流程具体叙述下
 
