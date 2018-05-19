@@ -46,6 +46,7 @@
   * [4.4 多线程](./java/thread.md)
   * [4.5 IO](./java/io.md)
   * [4.5 JVM](./java/jvm.md)
+     * [G1垃圾回收器](./java/G1垃圾回收器.md)
 * [第五章 数据库](./database/README.md)
   * [5.1 常见面试题](./database/all.md)
 * [第六章 框架](./framework/README.md)
