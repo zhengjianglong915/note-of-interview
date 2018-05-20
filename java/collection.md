@@ -22,6 +22,7 @@ Set(集) 元素不可重复: 取出元素的方法只有迭代器。**不可以�
  - TreeSet：线程不安全，可以对Set集合中的元素**进行排序**,底层采用了**红黑树**。它的排序是如何进行的呢？通过compareTo或者compare方法中的来保证元素的唯一性。元素是以二叉树的形式存放的。意味着TreeSet中的元素要实现Comparable接口。或者有一个自定义的比较器。
 
 Map　是一个双列集合:
+
  - Hashtable:线程安全，速度快。底层是**哈希表数据**结构。是同步的。不允许null作为键，null作为值。
  - Properties:用于配置文件的定义和操作，使用频率非常高，同时键和值都是字符串。是集合中可以和IO技术相结合的对象。(到了IO在学习它的特有和io相关的功能。)   
  - HashMap:线程不安全，速度慢。底层也是哈希表数据结构。是不同步的。
@@ -30,7 +31,8 @@ Map　是一个双列集合:
  - TreeMap：可以用来对Map集合中的键进行排序.底层是采用红黑树．
  
  
-Collection 和 Collections的区别
+Collection 和 Collections的区别：
+
  - Collection是集合类的上级接口，子接口主要有Set 和List、Map。 
  - Collections是针对集合类的一个帮助类，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。 
 
@@ -153,14 +155,15 @@ HashMap的存取实现:
 (e.hash == hash && ((k = e.key) == key || key.equals(k)))）
 ```
 
- 3） 再散列rehash过程：
+ - 3） 再散列rehash过程：
 Entry[]的长度一定后，随着map里面数据的越来越长，超过了加载因子，必须调整table的大小。每次将数组拓展到原来数据长度的两倍。这时，需要创建一张新表，将原表的映射到新表中。
 注：**在存储当前值后再判断是否进行扩展容器**，这样的扩容方式有可能导致拓展后容器没有被使用造成浪费。
 
- 4) 红黑树的引入
+ - 4) 红黑树的引入
 为了避免链表过长，查询速度变为了线性，java1.8 引入了红黑树。当链表长度大于8时就采用红黑树结构。
 
 解决hash冲突的常用方法办法：
+
 1. 开放定址法（线性探测再散列，二次探测再散列，伪随机探测再散列）
 2. 再哈希法
 3. 链地址法
@@ -169,16 +172,18 @@ Entry[]的长度一定后，随着map里面数据的越来越长，超过了加�
 Java中hashmap的解决办法就是采用的链地址法。
 
 HashMap实现原理：
+
  - http://blog.csdn.net/vking_wang/article/details/14166593
  - [美团点评][Java 8系列之重新认识HashMap](https://tech.meituan.com/java-hashmap.html) | 写的比较好
 
 
 ## 我们能否使用任何类作为Map的key
  我们可以使用任何类作为Map的key，然而在使用它们之前，需要考虑以下几点：
- - （1）**如果类重写了equals()方法，它也应该重写hashCode()方法**。
- -（2）**类的所有实例需要遵循与equals()和hashCode()相关的规则**。请参考之前提到的这些规则。
- -（3）如果一个类没有使用equals()，你不应该在hashCode()中使用它。
- -（4）**用户自定义key类的最佳实践是使之为不可变的**，这样，hashCode()值可以被缓存起来，拥有更好的性能。不可变的类也可以确保hashCode()和equals()在未来不会改变，这样就会解决与可变相关的问题了。
+ 
+- （1）**如果类重写了equals()方法，它也应该重写hashCode()方法**。
+- （2）**类的所有实例需要遵循与equals()和hashCode()相关的规则**。请参考之前提到的这些规则。
+- （3）如果一个类没有使用equals()，你不应该在hashCode()中使用它。
+- （4）**用户自定义key类的最佳实践是使之为不可变的**，这样，hashCode()值可以被缓存起来，拥有更好的性能。不可变的类也可以确保hashCode()和equals()在未来不会改变，这样就会解决与可变相关的问题了。
  
 比如，我有一个类MyKey，在HashMap中使用它
 
@@ -219,6 +224,7 @@ Iterator的fail-fast属性与当前的集合共同起作用，因此它不会受
 
 ## HashSet,TreeSet,LinkedHashSet 之间的区别
 首先这三个类都是实现了Set接口，并且LinkedHashSet继承HashSet ，TreeSet实现了SortedSet。所以它们都拥有Set的基本特性，如：集合中的元素不能重复（这个需要和容器转载的类中的**equals()方法**有关）. 这三个容器所接受的类必须实现equals() 方法:
+
  - **HashSet**： 为查询速度所设计的，存入HashSet的元素必须定义hashCode()方法。内部是基于散列函数实现。
  - **TreeSet**： 实现了SortedSet（SortedSet的元素可以保证处于排序状态）,所以内部的元素是保持一定次序的（次序与元素实现的compareTo()方法有关），且底层是树状结构。使用它可以从Set中提取有序的序列。要求存入的元素必须实现**Comparable接口**,或则需要传入一个比较器**Comparator**。否则报ClassCastException。内部采用了**红黑树**实现。
  - **LinkedHashSet**： 具有HashSet的查询速度，且内部链表维护元素的顺序（按插入顺序排序）。元素必须实现hashCode(）方法。内部是由链表实现。
@@ -228,16 +234,19 @@ Iterator的fail-fast属性与当前的集合共同起作用，因此它不会受
 
  - **HashMap** 基于散列表来的实现，即使用hashCode()进行快速查询元素的位置，显著提高性能。插入和查询“键值对”的开销是固定的。可以通过设置容量和负载因子，以调整容器的性能。
  - **LinkedHashMap**,  类似于HashMap,但是迭代遍历它时，取得“键值对”的顺序是其**插入的次序**，只比HashMap慢一点。而在迭代访问时反而更快，**因为它使用链表维护内部次序**。
- - **TreeMap**, 是基于**红黑树**的实现。实现了SortedMap，SortedMap 可以确保键处于排序状态。所以查看“键”和“键值对”时，所有得到的结果都是经过排序的，次序由Comparable或Comparator决定。SortedMap拥有其他额外的功能，如：Comparator comparator()返回当前Map使用的Comparator或者null. T firstKey() 返回Map的第一个键，T lastKey() 返回最后一个键。SortedMap headMap(toKey),生成一个键小于toKey的Map子集。SortedMap tailMap(fromKey) 也是生成一个子集。TreeMap是唯一的带有subMap()方法的Map,它可以返回一个子树。
+ - **TreeMap**, 是基于**红黑树**的实现。实现了SortedMap，SortedMap 可以确保键处于排序状态。所以查看“键”和“键值对”时，所有得到的结果都是经过排序的，次序由Comparable或Comparator决定。SortedMap拥有其他额外的功能，如：Comparator comparator()返回当前Map使用的Comparator或者null. T firstKey() 返回Map的第一个键，T lastKey() 返回最后一个键。SortedMap headMap(toKey),生成一个键小于toKey的Map子集。SortedMap tailMap(fromKey) 也是生成一个子集。TreeMap是唯一的带有subMap()方法的Map,它可以返回一个子树
  - **WeakHashMap**  表示**弱键映射**，允许释放映射所指向的对象。这是为了解决某类特殊问题而设计的，如果映射之外没有引用指向某个“键”，则“键”可以被垃圾收集器回收。
  - **ConcurrentHashMap** 一种线程安全的Map,它不涉及同步加锁。
  - **IdentityHashMap** 使用==代替equals() 对“键”进行比较的散列映射。专为解决特殊问题而设计。
- - **HashTable** (已经摒弃了)
+ - **Hashtable** (已经摒弃了)
 
-- [Map 综述（二）：彻头彻尾理解 LinkedHashMap](http://blog.csdn.net/justloveyou_/article/details/71713781)
+
+
+[Map 综述（二）：彻头彻尾理解 LinkedHashMap](http://blog.csdn.net/justloveyou_/article/details/71713781)
 
 ## Map接口提供了哪些不同的集合视图
 Map接口提供三个集合视图：
+
  - （1）**Set keyset()**：**返回map中包含的所有key的一个Set视图**。**集合是受map支持的，map的变化会在集合中反映出来，反之亦然**。当一个迭代器正在遍历一个集合时，若map被修改了（除迭代器自身的移除操作以外），迭代器的结果会变为未定义。集合支持通过**Iterator**的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
  
  - （2）**Collection values()**：**返回一个map中包含的所有value的一个Collection视图**。这个collection受map支持的，map的变化会在collection中反映出来，反之亦然。当一个迭代器正在遍历一个collection时，若map被修改了（除迭代器自身的移除操作以外），迭代器的结果会变为**未定义**。集合支持通过Iterator的Remove、Set.remove、removeAll、retainAll和clear操作进行元素移除，从map中移除对应的映射。它不支持add和addAll操作。
@@ -302,6 +311,7 @@ comparator.compare(person1,person2);。
 
 ## Java集合框架是什么？说出一些集合框架的优点？
 每种编程语言中都有集合，最初的Java版本包含几种集合类：Vector、Stack、HashTable和Array。随着集合的广泛使用，Java1.2提出了囊括所有集合接口、实现和算法的集合框架。在保证线程安全的情况下使用泛型和并发集合类，Java已经经历了很久。它还包括在Java并发包中，阻塞接口以及它们的实现。集合框架的部分优点如下：
+
  - （1）使用核心集合类降低开发成本，而非实现我们自己的集合类。
  - （2）随着使用经过严格测试的集合框架类，代码质量会得到提高。
  - （3）通过使用JDK附带的集合类，可以降低代码维护成本。
@@ -312,6 +322,7 @@ Java1.5引入了泛型，所有的集合接口和实现都大量地使用它。�
 
 ## 为何Map接口不继承Collection接口
 尽管Map接口和它的实现也是集合框架的一部分，但Map不是集合，集合也不是Map。因此，Map继承Collection毫无意义，反之亦然。
+
 如果Map继承Collection接口，那么元素去哪儿？Map包含key-value对，它提供抽取key或value列表集合的方法，但是它不适合“一组对象”规范。
 
 ## 为什么集合类没有实现Cloneable和Serializable接口
@@ -335,6 +346,7 @@ Collection接口指定一组对象，对象即为它的元素。**如何维护�
 ## ArrayList 是否支持序列化
 支持，
 实现了　serlializable接口，并实现了以下两个方法：
+
 ```
 　　 　private void writeObject(java.io.ObjectOutputStream s)
 	throws java.io.IOException{

@@ -51,14 +51,17 @@
   * [5.1 常见面试题](./database/all.md)
 * [第六章 框架](./framework/README.md)
   * [6.1 spring](./framework/spring.md)
-  * [6.2 hibernate](./framework/hibernate.md)
-  * [6.3 struts](./framework/struts.md)
+  * [6.2 mybatis] 
+  * [6.3 hibernate](./framework/hibernate.md) 
+  * [6.4 struts](./framework/struts.md)
 * [第七章 其他基础](./others/README.md)
   * [7.1 编码历史](./others/section1.md)
   * [7.2 单例模式的几种实现方式](./others/danli.md)
   * [7.3 一致性哈希算法](./others/hash.md)
-* [第八章 HR面](./hr/README.md)
-  * [8.1 项目与个人](./chapter8/ask.md)
+* [第八章 分布式相关]
+  * [8.1 缓存redis](./cache/redis.md)
+* [第九章 HR面](./hr/README.md)
+  * [9.1 项目与个人](./chapter8/ask.md)
 
 
 
