@@ -58,6 +58,7 @@
   * [7.1 编码历史](./others/section1.md)
   * [7.2 单例模式的几种实现方式](./others/danli.md)
   * [7.3 一致性哈希算法](./others/hash.md)
+  * [7.4 设计模式汇总](./others/设计模式汇总.md)
 * [第八章 分布式相关]
   * [8.1 缓存redis](./cache/redis.md)
 * [第九章 HR面](./hr/README.md)
