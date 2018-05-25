@@ -178,7 +178,7 @@ FULL GC发生的情况:
 ### MinorGC
 
 MinorGC 指发生在新生代的垃圾收集动作，非常频繁，回收速度也快。一般发生在新生代空间不足时,另外一个FullGC经常会伴随至少一次的Minor GC. 当虚拟检测晋升到到老年代的平均大小是否小于老年代剩余空间大小,如果小于并且允许担保失败,则执行Minor GC.
-http://zhidao.baidu.com/link?url=hxwfrDGb87nYAAaKh6kQerv45RzwFkGWOcvl9wbaKVwb8rjdiQNgxLy19ga_A0W8ozisKwCkrSlMjISwB1PeDcoXN9Z7qf12CdEm19VxiuO
+
 
 ## 几种常用的内存调试工具：jmap、jstack、jconsole。
 (如何用工具分析jvm状态)
