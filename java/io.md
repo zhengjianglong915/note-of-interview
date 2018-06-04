@@ -159,7 +159,12 @@ epoll的优点：
 2. 数据就绪后内核给用户线程发signal。 
 2. 当用户调用read, kernel执行数据拷贝操作，**用户线程阻塞直到数据读取完成**。kernel读取数据完成后，返回给用户数据。 
 
-这样避免了用户线程进行不断轮询的操作。
+应用进程使用 sigaction 系统调用，内核立即返回，应用进程可以继续执行，也就是说等待数据阶段应用进程是非阻塞的。内核在数据到达时向应用进程发送 SIGIO 信号，应用进程收到之后在信号处理程序中调用 recvfrom 将数据从内核复制到应用进程中。
+
+相比于非阻塞式 I/O 的轮询方式，信号驱动 I/O 的 CPU 利用率更高。这样避免了用户线程进行不断轮询的操作。
+
+<div align="center"> <img src="../images/15276920363669.jpg" width="500"/> </div>
+
 
 ### 5）异步IO（Asynchronous I/O）
 
@@ -237,6 +242,7 @@ Java NIO的选择器允许一个单独的线程来监视多个输入通道，你
  11. [磁盘I/O那些事](https://tech.meituan.com/about-desk-io.html) | 美团
  12. [《Linux 设备驱动 Edition 3》](https://www.kancloud.cn/kancloud/ldd3/61083)
  13. [磁盘及网络IO工作方式解析](https://segmentfault.com/a/1190000007692223)
+ 14. [Socket](https://github.com/CyC2018/Interview-Notebook/blob/master/notes/Socket.md)
 
 
 个人公众号(欢迎关注)：<br>
