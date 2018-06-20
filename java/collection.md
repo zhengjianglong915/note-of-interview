@@ -146,9 +146,10 @@ HashMap的存取实现:
 
 首先会根据对象的hashCode计算得到**散列桶坐标**（数组下表），因为数组中存放的是**Entry链表结构**，所以还需要对该链表进行遍历，通过调用key.equals方法判断是否存在该key，如果存在则修改内容。如果不存在则**采用头插入**的方式在链表头部插入一个新的节点存储这个新的映射关系。
 
-**null key总是存放在Entry[]数组的第一个元素，而且仅保留一个null key**。
+**null key总是存放在Entry[]数组的第一个元素，而且仅保留一个null key**。插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。
 
  - 2) get
+ 
 首先也会根据hashCode的值定位到散列桶，并遍历存放在该桶中的链表。如果存在的该key则返回对应的value，**如果不存在则返回null**。（比较时调用key.equals)  具体比较：
 
 ```
@@ -156,10 +157,12 @@ HashMap的存取实现:
 ```
 
  - 3） 再散列rehash过程：
+ 
 Entry[]的长度一定后，随着map里面数据的越来越长，超过了加载因子，必须调整table的大小。每次将数组拓展到原来数据长度的两倍。这时，需要创建一张新表，将原表的映射到新表中。
 注：**在存储当前值后再判断是否进行扩展容器**，这样的扩容方式有可能导致拓展后容器没有被使用造成浪费。
 
  - 4) 红黑树的引入
+
 为了避免链表过长，查询速度变为了线性，java1.8 引入了红黑树。当链表长度大于8时就采用红黑树结构。
 
 解决hash冲突的常用方法办法：
@@ -205,9 +208,9 @@ myHashMap.get(new MyKey('Pankaj'));
 ## HashMap和HashTable的区别
 HashMap和Hashtable都实现了Map接口，因此很多特性非常相似。但是，他们有以下不同点：
 
- - 1) HashMap允许键和值是null，而Hashtable不允许键或者值是null。
- - 2) Hashtable是同步的，而HashMap不是。因此，HashMap更适合于单线程环境，而Hashtable适合于多线程环境。
- - 3）HashMap的**迭代器(Iterator)是fail-fast迭代器**，而Hashtable的**enumerator(列举)迭代器不是fail-fast的**。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。一般认为Hashtable是一个遗留的类。如果你寻求在迭代的时候修改Map，你应该使用CocurrentHashMap 
+- HashMap允许键和值是null，而Hashtable不允许键或者值是null。
+- Hashtable是同步的，而HashMap不是。因此，HashMap更适合于单线程环境，而Hashtable适合于多线程环境。
+- HashMap的**迭代器(Iterator)是fail-fast迭代器**，而Hashtable的**enumerator(列举)迭代器不是fail-fast的**。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。一般认为Hashtable是一个遗留的类。如果你寻求在迭代的时候修改Map，你应该使用CocurrentHashMap 
  
 http://www.importnew.com/7010.html
 

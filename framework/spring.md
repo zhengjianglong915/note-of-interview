@@ -15,16 +15,13 @@ Spring框架至今已集成了20多个模块。这些模块主要被分如下图
 ![](/assets/spring.png)
 
 - **核心容器模块**：是spring中最核心的模块。负责Bean的创建、配置和管理。主要包括：beans,core,context,expression等模块。
-
 - **Spring的AOP模块**：主要负责对面向切面编程的支持，帮助应用对象解耦。
-
 - **数据访问和集成模块**：包括JDBC，ORM，OXM，JMS和事务处理模块，其细节如下：
- - JDBC模块提供了不再需要冗长的JDBC编码相关了JDBC的抽象层。
- - ORM（Object Relational Mapping，对象关系映射）模块提供的集成层。流行的对象关系映射API，包括JPA，JDO，Hibernate和iBatis。
- - OXM模块提供了一个支持对象/ XML映射实现对JAXB，Castor，使用XMLBeans，JiBX和XStream 的抽象层。
- - Java消息服务JMS模块包含的功能为生产和消费的信息。
- - 事务模块支持编程和声明式事务管理实现特殊接口类，并为所有的POJO。
-
+    - JDBC模块提供了不再需要冗长的JDBC编码相关了JDBC的抽象层。
+    - ORM（Object Relational Mapping，对象关系映射）模块提供的集成层。流行的对象关系映射API，包括JPA，JDO，Hibernate和iBatis。
+    - OXM模块提供了一个支持对象/ XML映射实现对JAXB，Castor，使用XMLBeans，JiBX和XStream 的抽象层。
+    - Java消息服务JMS模块包含的功能为生产和消费的信息。
+    - 事务模块支持编程和声明式事务管理实现特殊接口类，并为所有的POJO。
 - **Web和远程调用**：包括web,servlet,struts,portlet模块。
 - **测试模块**：test
 
