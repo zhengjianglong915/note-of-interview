@@ -1,3 +1,7 @@
+# 背景
+最近在学习go, 用 leetCode 练练手
+
+
 ## 1480. Running Sum of 1d Array
 see more: https://leetcode.com/problems/running-sum-of-1d-array/
 
@@ -9,12 +13,8 @@ func runningSum(nums []int) []int {
         return nil
     }
 
-    var count = 0
-    for i, v := range nums {
-        count += v
-        nums[i] = count
+    for i:=1; i < len(nums); i++ {
+        nums[i] += nums[i-1]
     }
-
-    return nums
 }
 ```
