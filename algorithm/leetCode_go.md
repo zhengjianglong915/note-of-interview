@@ -10,11 +10,12 @@ see more: https://leetcode.com/problems/running-sum-of-1d-array/
 ```
 func runningSum(nums []int) []int {
     if nil == nums || len(nums) == 0{
-        return nil
+        return nums
     }
 
     for i:=1; i < len(nums); i++ {
         nums[i] += nums[i-1]
     }
+    return nums
 }
 ```
