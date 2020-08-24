@@ -28,6 +28,10 @@ see more: https://leetcode.com/problems/shuffle-the-array/
 
 ```
 func shuffle(nums []int, n int) []int {
+    if nil == nums || len(nums) == 0 {
+        return nums
+    }
+    
     result := make ([]int, len(nums))
     
     for i:= range nums[:n] {
